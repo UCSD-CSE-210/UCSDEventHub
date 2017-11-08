@@ -149,7 +149,23 @@ INSTALLED_APPS = (
     'djangocms_googlemap',
     'djangocms_video',
     'aldryn_bootstrap3',
-    'event_hub'
+    'event_hub',
+    'absolute',
+    'aldryn_forms',
+    'aldryn_forms.contrib.email_notifications',
+    'captcha',
+    'emailit',
+    'aldryn_boilerplates',
+    'aldryn_common',
+    'aldryn_people',
+    'aldryn_reversion',
+    'parler',
+    'aldryn_translation_tools',
+    'sortedm2m',
+    'djangocms_fbcomments',
+    'connected_accounts',
+    'connected_accounts.providers',
+    'cms_named_menus'
 )
 
 LANGUAGES = (
@@ -208,3 +224,5 @@ THUMBNAIL_PROCESSORS = (
     'filer.thumbnail_processors.scale_and_crop_with_subject_location',
     'easy_thumbnails.processors.filters'
 )
+
+ALDRYN_BOILERPLATE_NAME='bootstrap3'
