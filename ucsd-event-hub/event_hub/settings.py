@@ -148,6 +148,7 @@ INSTALLED_APPS = (
     'djangocms_snippet',
     'djangocms_googlemap',
     'djangocms_video',
+    'aldryn_bootstrap3',
     'event_hub'
 )
 
