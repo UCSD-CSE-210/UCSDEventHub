@@ -32,3 +32,6 @@ def upcoming_events():
 
 def event_details(event_id):
     return list(Event.objects.filter(id=event_id).all().values())
+
+def add_event_to_db(event):
+	event.save()
