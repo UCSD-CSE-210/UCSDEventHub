@@ -29,6 +29,7 @@ def render_search_page(request):
 		key = re.sub('-+',' ', key)
 		return key
 	events = search_events(search_keywords)
+	print(events)
 	return render(request, 'hub/search_page.html', {'events':events})
 	
 	

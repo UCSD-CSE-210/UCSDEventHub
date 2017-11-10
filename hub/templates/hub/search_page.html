@@ -177,39 +177,47 @@
 		</div>
 		
 		<div class="col">
-		
 			{% for event in events %}
 				<div class="event_tile_wrapper">
 					<div class="poster">
-						<img src="{%  event.image.url %}" class="poster_image">
+						<a href="event_details/id={{  event.id}}">
+						<img src="/media/{{  event.image}}" class="poster_image">
+						</a>
 					</div>
 					<div class="details">
 						<div class="title">
+							<a href="event_details/id={{  event.id}}">
+						
 							<p class="p_title">
-								{%  event.title %}
+								{{  event.title }}
 							</p>
+							</a>
 						</div>
 						
 						<div class="datetime">
 							<p class="p_datetime">
-								{%  event.start_date %}
+								{{  event.start_date }}
 							</p>
 						</div>
 						
 						<div class="location">
 							<p class="p_location">
-								{%  event.location %}
+								{{  event.location }}
 							</p>
 						</div>
 						
 						<div class="hashtag">
 							<p class="p_hashtag">
-								{%  event.hashtags %}
+								{{  event.hashtags }}
 							</p>
 						</div>
 					</div>
 					<br style="clear: both;">
 				</div>
+				{%  empty  %}
+					<h3>No results found!</h3>
+				{%  endfor %}
+			
 		</div>
 		<div class="col"> </div>
 	</div>
