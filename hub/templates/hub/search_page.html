@@ -3,6 +3,10 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
 	<style>
 		.search_results{
 			
@@ -173,44 +177,43 @@
 		</div>
 		
 		<div class="col">
-			<div class="event_tile_wrapper">
-				<div class="poster">
-					<img src="./tile12_files/hungry-history-the-halloween-pumpkin-an-american-history-E.jpeg" class="poster_image">
+		
+			{% for event in events %}
+				<div class="event_tile_wrapper">
+					<div class="poster">
+						<img src="{%  event.image.url %}" class="poster_image">
+					</div>
+					<div class="details">
+						<div class="title">
+							<p class="p_title">
+								{%  event.title %}
+							</p>
+						</div>
+						
+						<div class="datetime">
+							<p class="p_datetime">
+								{%  event.start_date %}
+							</p>
+						</div>
+						
+						<div class="location">
+							<p class="p_location">
+								{%  event.location %}
+							</p>
+						</div>
+						
+						<div class="hashtag">
+							<p class="p_hashtag">
+								{%  event.hashtags %}
+							</p>
+						</div>
+					</div>
+					<br style="clear: both;">
 				</div>
-				<div class="details">
-					<div class="title">
-						<p class="p_title">
-							Halloween Party
-						</p>
-					</div>
-					
-					<div class="datetime">
-						<p class="p_datetime">
-							Nov 10, Friday, 8PM
-						</p>
-					</div>
-					
-					<div class="location">
-						<p class="p_location">
-							Location: Ballroom West
-						</p>
-					</div>
-					
-					<div class="hashtag">
-						<p class="p_hashtag">
-							#Freefood
-						</p>
-					</div>
-				</div>
-				<br style="clear: both;">
-			</div>
 		</div>
 		<div class="col"> </div>
 	</div>
 </div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
 
 </body></html>
