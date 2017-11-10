@@ -14,3 +14,7 @@ def event_list(request):
     
 def event_upload(request):
     return render(request, 'hub/event_upload.html', {})
+
+def event_details(request):
+    # making a call to the get event details api with an id of the event to get details. 
+    return render(request, 'hub/event_details.html', {'events':events})
