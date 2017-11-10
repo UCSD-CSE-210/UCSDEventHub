@@ -31,8 +31,10 @@ def render_search_page(request):
 		key = re.sub('[^A-Za-z0-9-]', '', key)
 		key = re.sub('-+',' ', key)
 		return key
+	search_keywords = clean(search_keywords)
+	#print("search=",search_keywords)
 	events = search_events(search_keywords)
-	print(events)
+	#print(events)
 	return render(request, 'hub/search_page.html', {'events':events})
 
 # Event Upload related views
