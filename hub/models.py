@@ -8,7 +8,7 @@ class Event(models.Model):
     location = models.CharField(max_length=255)
     date = models.DateTimeField()
     end_date = models.DateTimeField()
-    image = models.ImageField()
+    image = models.ImageField(upload_to="events")
     hastags = models.CharField(max_length=255)
     organizer = models.CharField(max_length=255)
     contact_email = models.EmailField()
