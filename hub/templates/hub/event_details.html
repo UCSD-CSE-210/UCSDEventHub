@@ -3,17 +3,17 @@
     <head>
     	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="{% static 'css/eventDetailsStyle.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static "css/eventDetailsStyle.css" %}">
 		<link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
     </head> 
     <body>
     	
-    	 
-<p class = "text">{{events}}</p>
     <h1 class = "eventTitle">{{ events.title }}</h1>
-    <div id="wrap">
-		<div class="imageBox"><img class = "image" src= "{% static "images/event.jpg" %}" alt="My image"/></div>
-
+    <div class="event_tile_wrapper">
+		<div class="poster">
+			<img src="/media/{{events.image}}" class="poster_image">
+		
+		</div>
 	<div class="details">
 	<div class="title">
 	<p class="p_title">
@@ -21,12 +21,12 @@
 	</p>
 	</div>
 
+	
 	<div class="datetime">
-	<p class="p_datetime">
-	Nov 10, Friday, 8PM
-	</p>
+		<p class="p_datetime">
+			{{  events.start_date }}
+		</p>
 	</div>
-
 	<div class="location">
 	<p class="p_location">
 	{{events.location}}
@@ -35,55 +35,20 @@
 
 	<div class="hashtag">
 	<p class="p_hashtag">
-	#Freefood
+	{{  events.hashtags }}
 	</p>
 	</div>
+
+
 	</div>
 <br style="clear: both;">
 </div>
 
-      <!--   {% for event in events %}
-            {{ description}}
-        {% endfor %} -->
 
-<!--     <div class="descBox">
-		<div>
-			<time datetime="2017-05-16">
-				<p>May 16</p>
-				
-			</time>
-		</div>
-		<div>
-			<h4><p>{{ events.title }}</p></h4>
-			<div>
-				<div>
-					<div>by UC San Diego</div>
-				</div>
-				<div>
-					<div>Location: La Jolla Shores</div>
-				</div>
-
-			</div>
-		</div>
-		<p></p>
-		<div>
-			<div>$5</div>
-		</div>
-		<p></p>
-		<p></p>
-
-		<div>
-			<p></p>
-			<p></p>
-			<p>#Fun, #Surfing #FreeFood</p>
-
-		</div>
-	</div> -->
 </div>
 
 	<div>
-		<div>
-			<div class="g-group">
+	
 				<div>
 					<h3 class ="heading">Description</h3>
 							
@@ -102,32 +67,19 @@
 								<h3 class ="heading">Tags</h3>
 								
 								<section>
+									{{events.hashtags}}
 
-									    {% for tag in events.tags %}
+									    <!-- {% for tag in events.hashtags %}
             								{{tag}}
-        								{% endfor %}
-<!-- 
-									<span>
-												
-										<span>#ThingsToDo</span>
-												
-									</span>
-									<span>
-										<span>#Class</span>
-									</span>
-									<span>
-										
-										<span>#Business</span>
-									</span> -->
+        								{% endfor %} -->
+
 								</section>
 							
 							</div>
 						</div>
 						
 				</div>
-				
-			</div>
-		</div>
+		
 	</div>
 
     </body>
