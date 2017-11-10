@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+  <head>
+    <title>UCSDEventHub</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <!-- <link href="grid.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="{% static "css/grid.css" %}">
+  </head>
+  <body>
+  <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">UCSD Event Hub</a>
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+          <ul class="navbar-nav ml-auto">
+
+          <form class="form-inline mt-2 mt-md-0">
+            
+
+
+
+
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Create Event</a>
+            </li>
+
+          </ul>
+        </div>
+      </nav>
+    </header>
+  <main role="main">
+    <section class="jumbotron text-center">
+        <div class="container">
+          <!-- <img src="http://wikimotive.com/wikiblog/wp-content/uploads/sites/2/2013/10/events-heavenly-header1.jpg"> -->
+          <!-- <div style="background-image: url(http://wikimotive.com/wikiblog/wp-content/uploads/sites/2/2013/10/events-heavenly-header1.jpg); height: 200px; width: 800px;">Upcoming EVents</div> -->
+          <h1 class="jumbotron-heading">Upcoming Events</h1> 
+          <!-- <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p> -->
+        </div>
+      </section>
+    <div class="album text-muted">
+        <div class="container">
+
+
+          <div class="row">
+            {% for event in events %}
+            <div class="card">
+              <!-- <div class="card_i"> -->
+                <img src={{ event.image.url }} alt="Unable to load image" class="img-thumbnail" style="max-height:200px; max-width: 100%">
+              <!-- </div> -->
+              <div class="card-text">
+              <p>{{ event.title }}</p>
+              <p>{{ event.date }}</p>
+              <p>{{ event.location }}</p>
+              <p>{{ event.hashtags }}</p>
+            </div>
+            </div>
+            {% endfor %}
+
+            <!-- <div class="card">
+              <div class="card_i">
+              <img src="http://wikimotive.com/wikiblog/wp-content/uploads/sites/2/2013/10/events-heavenly-header1.jpg" alt="Card image cap" style="max-height:100%; max-width:100%;">
+            </div>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+            <div class="card">
+              <div class="card_i">
+              <img src="http://hangouts.co.in/wp-content/uploads/2016/03/holi-party-2016-delhi.jpg" alt="Card image cap" style="max-height:100%; max-width:100%;">
+              </div>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. </p>
+            </div>
+            <div class="card">
+              <img src="https://asuevents.asu.edu/sites/default/files/styles/asu_event_image/public/ask_the_expert_career_fair_prep.jpg?itok=KR_mLIyf" alt="Card image cap" style="max-height:100%; max-width:100%;">
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+
+            <div class="card">
+              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap">
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+            <div class="card">
+              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap">
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+            <div class="card">
+              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap">
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+
+            <div class="card">
+              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap">
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+            <div class="card">
+              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap">
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+            <div class="card">
+              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap">
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div> -->
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <footer class="text-muted">
+      <div class="container">
+        <p>&copy; UC San Diego</p>
+      </div>
+    </footer>
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="https://getbootstrap.com/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="https://getbootstrap.com/assets/js/vendor/holder.min.js"></script>
+    <script>
+      Holder.addTheme('thumb', {
+        bg: '#55595c',
+        fg: '#eceeef',
+        text: 'Thumbnail'
+      });
+    </script>
+  </body>
+</html>
