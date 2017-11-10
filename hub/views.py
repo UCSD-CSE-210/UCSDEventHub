@@ -17,4 +17,6 @@ def event_upload(request):
 
 def event_details(request):
     # making a call to the get event details api with an id of the event to get details. 
+    eventId = request.GET.get("id")
+    events = Event.objects.all()
     return render(request, 'hub/event_details.html', {'events':events})
