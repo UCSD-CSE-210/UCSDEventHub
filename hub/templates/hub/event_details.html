@@ -8,29 +8,53 @@
     </head> 
     <body>
     	
-
-    <h1 class = "eventTitle">Meet the Beach!</h1>
-
-
+    	 
+<p class = "text">{{events}}</p>
+    <h1 class = "eventTitle">{{ events.title }}</h1>
     <div id="wrap">
-		<div class="imageBox"><img class = "image" src="{% static "images/event.jpg" %}" alt="My image"/></div>
+		<div class="imageBox"><img class = "image" src= "{% static "images/event.jpg" %}" alt="My image"/></div>
 
+	<div class="details">
+	<div class="title">
+	<p class="p_title">
+	{{events.title}}
+	</p>
+	</div>
 
+	<div class="datetime">
+	<p class="p_datetime">
+	Nov 10, Friday, 8PM
+	</p>
+	</div>
+
+	<div class="location">
+	<p class="p_location">
+	{{events.location}}
+	</p>
+	</div>
+
+	<div class="hashtag">
+	<p class="p_hashtag">
+	#Freefood
+	</p>
+	</div>
+	</div>
+<br style="clear: both;">
+</div>
 
       <!--   {% for event in events %}
-            {{ event.title }}
+            {{ description}}
         {% endfor %} -->
 
-    <div class="descBox">
+<!--     <div class="descBox">
 		<div>
 			<time datetime="2017-05-16">
 				<p>May 16</p>
-				<!-- <p>16</p> -->
+				
 			</time>
 		</div>
 		<div>
-			<h4>Meet the Beach!</h4>
-			<meta content="Meet the Beach!">
+			<h4><p>{{ events.title }}</p></h4>
 			<div>
 				<div>
 					<div>by UC San Diego</div>
@@ -52,53 +76,37 @@
 			<p></p>
 			<p></p>
 			<p>#Fun, #Surfing #FreeFood</p>
-			<!-- <p>#Surf</p> -->
+
 		</div>
-	</div>
+	</div> -->
 </div>
 
 	<div>
 		<div>
 			<div class="g-group">
 				<div>
-						<div>
+					<h3 class ="heading">Description</h3>
 							
-							<div>
-									<h3 class ="heading">Description</h3>
+									
 								<div>
-									<div>
-										<div>
-											<p class="text">As technical communicators, the authoring and publishing tools you choose can greatly impact the user’s experience with your content. So, how can you evaluate whether those tools are meeting the needs of content consumers and contributors? And, how can you make a tooling change when you need to?</p>
-<p  class="text">In this session, you will hear about how BigPanda, a leading provider of event correlation software for IT Operations teams, chose a Confluence server as its primary authoring and publishing platform. You will hear how they migrated content from other tools and learn about the benefits and challenges of using a wiki-style tool for customer-facing documentation. This session will highlight some of the key considerations for selecting, purchasing, and implementing a new technical communication tool so that you can plan your next project.</p>
-<p  class="text">You will learn how to:</p>
-<ul  class="text">
-<li>Evaluate the relative benefits and challenges of wiki-style vs. traditional technical publications tools</li>
-<li>Research, select, and purchase new authoring and publishing tools</li>
-<li>Plan for content migration and tool implementation projects</li>
-</ul>
-<p><br></p>
-<h3 class ="heading">ABOUT THE SPEAKER<br></h3>
-<p  class="text">Rachel Sienko is currently the Information Development Manager at BigPanda, where she manages the user assistance program and administers the Confluence server used to author and publish customer-facing technical content. She has a Bachelor’s degree in Computer Science and Mathematics from Vassar College and more than a decade of experience as a technical communicator. Rachel has used many technologies to develop online help systems, but wikis are her favorite.</p>
-<p><br></p>
-<h3 class ="heading">DETAILS ABOUT THE VIRTUAL PRESENTATION<span></span><br><span></span></h3>
-<p  class="text"><span><strong>Location: </strong>Online<span><br><strong>Cost</strong>: $5<br></span></span></p>
-<p  class="text"><span><span>Please send a copy of your ticket to programs@stc-sd.org after you pay to receive a non-shareable link to the virtual presentation. </span></span></p>
-<p  class="text"><span><span>You can download slidedecks and other resources from STC San Diego's page </span></span></p>
+									
+									<p class="text">{{events.description}}</p>
 
-										</div>
-									</div>
 									
 								</div>
-							</div>
-						</div>
+						
+						
 						<div  class="text">
-							<div>
-								<i></i><span>Tags</span>
-							</div>
+							
 							<div>
 								<h3 class ="heading">Tags</h3>
 								
 								<section>
+
+									    {% for tag in events.tags %}
+            								{{tag}}
+        								{% endfor %}
+<!-- 
 									<span>
 												
 										<span>#ThingsToDo</span>
@@ -110,7 +118,7 @@
 									<span>
 										
 										<span>#Business</span>
-									</span>
+									</span> -->
 								</section>
 							
 							</div>

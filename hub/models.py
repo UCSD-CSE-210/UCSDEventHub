@@ -24,7 +24,6 @@ def search_events(search_text):
     for keywords in search_text.split():
         events_results += Event.objects.filter(title__icontains=keywords).all().values()
     return events_results
-<<<<<<< HEAD
 
 def upcoming_events():
     now_time = timezone.now()
