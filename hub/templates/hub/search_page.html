@@ -6,6 +6,7 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 	<style>
 		.search_results{
@@ -80,8 +81,8 @@
 		.location{
 			margin-top: 0px;
 			padding-left: 10px;
-			padding-top: 25px;
-			padding-bottom: 50px;
+			padding-top: 10px;
+			padding-bottom: 44px;
 		}
 		.p_location{
 			margin-bottom: 0px;
@@ -135,7 +136,18 @@
 			font-size: 23px;
 		}
 	</style>
-	
+	<script type="text/javascript" language="javascript">
+		function SubmitSearchQuery() {
+			var input = document.getElementById("search").value;
+				location.href = "search?q="+input;
+			
+		}
+		function keyPressListener(e) {
+			if (e.keyCode == 13) {
+				SubmitSearchQuery()
+			}
+		}
+	</script>
 </head>
 <body>
 
@@ -147,9 +159,9 @@
 		<div class="col">
 			<div id="custom-search-input">
 				<div class="input-group col-md-12" style="width:700px;">
-					<input type="text" class="form-control input-lg" placeholder="Search" style="height:36px">
+					<input id="search" type="text" class="form-control input-lg" onkeypress= "keyPressListener(event)" placeholder="Search" style="height:36px" method="put" value="">
 					<span class="input-group-btn">
-						<button class="btn btn-info btn-lg" type="button">
+						<button class="btn btn-info btn-lg" id="searchButton" type="button"  onclick="SubmitSearchQuery()">
 							<i class="glyphicon glyphicon-search"></i>
 						</button>
 					</span>
@@ -196,7 +208,12 @@
 						
 						<div class="datetime">
 							<p class="p_datetime">
-								{{  event.start_date }}
+								{{  event.start_day }}
+							</p>
+						</div>
+						<div class="datetime">
+							<p class="p_datetime">
+								{{  event.start_time }}
 							</p>
 						</div>
 						

@@ -34,6 +34,9 @@ def render_search_page(request):
 	search_keywords = clean(search_keywords)
 	#print("search=",search_keywords)
 	events = search_events(search_keywords)
+	for event in events:
+		event["start_day"] = event["start_date"].strftime("%a, %b %m")
+		event["start_time"] = event["start_date"].strftime("%I:%M %p")
 	#print(events)
 	return render(request, 'hub/search_page.html', {'events':events})
 
