@@ -177,7 +177,10 @@
 		</div>
 		<div class="col"> 
 			<div style="padding-top: 11px;width: 700px;">
+				{% if not empty_search %}
+					
 				<p style="margin:0 0 0;font-size: x-large;font-family: unset;"> Search Results </p>
+				{% endif %}
 			</div>
 			
 		</div>
@@ -192,13 +195,13 @@
 			{% for event in events %}
 				<div class="event_tile_wrapper">
 					<div class="poster">
-						<a href="event_details/id={{  event.id}}">
-						<img src="/media/{{  event.image}}" class="poster_image">
+						<a href="/event_detail?id={{  event.id}}">
+						<img src="{{  event.image_url}}" class="poster_image">
 						</a>
 					</div>
 					<div class="details">
 						<div class="title">
-							<a href="event_details/id={{  event.id}}">
+							<a href="/event_detail?id={{  event.id}}">
 						
 							<p class="p_title">
 								{{  event.title }}
@@ -232,7 +235,9 @@
 					<br style="clear: both;">
 				</div>
 				{%  empty  %}
-					<h3>No results found!</h3>
+					{% if not empty_search %}
+						<h3>No results found!</h3>
+					{% endif %}
 				{%  endfor %}
 			
 		</div>

@@ -33,6 +33,9 @@ def event_detail(request):
 	
 def render_search_page(request):
 	search_keywords = request.GET.get("q")
+	if not search_keywords:
+		return render(request, 'hub/search_page.html', {'events':[], 'empty_search':True})
+
 	def clean(key):
 		key = re.sub(' ', '-', key)
 		key = re.sub('[^A-Za-z0-9-]', '', key)
@@ -44,8 +47,9 @@ def render_search_page(request):
 	for event in events:
 		event["start_day"] = event["start_date"].strftime("%a, %b %m")
 		event["start_time"] = event["start_date"].strftime("%I:%M %p")
+		event["image_url"] = "/media/"+event["image"]
 	#print(events)
-	return render(request, 'hub/search_page.html', {'events':events})
+	return render(request, 'hub/search_page.html', {'events':events, 'empty_search':False})
 
 # Event Upload related views
 def get_alert(text,alerttype):
