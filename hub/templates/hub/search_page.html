@@ -1,3 +1,4 @@
+{% extends 'hub\base.html' %}
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -8,139 +9,11 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-	<style>
-		.search_results{
-			
-		}
-		.event_tile_wrapper{
-			border-width: 1px;
-			border-style: outset;
-			border-color: lightgrey;
-			display: flex !important;
-			width: 700px;
-			background: ghostwhite;
-			border-radius: 2px;
-			margin-top:7px;
-			margin-bottom:7px;
-		}
-		.poster{
-			float: left;margin-right: 0px;
-			/* height: 180px;
-			*/border-right: inherit;
-			border-right-width: 1px;
-			border-right-style: solid;
-			padding: 5px;
-		}
-		.poster_image{
-			/* margin: 3px; */
-			width: 259px;
-			height: 170px;
-		}
-		.details{
-			width: 429px;
-			/* border: black; */
-			/* background-color: snow; */
-			/* height: 2px; */
-			/* float: right; */
-			/* margin-left: 0; */
-			/* padding-left: 10px; */
-			/* margin-left: 0px; */
-			display: inline-block;
-			box-sizing:unset;
-		}
-		.title{
-			border-bottom-style: solid;
-			border-bottom-color: lightgray;
-			border-bottom-width: 1px;
-			padding-left: 10px;
-		}
-		.p_title{
-			font-weight: bold;
-			font-family: inherit;
-			/* margin-top: 2px; */
-			/* margin-bottom: 0px; */
-			padding-top: 3px;
-			padding-bottom: 3px;
-			color: dimgrey;
-			font-size: 21px;
-			margin-top: 0px;
-			margin-bottom: 0px;
-		}
-		.datetime{	
-			padding-left: 10px;
-			padding-top: 2px;
-			padding-bottom: 2px;
-		}
-		.p_datetime{
-			margin-bottom: 0px;
-			margin-top: 2px;
-			font-family: monospace;
-			font-size: 13px;
-			color: gray;
-		}
-		.location{
-			margin-top: 0px;
-			padding-left: 10px;
-			padding-top: 10px;
-			padding-bottom: 44px;
-		}
-		.p_location{
-			margin-bottom: 0px;
-			/* height: 92px; */
-			margin-top: 0px;
-			font-family: monospace;
-			font-size: 13px;
-			color: gray;
-		}
-		.hashtag{
-			margin-top: 0px;
-			padding-left: 10px;
-			padding-top: 2px;
-			padding-bottom: 2px;
-		}
-		.p_hashtag{
-			margin-bottom: 0px;
-			font-family: sans-serif;
-			font-size: 13px;
-			color: gray;
-		}
-		#custom-search-input{
-			padding: 3px;
-			border: solid 1px #E4E4E4;
-			border-radius: 6px;
-			background-color: #fff;
-		}
-
-		#custom-search-input input{
-			border: 0;
-			box-shadow: none;
-		}
-
-		#custom-search-input button{
-			margin: 2px 0 0 0;
-			background: none;
-			box-shadow: none;
-			border: 0;
-			color: #666666;
-			padding: 0 8px 0 10px;
-			border-left: solid 1px #ccc;
-		}
-
-		#custom-search-input button:hover{
-			border: 0;
-			box-shadow: none;
-			border-left: solid 1px #ccc;
-		}
-
-		#custom-search-input .glyphicon-search{
-			font-size: 23px;
-		}
-	</style>
 	<script type="text/javascript" language="javascript">
 		function SubmitSearchQuery() {
 			var input = document.getElementById("search").value;
-				location.href = "search?q="+input;
-			
+				location.href = "event_search?q="+input;
+
 		}
 		function keyPressListener(e) {
 			if (e.keyCode == 13) {
@@ -152,10 +25,16 @@
 <body>
 
 <div class="container">
+	{% block title_content %}
+	<p></p>
+	<h1>Search for Events</h1>
+	<p></p>
+	{% endblock %}
+	{% block content %}
 	<div class="row">
-		<div class="col"> 
+		<div class="col">
 		</div>
-		
+
 		<div class="col">
 			<div id="custom-search-input">
 				<div class="input-group col-md-12" style="width:700px;">
@@ -168,44 +47,42 @@
 				</div>
 			</div>
 		</div>
-	
+
 		<div class="col">
 		</div>
 	</div>
 	<div class="row">
-		<div class="col"> 
+		<div class="col">
 		</div>
-		<div class="col"> 
+		<div class="col">
 			<div style="padding-top: 11px;width: 700px;">
 				<p style="margin:0 0 0;font-size: x-large;font-family: unset;"> Search Results </p>
 			</div>
-			
+
 		</div>
-		<div class="col"> 
+		<div class="col">
 		</div>
 	</div>
 	<div class="row">
-		<div class="col"> 
-		</div>
-		
+
 		<div class="col">
 			{% for event in events %}
 				<div class="event_tile_wrapper">
 					<div class="poster">
-						<a href="event_details/id={{  event.id}}">
+						<a href="../event_detail/?id={{  event.id}}">
 						<img src="/media/{{  event.image}}" class="poster_image">
 						</a>
 					</div>
 					<div class="details">
 						<div class="title">
-							<a href="event_details/id={{  event.id}}">
-						
+							<a href="../event_detail/id={{  event.id}}">
+
 							<p class="p_title">
 								{{  event.title }}
 							</p>
 							</a>
 						</div>
-						
+
 						<div class="datetime">
 							<p class="p_datetime">
 								{{  event.start_day }}
@@ -216,13 +93,13 @@
 								{{  event.start_time }}
 							</p>
 						</div>
-						
+
 						<div class="location">
 							<p class="p_location">
 								{{  event.location }}
 							</p>
 						</div>
-						
+
 						<div class="hashtag">
 							<p class="p_hashtag">
 								{{  event.hashtags }}
@@ -234,9 +111,9 @@
 				{%  empty  %}
 					<h3>No results found!</h3>
 				{%  endfor %}
-			
+
 		</div>
-		<div class="col"> </div>
+		{% endblock %}
 	</div>
 </div>
 

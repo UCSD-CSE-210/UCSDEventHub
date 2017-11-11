@@ -1,3 +1,4 @@
+{% extends 'hub\base.html' %}
 {% load staticfiles %}
 <html>
     <head>
@@ -5,14 +6,18 @@
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 		<link rel="stylesheet" type="text/css" href="{% static "css/eventDetailsStyle.css" %}">
 		<link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-    </head> 
+    </head>
     <body>
-    	
+    {% block title_content %}
+    <p></p>
     <h1 class = "eventTitle">{{ events.title }}</h1>
+    <p></p>
+    {% endblock %}
+    {% block content %}
     <div class="event_tile_wrapper">
 		<div class="poster">
 			<img src="/media/{{events.image}}" class="poster_image">
-		
+
 		</div>
 	<div class="details">
 	<div class="title">
@@ -21,7 +26,7 @@
 	</p>
 	</div>
 
-	
+
 	<div class="datetime">
 		<p class="p_datetime">
 			{{  events.start_date }}
@@ -48,24 +53,24 @@
 </div>
 
 	<div>
-	
+
 				<div>
 					<h3 class ="heading">Description</h3>
-							
-									
+
+
 								<div>
-									
+
 									<p class="text">{{events.description}}</p>
 
-									
+
 								</div>
-						
-						
+
+
 						<div  class="text">
-							
+
 							<div>
 								<h3 class ="heading">Tags</h3>
-								
+
 								<section>
 									{{events.hashtags}}
 
@@ -74,14 +79,14 @@
         								{% endfor %} -->
 
 								</section>
-							
+
 							</div>
 						</div>
-						
-				</div>
-		
-	</div>
 
+				</div>
+
+	</div>
+	{% endblock %}
     </body>
 </html>
 

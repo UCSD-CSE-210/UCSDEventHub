@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
@@ -28,11 +26,10 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <!-- Fav and touch icons -->
-    
+
 </head>
 
 <body>
-    
     <div class="container-fluid">
         <div class="row">
 
@@ -41,15 +38,15 @@
                 <div class="container-fluid shadow">
                     <div class="row">
 						{{ div_elem|safe }}
-                        
+
                                     <div class="row">
                                         <div class="col-md-12"><div id="panel1" class="panel panel-default" data-role="panel">
-        
+
         <div class="panel-heading">Event Upload</div>
-        <div class="panel-body">    
+        <div class="panel-body">
 			<div class="form-group">
 				<label class="control-label-left" for="title">Title<span class="req"> *</span></label>
-				<div class="controls">    
+				<div class="controls">
 					<input id="title" name="n_title" type="text" class="form-control k-textbox" data-role="text" required="required" placeholder="Title of your event" data-parsley-errors-container="#errId1"><span id="errId1" class="error"></span>
 				</div>
 			</div>
@@ -70,42 +67,42 @@
 
 			<div class="form-group" style="display: block;">
 				<label class="control-label-left" for="loc">Location</label>
-				<div class="controls">    
+				<div class="controls">
 					<input id="loc" name="n_loc" type="text" class="form-control k-textbox" data-role="text" placeholder="Location of the event" data-parsley-errors-container="#errId3"><span id="errId3" class="error"></span>
 				</div>
 			</div>
 
 			<div class="form-group" style="display: block;">
 				<label class="control-label" for="startdate">Event Start Date<span class="req"> *</span></label>
-				<div class="controls">    
+				<div class="controls">
 				<span class="k-widget k-datetimepicker k-header form-control" style=""><span class="k-picker-wrap k-state-default"><input id="startdate" name="n_startdate" type="text" class="form-control k-input" data-role="datetime" role="textbox" aria-haspopup="true" aria-expanded="false" aria-disabled="false" aria-readonly="false" aria-label="Current focused date is 11/8/2017 2:00:00 AM" data-error-container="#errfield5" style="width: 100%;" aria-activedescendant="field5_option_selected" data-parsley-errors-container="#errId4"><span unselectable="on" class="k-select"><span unselectable="on" class="k-icon k-i-calendar" role="button" aria-controls="field5_dateview">select</span><span unselectable="on" class="k-icon k-i-clock" role="button" aria-controls="field5_timeview">select</span></span></span></span><span id="errId4" class="error"></span>
 				</div>
 			</div>
 
 			<div class="form-group" style="display: block;">
 				<label class="control-label" for="enddate">Event End Date<span class="req"> *</span></label>
-				<div class="controls">    
+				<div class="controls">
 					<span class="k-widget k-datetimepicker k-header form-control" style=""><span class="k-picker-wrap k-state-default"><input id="enddate" name="n_enddate" type="text" class="form-control k-input" data-role="datetime" role="textbox" aria-haspopup="true" aria-expanded="false" aria-disabled="false" aria-readonly="false" aria-label="Current focused date is null" data-error-container="#errfield6" style="width: 100%;" data-parsley-errors-container="#errId8"><span unselectable="on" class="k-select"><span unselectable="on" class="k-icon k-i-calendar" role="button" aria-controls="field6_dateview">select</span><span unselectable="on" class="k-icon k-i-clock" role="button" aria-controls="field6_timeview">select</span></span></span></span><span id="errId8" class="error"></span>
 				</div>
 			</div>
 
 			<div class="form-group" style="display: block;">
 				<label class="control-label" for="tags">Hash Tags</label>
-				<div class="controls">    
+				<div class="controls">
 					<input id="tags" name="n_tags" type="text" class="form-control k-textbox" data-role="tagsinput" data-parsley-errors-container="#errId5"><span id="errId5" class="error"></span>
-				</div>        
+				</div>
 			</div>
 
 			<div class="form-group" style="display: block;">
 				<label class="control-label" for="org">Organizer<span class="req"> *</span></label>
-				<div class="controls">    
+				<div class="controls">
 					<input id="org" name="n_org" type="text" class="form-control k-textbox" data-role="text" data-parsley-errors-container="#errId6"><span id="errId6" class="error"></span>
 				</div>
 			</div>
 
 			<div class="form-group" style="display: block;">
 				<label class="control-label" for="email">Contact Email<span class="req"> *</span></label>
-				<div class="controls">    
+				<div class="controls">
 					<input id="email" name="n_email" type="text" class="form-control k-textbox" data-role="text" data-parsley-errors-container="#errId7"><span id="errId7" class="error"></span>
 				</div>
 			</div>
@@ -120,7 +117,7 @@
 	</div>
 </div>
                                     </div>
-                                
+
 
 
                     </div>
@@ -128,7 +125,7 @@
             </form>
         </div>
     </div>
-    
+
 
 
 
