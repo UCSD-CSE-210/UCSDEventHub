@@ -35,7 +35,7 @@ body {
 .card {
   float: left;
   width: 33.333%;
-  height: 300px;
+  /*height: 300px;*/
   padding: .75rem;
   margin-bottom: 2rem;
   border: 0;
@@ -51,7 +51,8 @@ body {
 
 
 .card-text {
-  border: 1px solid black;
+  border-radius: 4px;
+  border: 1px solid lightgrey;
   font-size: 85%;
 }
 
