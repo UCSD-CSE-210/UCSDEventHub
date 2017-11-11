@@ -1,11 +1,13 @@
 from django.shortcuts import render
-from .models import Event,add_event_to_db
+from .models import Event,add_event_to_db,event_details
 from .models import search_events
 from django.http import HttpResponse
 from django.utils import dateparse
 from datetime import datetime
 import re
 
+import json
+from django.http import HttpResponse
 # Create your views here.
 def post_list(request):
     events = Event.objects.all()
@@ -20,9 +22,14 @@ def event_list(request):
 def event_upload(request):
     return render(request, 'hub/event_upload.html', {})
 
-def event_details(request):
-    # making a call to the get event details api with an id of the event to get details. 
-    return render(request, 'hub/event_details.html', {'events':events})
+def event_detail(request):
+    eventId = request.GET.get("id")
+    evntId = int(eventId)
+    events = event_details(evntId)
+    event = events[0]
+    event["googleDate"] = event["start_date"].strftime("%Y%m%dT%H%M%S")+"/"+event["end_date"].strftime("%Y%m%dT%H%M%S") 
+    return render(request, 'hub/event_details.html', {'events':event})
+
 	
 def render_search_page(request):
 	search_keywords = request.GET.get("q")

@@ -3,126 +3,65 @@
     <head>
     	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="{% static 'css/eventDetailsStyle.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static "css/eventDetailsStyle.css" %}">
 		<link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
     </head> 
     <body>
-    	
 
-    <h1 class = "eventTitle">Meet the Beach!</h1>
-
-
-    <div id="wrap">
-		<div class="imageBox"><img class = "image" src="{% static "images/event.jpg" %}" alt="My image"/></div>
-
-
-
-      <!--   {% for event in events %}
-            {{ event.title }}
-        {% endfor %} -->
-
-    <div class="descBox">
-		<div>
-			<time datetime="2017-05-16">
-				<p>May 16</p>
-				<!-- <p>16</p> -->
-			</time>
+    <h1 class = "eventTitle">{{ events.title }}</h1>
+    <div class="event_tile_wrapper">
+		<div class="poster">
+			<img src="/media/{{events.image}}" class="poster_image">
+		
 		</div>
-		<div>
-			<h4>Meet the Beach!</h4>
-			<meta content="Meet the Beach!">
-			<div>
-				<div>
-					<div>by UC San Diego</div>
-				</div>
-				<div>
-					<div>Location: La Jolla Shores</div>
-				</div>
-
-			</div>
-		</div>
-		<p></p>
-		<div>
-			<div>$5</div>
-		</div>
-		<p></p>
-		<p></p>
-
-		<div>
-			<p></p>
-			<p></p>
-			<p>#Fun, #Surfing #FreeFood</p>
-			<!-- <p>#Surf</p> -->
-		</div>
+	<div class="details">
+	<div class="title">
+	<p class="p_title">
+	{{events.title}}
+	</p>
 	</div>
+
+	
+	<div class="datetime">
+		<p class="p_datetime">
+			{{  events.start_date }}
+		</p>
+	</div>
+	<div class="location">
+	<p class="p_location">
+	{{events.location}}
+	</p>
+	</div>
+
+	<div class="hashtag">
+	<p class="p_hashtag">
+	{{  events.hashtags }}
+	</p>
+	</div>
+
+
+	</div>
+<br style="clear: both;">
 </div>
 
-	<div>
-		<div>
-			<div class="g-group">
-				<div>
-						<div>
-							
-							<div>
-									<h3 class ="heading">Description</h3>
-								<div>
-									<div>
-										<div>
-											<p class="text">As technical communicators, the authoring and publishing tools you choose can greatly impact the user’s experience with your content. So, how can you evaluate whether those tools are meeting the needs of content consumers and contributors? And, how can you make a tooling change when you need to?</p>
-<p  class="text">In this session, you will hear about how BigPanda, a leading provider of event correlation software for IT Operations teams, chose a Confluence server as its primary authoring and publishing platform. You will hear how they migrated content from other tools and learn about the benefits and challenges of using a wiki-style tool for customer-facing documentation. This session will highlight some of the key considerations for selecting, purchasing, and implementing a new technical communication tool so that you can plan your next project.</p>
-<p  class="text">You will learn how to:</p>
-<ul  class="text">
-<li>Evaluate the relative benefits and challenges of wiki-style vs. traditional technical publications tools</li>
-<li>Research, select, and purchase new authoring and publishing tools</li>
-<li>Plan for content migration and tool implementation projects</li>
-</ul>
-<p><br></p>
-<h3 class ="heading">ABOUT THE SPEAKER<br></h3>
-<p  class="text">Rachel Sienko is currently the Information Development Manager at BigPanda, where she manages the user assistance program and administers the Confluence server used to author and publish customer-facing technical content. She has a Bachelor’s degree in Computer Science and Mathematics from Vassar College and more than a decade of experience as a technical communicator. Rachel has used many technologies to develop online help systems, but wikis are her favorite.</p>
-<p><br></p>
-<h3 class ="heading">DETAILS ABOUT THE VIRTUAL PRESENTATION<span></span><br><span></span></h3>
-<p  class="text"><span><strong>Location: </strong>Online<span><br><strong>Cost</strong>: $5<br></span></span></p>
-<p  class="text"><span><span>Please send a copy of your ticket to programs@stc-sd.org after you pay to receive a non-shareable link to the virtual presentation. </span></span></p>
-<p  class="text"><span><span>You can download slidedecks and other resources from STC San Diego's page </span></span></p>
 
-										</div>
-									</div>
-									
-								</div>
-							</div>
-						</div>
-						<div  class="text">
-							<div>
-								<i></i><span>Tags</span>
-							</div>
-							<div>
-								<h3 class ="heading">Tags</h3>
-								
-								<section>
-									<span>
-												
-										<span>#ThingsToDo</span>
-												
-									</span>
-									<span>
-										<span>#Class</span>
-									</span>
-									<span>
-										
-										<span>#Business</span>
-									</span>
-								</section>
+<div id="wrapper">
+	
+	<div class ="description">
+		<h3 class ="heading">Description</h3>						
+		<div>
+			<p class="text">{{events.description}}</p>
+		</div>				
+		<div  class="text">
+			<div>
+				<h3 class ="heading">Tags</h3>
+				<section>
+					{{events.hashtags}}				
+				</section>
 							
-							</div>
-						</div>
-						
-				</div>
-				
 			</div>
 		</div>
+						
 	</div>
-
-    </body>
-</html>
-
-
+	<div class ="calendar"><a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{events.title}}&dates={{events.googleDate}}&details={{events.description}}&location={{events.location}}&trp=false&sprop=&sprop=name">Add to calendar</a></div>	
+</div>
