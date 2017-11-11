@@ -5,16 +5,19 @@
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 		<link rel="stylesheet" type="text/css" href="{% static "css/eventDetailsStyle.css" %}">
 		<link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+ integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+ crossorigin="anonymous"></script>
+   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     </head> 
     <body>
 
     <h1 class = "eventTitle">{{ events.title }}</h1>
-    <div class="event_tile_wrapper">
-		<div class="poster">
-			<img src="/media/{{events.image}}" class="poster_image">
-		
+    <div class="event_tile_wrapper col-md-12 no-padding" style="padding-right: 0px;">
+		<div class="poster col-md-8">
+			<img src="/media/{{events.image}}" class="poster_image img-responsive" style = "width:100%; height:300px"/>	
 		</div>
-	<div class="details">
+	<div class="details col-md-4">
 	<div class="title">
 	<p class="p_title">
 	{{events.title}}
@@ -45,9 +48,11 @@
 </div>
 
 
+<div class = "col-md-8"></div>
+
 <div id="wrapper">
 	
-	<div class ="description">
+	<div class ="description col-md-10">
 		<h3 class ="heading">Description</h3>						
 		<div>
 			<p class="text">{{events.description}}</p>
@@ -63,5 +68,5 @@
 		</div>
 						
 	</div>
-	<div class ="calendar"><a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{events.title}}&dates={{events.googleDate}}&details={{events.description}}&location={{events.location}}&trp=false&sprop=&sprop=name">Add to calendar</a></div>	
+	<div class ="calendar col-md-2"><a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{events.title}}&dates={{events.googleDate}}&details={{events.description}}&location={{events.location}}&trp=false&sprop=&sprop=name">Add to calendar</a></div>	
 </div>

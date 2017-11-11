@@ -10,7 +10,8 @@ body {
 .details{
 width: 429px;
 display: inline-block;
-box-sizing:unset;
+padding:1px;
+background: ghostwhite;
 }
 .title{
 border-bottom-style: solid;
@@ -69,21 +70,11 @@ font-size: 13px;
 color: gray;
 }
 
-.heading{
-	color: #FCA205;
-    font-family: 'Lobster';
-}
-
 
 .eventTitle{
 	text-align: center;
-	color: #FCA205;
-    font-family: 'Lobster';
 }
 
-.text{
-	color: black
-}
 
 .event_tile_wrapper{
             border-width: 1px;
@@ -95,14 +86,21 @@ color: gray;
             border-radius: 2px;
             margin-top:7px;
             margin-bottom:7px;
+            padding: 2px;
+            background: unset;
+            border-radius:4px; 
+            padding-left: 0px;
+            padding-right: 0px;
+
 }
 .poster{
             float: left;margin-right: 0px;
-            /* height: 180px;
-            */border-right: inherit;
-            border-right-width: 1px;
+            /*border-right: inherit;*/
+            /*border-right-width: 1px;*/
             border-right-style: solid;
-            padding: 5px;
+            padding-left:0px;
+            padding-right:0px; 
+        
 }
 .poster_image{
             /* margin: 3px; */
