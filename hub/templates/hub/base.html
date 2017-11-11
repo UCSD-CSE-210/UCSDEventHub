@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+{% load staticfiles %}
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static "favicon.ico" %}">
+
+    <title>UCSD EventHub</title>
+
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" >
+     <style>
+      #navBarSearchForm input[type=text]{width:430px !important;}
+  </style>
+  <script type="text/javascript" language="javascript">
+    function SubmitSearchQuery() {
+      var input = document.getElementById("search").value;
+      location.href = "/event_search?q="+input;
+
+    }
+    function searchKeyPressListener(e) {
+      if (e.keyCode == 13) {
+        SubmitSearchQuery()
+      }
+    }
+  </script>
+  <style>
+    .search_results{
+
+    }
+    .event_tile_wrapper{
+      border-width: 1px;
+      border-style: outset;
+      border-color: lightgrey;
+      display: flex !important;
+      width: 700px;
+      background: ghostwhite;
+      border-radius: 2px;
+      margin-top:7px;
+      margin-bottom:7px;
+    }
+    .poster{
+      float: left;margin-right: 0px;
+      /* height: 180px;
+      */border-right: inherit;
+      border-right-width: 1px;
+      border-right-style: solid;
+      padding: 5px;
+    }
+    .poster_image{
+      /* margin: 3px; */
+      width: 259px;
+      height: 170px;
+    }
+    .details{
+      width: 429px;
+      /* border: black; */
+      /* background-color: snow; */
+      /* height: 2px; */
+      /* float: right; */
+      /* margin-left: 0; */
+      /* padding-left: 10px; */
+      /* margin-left: 0px; */
+      display: inline-block;
+      box-sizing:unset;
+    }
+    .title{
+      border-bottom-style: solid;
+      border-bottom-color: lightgray;
+      border-bottom-width: 1px;
+      padding-left: 10px;
+    }
+    .p_title{
+      font-weight: bold;
+      font-family: inherit;
+      /* margin-top: 2px; */
+      /* margin-bottom: 0px; */
+      padding-top: 3px;
+      padding-bottom: 3px;
+      color: dimgrey;
+      font-size: 21px;
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+    .datetime{
+      padding-left: 10px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
+    .p_datetime{
+      margin-bottom: 0px;
+      margin-top: 2px;
+      font-family: monospace;
+      font-size: 13px;
+      color: gray;
+    }
+    .location{
+      margin-top: 0px;
+      padding-left: 10px;
+      padding-top: 10px;
+      padding-bottom: 44px;
+    }
+    .p_location{
+      margin-bottom: 0px;
+      /* height: 92px; */
+      margin-top: 0px;
+      font-family: monospace;
+      font-size: 13px;
+      color: gray;
+    }
+    .hashtag{
+      margin-top: 0px;
+      padding-left: 10px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
+    .p_hashtag{
+      margin-bottom: 0px;
+      font-family: sans-serif;
+      font-size: 13px;
+      color: gray;
+    }
+    #custom-search-input{
+      padding: 3px;
+      border: solid 1px #E4E4E4;
+      border-radius: 6px;
+      background-color: #fff;
+    }
+
+    #custom-search-input input{
+      border: 0;
+      box-shadow: none;
+    }
+
+    #custom-search-input button{
+      margin: 2px 0 0 0;
+      background: none;
+      box-shadow: none;
+      border: 0;
+      color: #666666;
+      padding: 0 8px 0 10px;
+      border-left: solid 1px #ccc;
+    }
+
+    #custom-search-input button:hover{
+      border: 0;
+      box-shadow: none;
+      border-left: solid 1px #ccc;
+    }
+
+    #custom-search-input .glyphicon-search{
+      font-size: 23px;
+    }
+  </style>
+
+  <link rel="stylesheet" type="text/css" href="{% static "css/eventDetailsStyle.css" %}">
+      <link rel="stylesheet" type="text/css" href="{% static "css/grid.css" %}">
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="/">UCSD Event Hub</a>
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+          <ul class="navbar-nav ml-auto">
+
+          <div class="form-inline mt-2 mt-md-0" id="navBarSearchForm">
+            <input class="form-control mr-sm-4 span10" id="search" method="put" type="text" placeholder="Search" onkeypress= "searchKeyPressListener(event)">
+            <button class="btn btn-outline-success my-2 my-sm-0" onclick="SubmitSearchQuery()" id="searchButton">Search</button>
+          </div>
+            <li class="nav-item">
+              <a class="nav-link" href="/event_upload">Create Event</a>
+            </li>
+
+          </ul>
+        </div>
+      </nav>
+
+    <main role="main">
+      <div class="jumbotron" style="text-align: center;">
+        {% block title_content %}
+        {% endblock %}
+      </div>
+
+      <div class="container">
+      {% block content %}
+      {% endblock %}
+      </div>
+    </main>
+
+    <footer class="container">
+      <p>&copy; UCSD EventHub, 2017</p>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script>
+      Holder.addTheme('thumb', {
+        bg: '#55595c',
+        fg: '#eceeef',
+        text: 'Thumbnail'
+      });
+    </script>
+  </body>
+</html>
