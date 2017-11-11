@@ -17,7 +17,8 @@ def post_list(request):
 def event_list(request):
     events=upcoming_events()#.sort(key=lambda e: e.date)[:3]
     for event in events:
-    	event["image_url"] = "/media/" + event["image"]
+        event["image_url"] = "/media/" + event["image"]
+        event["start_date"] = event["start_date"].strftime("%a, %b %m, %I:%M %p")
     return render(request, 'hub/Homepage.html', {'events':events})
 
 
@@ -30,6 +31,10 @@ def event_detail(request):
     events = event_details(evntId)
     event = events[0]
     event["googleDate"] = event["start_date"].strftime("%Y%m%dT%H%M%S")+"/"+event["end_date"].strftime("%Y%m%dT%H%M%S")
+    event["start_day"] = event["start_date"].strftime("%a, %b %m")
+    event["start_time"] = event["start_date"].strftime("%I:%M %p")
+    event["image_url"] = "/media/"+event["image"]
+     
     return render(request, 'hub/event_details.html', {'events':event})
 
 
@@ -51,6 +56,7 @@ def render_search_page(request):
 		event["start_time"] = event["start_date"].strftime("%I:%M %p")
 		event["image_url"] = "/media/"+event["image"]
 	#print(events)
+	
 	return render(request, 'hub/search_page.html', {'events':events, 'empty_search':False})
 
 # Event Upload related views
