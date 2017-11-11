@@ -15,7 +15,7 @@ def event_list(request):
     events=upcoming_events()#.sort(key=lambda e: e.date)[:3]
     for event in events:
         event["image_url"] = "/media/" + event["image"]
-        event["start_date"] = event["start_date"].strftime("%a, %b %m, %I:%M %p")
+        event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
     return render(request, 'hub/Homepage.html', {'events':events})
 
 
@@ -28,7 +28,7 @@ def event_detail(request):
     events = event_details(evntId)
     event = events[0]
     event["googleDate"] = event["start_date"].strftime("%Y%m%dT%H%M%S")+"/"+event["end_date"].strftime("%Y%m%dT%H%M%S")
-    event["start_day"] = event["start_date"].strftime("%a, %b %m")
+    event["start_day"] = event["start_date"].strftime("%a, %b %d")
     event["start_time"] = event["start_date"].strftime("%I:%M %p")
     event["image_url"] = "/media/"+event["image"]
 
@@ -49,7 +49,7 @@ def render_search_page(request):
 	#print("search=",search_keywords)
 	events = search_events(search_keywords)
 	for event in events:
-		event["start_day"] = event["start_date"].strftime("%a, %b %m")
+		event["start_day"] = event["start_date"].strftime("%a, %b %d")
 		event["start_time"] = event["start_date"].strftime("%I:%M %p")
 		event["image_url"] = "/media/"+event["image"]
 	#print(events)
