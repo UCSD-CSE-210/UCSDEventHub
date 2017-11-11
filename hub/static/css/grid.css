@@ -34,9 +34,9 @@ body {
 
 .card-text {
   border-radius: 4px;
-  border: 1px solid #343a40;
+  border: 1px solid lightgrey;
   font-size: 85%;
-  background: aliceblue;
+  background: rgba(211, 211, 211, 0.16);
   
 }
 
@@ -51,7 +51,7 @@ footer p {
 
 .homepage_poster{
 	padding: 2px;
-	background:#343a40;
+	background:lightgrey;
 	border-radius: 4px;
 }
 .homepage_poster_image{

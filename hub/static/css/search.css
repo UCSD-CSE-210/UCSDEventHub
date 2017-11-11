@@ -1,11 +1,11 @@
 .search_event_tile_wrapper{
   border-width: 1px;
   border-style: outset;
-  border-color: #343a40;
+  border-color: lightgrey;
   display: flex !important;
   width: 100%;
   height: 250px;
-  background: aliceblue;
+  background: rgba(211, 211, 211, 0.16);
   border-radius: 4px;
   margin-top:17px;
   margin-bottom:17px;
@@ -17,7 +17,7 @@
   /* height: 180px;
   */border-right: inherit;
   padding: 2px;
-  background:#343a40;
+  background:lightgrey;
   border-radius: 4px;
 }
 .search_poster_image{
@@ -42,7 +42,7 @@
 }
 .search_title{
   border-bottom-style: solid;
-  border-bottom-color: #343a40;
+  border-bottom-color: lightgrey;
   border-bottom-width: 1px;
   padding-left: 10px;
 }
