@@ -1,4 +1,4 @@
-{% extends 'hub\base.html' %}
+{% extends 'hub/base.html' %}
 {% load staticfiles %}
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"></head>
 
@@ -11,8 +11,8 @@
 	
 
 	{% block content %}
-	
-			
+	<script src="{% static "js/bootstrap-tagsinput.js" %}" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="{% static "css/bootstrap-tagsinput.css" %}">
 				<div class="row">
 					<div class="col"></div>
 					<div class="col-md-10">
@@ -65,7 +65,7 @@
 												<div class="form-group" style="display: block;">
 													<label class="control-label" for="tags">Hash Tags</label>
 													<div class="controls">
-														<input id="tags" name="n_tags" type="text" class="form-control k-textbox" data-role="tagsinput" data-parsley-errors-container="#errId5"><span id="errId5" class="error"></span>
+														<input id="tags" name="n_tags" type="text" class="form-control k-textbox c_tags" data-role="tagsinput" data-parsley-errors-container="#errId5"><span id="errId5" class="error"></span>
 													</div>
 												</div>
 												<div class="form-group" style="display: block;">
