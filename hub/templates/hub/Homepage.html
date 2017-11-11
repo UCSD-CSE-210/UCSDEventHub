@@ -11,38 +11,125 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <!-- <link href="grid.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="{% static "css/grid.css" %}">
+	<style>
+		.title{
+			border-bottom-style: solid;
+			border-bottom-color: lightgray;
+			border-bottom-width: 1px;
+			padding-left: 10px;
+		}
+		.p_title{
+			font-weight: bold;
+			font-family: inherit;
+			/* margin-top: 2px; */
+			/* margin-bottom: 0px; */
+			padding-top: 3px;
+			padding-bottom: 3px;
+			color: dimgrey;
+			font-size: 21px;
+			margin-top: 0px;
+			margin-bottom: 0px;
+		}
+		.datetime{
+			padding-left: 10px;
+			padding-top: 1px;
+			padding-bottom: 1px;
+		}
+		.p_datetime{
+			margin-bottom: 0px;
+			margin-top: 0px;
+			font-family: monospace;
+			font-size: 13px;
+			color: gray;
+		}
+		.location{
+			margin-top: 0px;
+			padding-left: 10px;
+			padding-top: 1px;
+			padding-bottom: 1px;
+		}
+		.p_location{
+			margin-bottom: 0px;
+			/* height: 92px; */
+			margin-top: 0px;
+			font-family: monospace;
+			font-size: 13px;
+			color: gray;
+		}
+		.hashtag{
+			margin-top: 0px;
+			padding-left: 10px;
+			padding-top: 1px;
+			padding-bottom: 1px;
+		}
+		.p_hashtag{
+			margin-bottom: 0px;
+			font-family: sans-serif;
+			font-size: 13px;
+			color: gray;
+		}
+
+	</style>
+
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-        {% block title_content %}
-        <p></p>
-        <h1>Upcoming Events</h1>
-        <p></p>
-        {% endblock %}
-    </div>
-    <div class="row">
-    {% block content %}
-
-
-            <div class="row">
-              {% for event in events %}
-              <div class="card">
-                <!-- <div class="card_i"> -->
-                  <img src={{ event.image.url }} alt="Unable to load image" class="img-thumbnail" style="max-height:200px; max-width: 100%">
-                <!-- </div> -->
-                <div class="card-text">
-                <p>{{ event.title }}</p>
-                <p>{{ event.date }}</p>
-                <p>{{ event.location }}</p>
-                <p>{{ event.hashtags }}</p>
-              </div>
-              </div>
-              {% endfor %}
-
-            </div>
+  <main role="main">
+  <div class="container">
+       {% block title_content %}
+      <p></p>
+      <h1>Upcoming Events</h1>
+      <p></p>
       {% endblock %}
+
+    {% block content %}
+    <div class="album text-muted" style="background:transparent">
+        <div class="container">
+
+
+          <div class="row">
+            {% for event in events %}
+            <div class="card">
+              <!-- <div class="card_i"> -->
+              	<a href="/event_detail?id={{ event.id }}">
+                <img src= "{{ event.image_url }}" style="max-height:200px; width: 100%;    border-radius: 4px;">
+            	</a>
+              <!-- </div> -->
+              <div class="card-text">
+              	<a href="/event_detail?id={{ event.id }}">
+				<div class="title">
+					<p class="p_title">
+						{{ event.title }}
+					</p>
+				</div>
+				</a>
+
+				<div class="datetime">
+					<p class="p_datetime">
+						{{ event.start_date }}
+					</p>
+				</div>
+
+				<div class="location">
+					<p class="p_location">
+						{{ event.location }}
+					</p>
+				</div>
+
+				<div class="hashtag">
+					<p class="p_hashtag" style="
+margin-top: 0px;
+">
+						{{ event.hashtags }}
+					</p>
+				</div>
+              </div>
+            </div>
+            {% endfor %}
+      {% endblock %}
+      </div>
     </div>
         </div>
+      </div>
   </body>
 </html>

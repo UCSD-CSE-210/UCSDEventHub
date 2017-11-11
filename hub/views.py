@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Event,add_event_to_db,event_details
 from .models import search_events
+from .models import upcoming_events
 from django.http import HttpResponse
 from django.utils import dateparse
 from datetime import datetime
@@ -14,8 +15,9 @@ def post_list(request):
     return render(request, 'hub/Homepage.html', {'events':events})
 
 def event_list(request):
-    events1 = Event.objects.all()
-    events = events1 #.sort(key=lambda e: e.date)[:3]
+    events=upcoming_events()#.sort(key=lambda e: e.date)[:3]
+    for event in events:
+    	event["image_url"] = "/media/" + event["image"]
     return render(request, 'hub/Homepage.html', {'events':events})
 
 
@@ -23,27 +25,12 @@ def event_upload(request):
     return render(request, 'hub/event_upload.html', {})
 
 def event_detail(request):
-    # making a call to the get event details api with an id of the event to get details.
-
-    # print eventId
-    # print type(request.GET)
     eventId = request.GET.get("id")
-    # print type(eventId)
     evntId = int(eventId)
-    print(evntId)
-    print(type(evntId))
-    # eventId = json.loads(eventIds)
     events = event_details(evntId)
-    # events[0]
-    # eventDict = {}
-    l=events
-    print(l)
-
-  	# print eventDetails
-    # print events.get("description")
-    # return HttpResponse("<h1>Hi</h1>")
-    # return render(request, 'hub/event_details.html', {'description':str(events.get("description"))})
-    return render(request, 'hub/event_details.html', {'events':events[0]})
+    event = events[0]
+    event["googleDate"] = event["start_date"].strftime("%Y%m%dT%H%M%S")+"/"+event["end_date"].strftime("%Y%m%dT%H%M%S")
+    return render(request, 'hub/event_details.html', {'events':event})
 
 
 def render_search_page(request):
