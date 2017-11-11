@@ -113,7 +113,7 @@
 	
   </head>
   <body>
-  <header>
+  <!-- <header>
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="#">UCSD Event Hub</a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -139,7 +139,7 @@
           </ul>
         </div>
       </nav>
-    </header>
+    </header> -->
   <main role="main">
     <section class="jumbotron text-center">
         <div class="container">
@@ -157,24 +157,28 @@
             {% for event in events %}
             <div class="card">
               <!-- <div class="card_i"> -->
-                <img src="http://cdn.history.com/sites/2/2015/03/hungry-history-the-halloween-pumpkin-an-american-history-E.jpeg" alt="Unable to load image" class="img-thumbnail" style="max-height:200px; max-width: 100%">
+              	<a href="/event_detail?id={{ event.id }}">
+                <img src= "{{ event.image_url }}" style="max-height:200px; width: 100%;    border-radius: 4px;">
+            	</a>
               <!-- </div> -->
               <div class="card-text">
+              	<a href="/event_detail?id={{ event.id }}">
 				<div class="title">
 					<p class="p_title">
-						Halloween Party
+						{{ event.title }}
 					</p>
 				</div>
+				</a>
 				
 				<div class="datetime">
 					<p class="p_datetime">
-						Nov 10, Friday, 8PM
+						{{ event.start_date }}
 					</p>
 				</div>
 				
 				<div class="location">
 					<p class="p_location">
-						Location: Ballroom West
+						{{ event.location }}
 					</p>
 				</div>
 				
@@ -182,7 +186,7 @@
 					<p class="p_hashtag" style="
 margin-top: 0px;
 ">
-						#Freefood
+						{{ event.hashtags }}
 					</p>
 				</div>
               </div>

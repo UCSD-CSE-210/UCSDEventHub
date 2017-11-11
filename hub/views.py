@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Event,add_event_to_db,event_details
 from .models import search_events
+from .models import upcoming_events
 from django.http import HttpResponse
 from django.utils import dateparse
 from datetime import datetime
@@ -14,8 +15,9 @@ def post_list(request):
     return render(request, 'hub/Homepage.html', {'events':events})
 
 def event_list(request):
-    events1 = Event.objects.all()
-    events = events1 #.sort(key=lambda e: e.date)[:3]
+    events=upcoming_events()#.sort(key=lambda e: e.date)[:3]
+    for event in events:
+    	event["image_url"] = "/media/" + event["image"]
     return render(request, 'hub/Homepage.html', {'events':events})
 
     
