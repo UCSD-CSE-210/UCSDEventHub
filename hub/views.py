@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from .models import Event,add_event_to_db,event_details
-from .models import search_events
-from .models import upcoming_events
+from .models import Event
+from .apis import add_event_to_db,event_details
+from .apis import search_events
+from .apis import upcoming_events
 from django.http import HttpResponse
 from django.utils import dateparse
 from datetime import datetime
@@ -10,6 +11,30 @@ import re
 import json
 from django.http import HttpResponse
 # Create your views here.
+
+class Utils():
+
+	@staticmethod
+	def format_day(date):
+		return date.strftime("%a, %b %d")
+	
+	@staticmethod
+	def format_time(date):
+		return date.strftime("%I:%M %p")
+	
+	@staticmethod
+	def format_date(date):
+		return Utils.format_day(date)+" "+Utils.format_time(date)
+	
+	@staticmethod
+	def get_image_url(image):
+		return Constants.media_path+image
+	
+		
+class Constants():
+	app_name="hub"
+	media_path="/media/"
+
 
 def event_list(request):
     events=upcoming_events()#.sort(key=lambda e: e.date)[:3]
@@ -31,31 +56,75 @@ def event_detail(request):
     event["start_day"] = event["start_date"].strftime("%a, %b %d")
     event["start_time"] = event["start_date"].strftime("%I:%M %p")
     event["image_url"] = "/media/"+event["image"]
-
+	
     return render(request, 'hub/event_details.html', {'events':event})
 
 
-def render_search_page(request):
-	search_keywords = request.GET.get("q")
-	if not search_keywords:
-		return render(request, 'hub/search_page.html', {'events':[], 'empty_search':True})
-
-	def clean(key):
+	
+class SearchListing():
+	name = "search_page"
+	base_url = "event_search/"
+	template = Constants.app_name+"/search_page.html"
+		
+	class Response():
+		
+		def __init__(self):
+			self.events = []
+			self.empty_search = True
+		
+	def __init__(self):
+		self.response = SearchListing.Response()
+		
+	def _get_keywords(self,request):
+		return request.GET.get("q")
+	
+	def _clean_search_keywords(self, key):
 		key = re.sub(' ', '-', key)
 		key = re.sub('[^A-Za-z0-9-]', '', key)
 		key = re.sub('-+',' ', key)
 		return key
-	search_keywords = clean(search_keywords)
-	#print("search=",search_keywords)
-	events = search_events(search_keywords)
-	for event in events:
-		event["start_day"] = event["start_date"].strftime("%a, %b %d")
-		event["start_time"] = event["start_date"].strftime("%I:%M %p")
-		event["image_url"] = "/media/"+event["image"]
-	#print(events)
-
-	return render(request, 'hub/search_page.html', {'events':events, 'empty_search':False})
-
+	
+	def _generate_repsonse(self, events):
+		
+		for event in events:
+			event["start_day"] = Utils.format_day(event["start_date"])
+			event["start_time"] = Utils.format_time(event["start_date"])
+			event["image_url"] = Utils.get_image_url(event["image"])
+		
+		self.response.empty_search = False
+		self.response.events = events
+	
+	def _render_me(self, request):
+		return render(request, self.template, 
+								{"events":self.response.events, 
+								"empty_search":self.response.empty_search}
+								)
+								
+	
+	def render(self, request):
+		search_keywords = self._get_keywords(request)
+		
+		if not search_keywords:
+			return self._render_me(request)
+		
+		search_keywords = self._clean_search_keywords(search_keywords)
+		
+		events = search_events(search_keywords)
+		
+		self._generate_repsonse(events)
+		
+		return self._render_me(request)
+	
+	@staticmethod
+	def render_page(request):
+		module = SearchListing()
+		return module.render(request)
+	
+	def build_url(self, keywords):
+		return base_url+"?"+keywords
+	
+	
+	
 # Event Upload related views
 def get_alert(text,alerttype):
 	div=""
