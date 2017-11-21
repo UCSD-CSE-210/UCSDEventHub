@@ -174,3 +174,8 @@ class SearchListing():
 		return base_url+"?"+keywords
 
 
+def login(request):
+    return render(request, 'hub/login.html', {})
+
+def signup(request):
+    return render(request, 'hub/signup.html', {})

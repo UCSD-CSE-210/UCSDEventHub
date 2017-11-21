@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+{% extends 'hub/base.html' %}
+{% load staticfiles %}
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Material Login Form</title>
+</head>
+
+<body class="signup-body">
+{% block title_content %}
+  <p></p>
+  <h1>SignUp</h1>
+  <p></p>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static "css/signupui.css" %}">
+<nav class="nav nav-tabs" id="myTab" role="tablist">
+  <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">New Attendee</a>
+  <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">New Organization</a>
+</nav>
+
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    <div class="container">
+      <form class="form-horizontal" role="form">
+        <h2>New User Registration</h2>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="firstName" class="col-md-6 control-label">First Name</label>
+            <div class="col-md-9">
+              <input type="text" id="firstName" placeholder="Full Name" class="form-control" autofocus>
+            </div>
+          </div>
+
+        <div class="form-group col-md-6">
+          <label for="firstName" class="col-md-6 control-label">Last Name</label>
+          <div class="col-md-9">
+            <input type="text" id="lastName" placeholder="Last Name" class="form-control" autofocus>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+          <label for="email" class="col-md-3 control-label">Email</label>
+          <div class="col-md-9">
+              <input type="email" id="email" placeholder="Email" class="form-control">
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="col-md-3 control-label">Password</label>
+          <div class="col-md-9">
+            <input type="password" id="password" placeholder="Password" class="form-control">
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmpassword" class="col-md-3 control-label">Confirm Password</label>
+          <div class="col-md-9">
+            <input type="password" id="confirmpassword" placeholder="Confirm Password" class="form-control">
+          </div>
+      </div>
+
+      <div class="form-group">
+          <div class="col-sm-9 col-sm-offset-3">
+              <div class="checkbox">
+                  <label>
+                      <input type="checkbox">I accept <a href="#">terms</a>
+                  </label>
+              </div>
+          </div>
+      </div> <!-- /.form-group -->
+
+      <div class="form-group">
+          <div class="col-sm-9 col-sm-offset-3">
+              <button type="submit" class="btn btn-primary btn-block">Register</button>
+          </div>
+      </div>
+    </form> <!-- /form -->
+  </div> <!-- ./container -->
+</div>
+
+<div class="tab-pane" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+  <div class="container">
+    <form class="form-horizontal" role="form">
+      <h2>New Organization Registration</h2>
+
+      <div class="form-group">
+          <label for="i_uname" class="col-md-3 control-label">User Name</label>
+          <div class="col-md-9">
+              <input type="text" id="i_uname" placeholder="User Name" class="form-control">
+          </div>
+      </div>
+
+      <div class="form-group">
+          <label for="email" class="col-md-3 control-label">Email</label>
+          <div class="col-md-9">
+              <input type="email" id="email" placeholder="Email" class="form-control">
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="col-md-3 control-label">Password</label>
+          <div class="col-md-9">
+            <input type="password" id="password" placeholder="Password" class="form-control">
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmpassword" class="col-md-9 control-label">Confirm Password</label>
+          <div class="col-md-9">
+            <input type="password" id="confirmpassword" placeholder="Confirm Password" class="form-control">
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="i_orgdesc" class="col-md-9 control-label">Description</label>
+          <div class="col-md-9">
+            <textarea id="i_orgdesc" class="form-control" placeholder="Write Something about your organization ..." rows="5"></textarea>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label>Address</label>
+        <textarea placeholder="Enter Address Here.." rows="3" class="form-control"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="col-md-4 form-group">
+          <label>City</label>
+          <input type="text" placeholder="Enter City Name Here.." class="form-control">
+        </div>
+
+        <div class="col-md-4 form-group">
+          <label>State</label>
+          <input type="text" placeholder="Enter State Name Here.." class="form-control">
+        </div>
+
+        <div class="col-md-4 form-group">
+          <label>Zip</label>
+          <input type="text" placeholder="Enter Zip Code Here.." class="form-control">
+        </div>
+      </div>
+
+      <h3>Point of Contact</h3>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="i_orgfn" class="col-md-6 control-label">First Name</label>
+          <div class="col-md-9">
+            <input type="text" id="i_orgfn" placeholder="First Name" class="form-control" autofocus>
+          </div>
+        </div>
+        
+        <div class="form-group col-md-6">
+          <label for="i_orgln" class="col-md-6 control-label">Last Name</label>
+          <div class="col-md-9">
+            <input type="text" id="i_orgln" placeholder="Last Name" class="form-control" autofocus>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+          <label for="i_poc_email" class="col-md-3 control-label">Email</label>
+          <div class="col-md-9">
+              <input type="email" id="i_poc_email" placeholder="Email" class="form-control">
+          </div>
+      </div>
+
+      <div class="form-group">
+          <label for="i_poc_phone" class="col-md-3 control-label">Phone Number</label>
+          <div class="col-md-9">
+              <input type="phone" id="i_poc_phone" placeholder="Phone Number" class="form-control">
+          </div>
+      </div>
+
+      <div class="form-group">
+          <div class="col-md-9 col-md-offset-3">
+              <div class="checkbox">
+                  <label>
+                      <input type="checkbox">I accept <a href="#">terms</a>
+                  </label>
+              </div>
+          </div>
+      </div> <!-- /.form-group -->
+
+      <div class="form-group">
+          <div class="col-md-9 col-md-offset-3">
+              <button type="submit" class="btn btn-primary btn-block">Register</button>
+          </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+</div>
+{% endblock %}
+</body>
+</html>

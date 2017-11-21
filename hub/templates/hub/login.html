@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% extends 'hub/base.html' %}
+{% load staticfiles %}
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Material Login Form</title>
+</head>
+
+<body>
+{% block title_content %}
+  <p></p>
+  <h1>Login</h1>
+  <p></p>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static "css/loginui.css" %}">
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-centered">
+      <form>
+        <div class="form-group row">
+          <label for="i_login_email">Email address<span class="req"> *</span></label>
+          <input type="email" name="n_login_email" class="form-control" id="i_login_email" aria-describedby="emailHelp" placeholder="Enter email">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group row">
+          <label for="i_login_pw">Password<span class="req"> *</span></label>
+          <input type="password" name="n_login_pw" class="form-control" id="i_login_pw" placeholder="Password">
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input">
+            Login as Organizer
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+</body>
+</html>
