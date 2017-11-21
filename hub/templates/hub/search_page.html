@@ -71,17 +71,25 @@
 						<div class="search_datetime">
 							<p class="search_p_datetime">
 								{{  event.start_day }}
+								{%  if not event.ending_same_day %}
+								  - {{event.end_day}}
+								{%  endif%}
 							</p>
 						</div>
 						<div class="search_datetime">
 							<p class="search_p_datetime">
-								{{  event.start_time }}
+								{{  event.start_time }} - {{  event.end_time }}
 							</p>
 						</div>
 
 						<div class="search_location">
 							<p class="search_p_location">
-								{{  event.location }}
+								At: {{  event.location }}
+							</p>
+						</div>
+						<div class="search_organizer">
+							<p class="search_p_organizer">
+								By: {{  event.organizer }}
 							</p>
 						</div>
 

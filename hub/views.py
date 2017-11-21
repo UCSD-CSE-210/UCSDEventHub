@@ -138,7 +138,13 @@ class SearchListing():
 		
 		for event in events:
 			event["start_day"] = Utils.format_day(event["start_date"])
+			event["end_day"] = Utils.format_day(event["end_date"])
 			event["start_time"] = Utils.format_time(event["start_date"])
+			event["end_time"] = Utils.format_time(event["end_date"])
+			if event["start_day"] == event["end_day"]:
+				event["ending_same_day"]=True
+			else:
+				event["ending_same_day"]=False
 			event["image_url"] = Utils.get_image_url(event["image"])
 		
 		self.response.empty_search = False

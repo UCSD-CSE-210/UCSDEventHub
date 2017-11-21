@@ -4,7 +4,7 @@
   border-color: lightgrey;
   display: flex !important;
   width: 100%;
-  height: 250px;
+  height: 260px;
   background: rgba(211, 211, 211, 0.16);
   border-radius: 4px;
   margin-top:17px;
@@ -66,10 +66,21 @@
   color: gray;
   margin:0px;
 }
+.search_organizer{
+  padding-top: 6px;
+  padding-left: 10px;
+  padding-bottom: 55px;
+
+}
+.search_p_organizer{
+  font-family: monospace;
+  font-size: 19px;
+  color: gray;
+  margin:0px;
+}
 .search_location{
   padding-left: 10px;
   padding-top: 6px;
-  padding-bottom: 80px;
 }
 .search_p_location{
   font-family: monospace;
