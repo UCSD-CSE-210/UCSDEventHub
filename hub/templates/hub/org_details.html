@@ -15,57 +15,39 @@
 
      {% block title_content %}
     <p></p>
-    <h1 class = "eventTitle">{{ events.title }}</h1>
+    <h1 class = "eventTitle">GSA</h1>
     <p></p>
     {% endblock %}
     {% block content %}
     <div class="row">
 		<div class ="col"></div>
 		<div class = "col-md-10">
-			<div class="event_tile_wrapper no-padding">
-				<div class="poster">
+			<div class="org_event_tile_wrapper no-padding">
+				<div class="org_poster">
 					<img src="{{events.image_url}}" class="poster_image img-responsive"/>
 				</div>
-				<div class="details">
+				<div class="org_details">
 					<div class="title">
 						<p class="p_title">
-							{{events.title}}
+							GSA
 						</p>
 					</div>
-					<div class="datetime">
-						<p class="p_datetime">
-							{{  events.start_day }}
+					<div class="org_text">
+						<p class="p_org_text">
+							Email: gsa@evtns.com
 						</p>
 					</div>
-					<div class="datetime">
-						<p class="p_datetime">
-							{{  events.start_time }}
+					<div class="org_text">
+						<p class="p_org_text">
+							Phone: +1 123-421-1234
 						</p>
 					</div>
-					<div class="location">
-						<p class="p_location">
-							At: {{events.location}}
+					<div class="org_text">
+						<p class="p_org_text">
+							Address: Some, Where, @ UCSD
 						</p>
 					</div>
-
-					<div class="organizer">
-						<p class="p_organizer">
-							By: {{events.organizer}}
-						</p>
-					</div>
-
-					<div class="calendar">
-						<a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{events.title}}&dates={{events.googleDate}}&details={{events.description}}&location={{events.location}}&trp=false&sprop=&sprop=name" target="_blank">
-							<p class="p_calendar">	
-							Add to calendar
-							</p>
-						</a>
-					</div>
-					<div class="hashtag">
-						<p class="p_hashtag">
-							{{  events.hashtags }}
-						</p>
-					</div>
+					
 					
 				</div>
 			<br style="clear: both;">
@@ -80,17 +62,9 @@
 			
 			<div id="wrapper">
 				<div class ="description">
-					<h3 class ="heading">Description</h3>
+					<h3 class ="heading">About Me</h3>
 					<div style="padding-bottom:20px">
-						<p class="p_description">{{events.description}}</p>
-					</div>
-					<div  class="text">
-						<div>
-							<h3 class ="heading">Tags</h3>
-							<section>
-								{{events.hashtags}}
-							</section>
-						</div>
+						<p class="p_description">Random Text ... </p>
 					</div>
 				</div>
 				<div class ="sidecolumn">

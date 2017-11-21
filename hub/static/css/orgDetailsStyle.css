@@ -1,0 +1,58 @@
+
+
+.eventTitle{
+	text-align: center;
+}
+
+
+.org_event_tile_wrapper{
+	border-width: 1px;
+	border-style: outset;
+	display: flex !important;
+	border-color:lightgrey;
+	width: 100%;
+	height: 265px;
+	border-radius: 5px;
+	margin-top:7px;
+	margin-bottom:7px;
+	background: unset;
+	padding-left: 0px;
+	padding-right: 0px;
+	background: rgba(211, 211, 211, 0.16);
+      
+}
+.org_poster{
+	float: left;
+	margin-right: 0px;
+	padding: 2px;
+	background:lightgrey;
+	border-radius: 4px;
+	width:45%;
+			
+}
+
+.poster_image{
+	/* margin: 3px; */
+	width: 100%;
+	height: 100%;
+	border-radius: 4px;
+      
+}
+.org_details{
+	display: inline-block;
+	padding:1px;
+	width:55%;
+}
+.org_text{
+	padding-left: 10px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.p_org_text{
+	margin-bottom: 0px;
+	margin-top: 2px;
+	font-family: monospace;
+	font-size: 20px;
+	color: gray;
+}
+
