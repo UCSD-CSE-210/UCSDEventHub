@@ -44,3 +44,7 @@ class OrganizationDetails(models.Model):
     # Using E.164 as recommended phone number format
     contact_number = models.CharField(
         validators = [phone_regex], max_length = 15, blank = True, null=True)
+
+class RSVP(models.Model):
+    rsvp_user = models.ForeignKey(User)
+    rsvp_event = models.ForeignKey(Event)
