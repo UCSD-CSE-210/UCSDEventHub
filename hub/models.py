@@ -46,5 +46,5 @@ class OrganizationDetails(models.Model):
         validators = [phone_regex], max_length = 15, blank = True, null=True)
 
 class RSVP(models.Model):
-    rsvp_user = models.ForeignKey(User)
-    rsvp_event = models.ForeignKey(Event)
+    rsvp_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rsvp_event = models.ForeignKey(Event, on_delete=models.CASCADE)
