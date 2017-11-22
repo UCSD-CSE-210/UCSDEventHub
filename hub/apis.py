@@ -1,18 +1,25 @@
 from django.db import models
 from django.utils import timezone
+from datetime import datetime
 import pytz
 from .models import Event
 
+pst = pytz.timezone('US/Pacific')
+# Hard coding PST as timezone as one time fix.
+# Need to update this to get dynamic tz conversion
+
 def search_events(search_text):
+    today_date = datetime.now(pst).replace(hour=0, minute=0, second=0)
     events_results = []
     for keywords in search_text.split():
-        events_results += Event.objects.filter(title__icontains=keywords).all().values()
+        events_results += Event.objects.filter(
+            title__icontains=keywords, start_date__gte=today_date).all().values()
     events_results.sort(key = lambda item:item['start_date'])
     return events_results
 
 def upcoming_events():
-    now_time = timezone.now()
-    events_results = list(Event.objects.filter(start_date__gte=now_time).all().values())
+    today_date = datetime.now(pst).replace(hour=0, minute=0, second=0)
+    events_results = list(Event.objects.filter(start_date__gte=today_date).all().values())
     events_results.sort(key = lambda item:item['start_date'])
     return events_results
 
