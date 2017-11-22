@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^'+EventUpload.submit_url, EventUpload.event_upload_handler, name=EventUpload.submit_view_name),
     url(r'^login/', views.login, name='Login Page'),
     url(r'^signup/', views.signup, name='SignUp Page'),
+    url(r'^myevents/', views.myevents, name='My Events Page'),
 ]

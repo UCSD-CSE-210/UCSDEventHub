@@ -185,3 +185,12 @@ def login(request):
 
 def signup(request):
     return render(request, 'hub/signup.html', {})
+
+#@login_required
+def myevents(request):
+	#dummy content until APIs for rsvp retreival are written
+    events=upcoming_events()#.sort(key=lambda e: e.date)[:3]
+    for event in events:
+        event["image_url"] = "/media/" + event["image"]
+        event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
+    return render(request, 'hub/my_events.html', {'events':events})

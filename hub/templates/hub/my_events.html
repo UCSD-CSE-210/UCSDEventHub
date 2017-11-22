@@ -1,0 +1,86 @@
+{% extends 'hub/base.html' %}
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	
+</head>
+<body>
+
+<div class="container">
+	{% block title_content %}
+	<p></p>
+	<h1>My Events</h1>
+	<p></p>
+	{% endblock %}
+	{% block content %}
+	
+	<div class="row">
+		<div class="col">
+		</div>
+
+		<div class="col-md-10">
+			{% for event in events %}
+				<div class="search_event_tile_wrapper">
+					<div class="search_poster">
+						<a href="/event_detail?id={{  event.id}}">
+						<img src="{{  event.image_url}}" class="search_poster_image">
+						</a>
+					</div>
+					<div class="search_details">
+						<div class="search_title">
+							<a href="/event_detail?id={{  event.id}}">
+						
+							<p class="search_p_title">
+								{{  event.title }}
+							</p>
+							</a>
+						</div>
+
+						<div class="search_datetime">
+							<p class="search_p_datetime">
+								{{  event.start_day }}
+								{%  if not event.ending_same_day %}
+								  - {{event.end_day}}
+								{%  endif%}
+							</p>
+						</div>
+						<div class="search_datetime">
+							<p class="search_p_datetime">
+								{{  event.start_time }} - {{  event.end_time }}
+							</p>
+						</div>
+
+						<div class="search_location">
+							<p class="search_p_location">
+								At: {{  event.location }}
+							</p>
+						</div>
+						<div class="search_organizer">
+							<p class="search_p_organizer">
+								By: {{  event.organizer }}
+							</p>
+						</div>
+
+						<div class="search_hashtag">
+							<p class="search_p_hashtag">
+								{{  event.hashtags }}
+							</p>
+						</div>
+					</div>
+					<br style="clear: both;">
+				</div>
+				{%  empty  %}
+					{% if not empty_search %}
+						<h3>No results found!</h3>
+					{% endif %}
+				{%  endfor %}
+
+		</div>
+		<div class="col">
+		</div>
+
+		</div>
+	{% endblock %}
+		
+</div>
+
+
+</body></html>
