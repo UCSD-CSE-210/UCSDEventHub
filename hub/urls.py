@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.views.generic import TemplateView
 from . import views
-from .views import SearchListing, EventUpload, OranizationPage, EventDetails
+from .views import SearchListing, EventUpload, OrganizationPage, EventDetails
 
 urlpatterns = [
     url(r'^$', views.event_list, name='event_list'),
@@ -12,5 +12,5 @@ urlpatterns = [
     url(r'^login/', views.login, name='Login Page'),
     url(r'^signup/', views.signup, name='SignUp Page'),
     url(r'^myevents/', views.myevents, name='My Events Page'),
-	url(r'^'+OranizationPage.base_url, OranizationPage.render_page, name=OranizationPage.name)
+	url(r'^'+OrganizationPage.base_url, OrganizationPage.render_page, name=OrganizationPage.name)
 ]

@@ -63,7 +63,7 @@ class EventDetails():
 		event["start_day"] = event["start_date"].strftime("%a, %b %d")
 		event["start_time"] = event["start_date"].strftime("%I:%M %p")
 		event["image_url"] = Utils.get_image_url(event["image"])
-		event["organizer_url"] = OranizationPage.get_url(1)
+		event["organizer_url"] = OrganizationPage.get_url(1)
 			
 		return event
 	def render(self):
@@ -167,7 +167,7 @@ class SearchListing():
 			event["end_day"] = Utils.format_day(event["end_date"])
 			event["start_time"] = Utils.format_time(event["start_date"])
 			event["end_time"] = Utils.format_time(event["end_date"])
-			event["organizer_url"] = OranizationPage.get_url(1)
+			event["organizer_url"] = OrganizationPage.get_url(1)
 			if event["start_day"] == event["end_day"]:
 				event["ending_same_day"]=True
 			else:
@@ -209,7 +209,7 @@ class SearchListing():
 def get_event_details(id):
 	return OrganizationDetails() 
 	
-class OranizationPage():
+class OrganizationPage():
 	name = "Organization"
 	base_url = "organizer/"
 	template = Constants.app_name+"/org_details.html"
@@ -220,7 +220,7 @@ class OranizationPage():
 		
 	def __init__(self, request):
 		self.request = request
-		self.response = OranizationPage.Response()
+		self.response = OrganizationPage.Response()
 		
 	def _get_id(self):
 		return self.request.GET.get("id")
@@ -235,7 +235,7 @@ class OranizationPage():
 			"image": Utils.get_image_url("events/Halloween-Hero-1-A.jpeg"),
 			"email":"gsa@ucsd.com"
 		}
-		return render(self.request, OranizationPage.template, 
+		return render(self.request, OrganizationPage.template, 
 								{"organizer": dummy}
 								)
 	
@@ -247,12 +247,12 @@ class OranizationPage():
 		
 	@staticmethod
 	def render_page(request):
-		module = OranizationPage(request)
+		module = OrganizationPage(request)
 		return module.render()
 
 	@staticmethod
 	def get_url(id):
-		return "/"+OranizationPage.base_url+"?id="+str(id)
+		return "/"+OrganizationPage.base_url+"?id="+str(id)
 
 
 def login(request):
