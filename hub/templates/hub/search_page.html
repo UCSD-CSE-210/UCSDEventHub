@@ -54,13 +54,13 @@
 			{% for event in events %}
 				<div class="search_event_tile_wrapper">
 					<div class="search_poster">
-						<a href="/event_detail?id={{  event.id}}">
+						<a href="{{ event.event_url }}">
 						<img src="{{  event.image_url}}" class="search_poster_image">
 						</a>
 					</div>
 					<div class="search_details">
 						<div class="search_title">
-							<a href="/event_detail?id={{  event.id}}">
+							<a href="{{ event.event_url }}">
 						
 							<p class="search_p_title">
 								{{  event.title }}
@@ -89,7 +89,9 @@
 						</div>
 						<div class="search_organizer">
 							<p class="search_p_organizer">
-								By: {{  event.organizer }}
+								By: <a href="{{ event.organizer_url }}">
+									{{  event.organizer }}
+									</a>
 							</p>
 						</div>
 

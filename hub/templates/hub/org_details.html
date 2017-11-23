@@ -15,7 +15,7 @@
 
      {% block title_content %}
     <p></p>
-    <h1 class = "eventTitle">GSA</h1>
+    <h1 class = "eventTitle">{{organizer.name}}</h1>
     <p></p>
     {% endblock %}
     {% block content %}
@@ -24,27 +24,27 @@
 		<div class = "col-md-10">
 			<div class="org_event_tile_wrapper no-padding">
 				<div class="org_poster">
-					<img src="{{events.image_url}}" class="poster_image img-responsive"/>
+					<img src="{{organizer.image}}" class="poster_image img-responsive"/>
 				</div>
 				<div class="org_details">
 					<div class="title">
 						<p class="p_title">
-							GSA
+							{{organizer.name}}
 						</p>
 					</div>
 					<div class="org_text">
 						<p class="p_org_text">
-							Email: gsa@evtns.com
+							Email: {{organizer.email}}
 						</p>
 					</div>
 					<div class="org_text">
 						<p class="p_org_text">
-							Phone: +1 123-421-1234
+							Phone: {{organizer.phone}}
 						</p>
 					</div>
 					<div class="org_text">
 						<p class="p_org_text">
-							Address: Some, Where, @ UCSD
+							Address: {{organizer.address}}
 						</p>
 					</div>
 					
@@ -64,7 +64,7 @@
 				<div class ="description">
 					<h3 class ="heading">About Me</h3>
 					<div style="padding-bottom:20px">
-						<p class="p_description">Random Text ... </p>
+						<p class="p_description">{{organizer.description}} </p>
 					</div>
 				</div>
 				<div class ="sidecolumn">
