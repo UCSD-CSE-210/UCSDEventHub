@@ -19,15 +19,16 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 col-centered">
-      <form>
+      <form id="login-form" method="post" action="{% url 'login' %}" >
+        {% csrf_token %}
         <div class="form-group row">
-          <label for="i_login_name">User Name<span class="req"> *</span></label>
-          <input type="text" name="n_login_name" class="form-control" id="i_login_name" aria-describedby="emailHelp" placeholder="Enter email">
+          <label for="id_username">User Name<span class="req"> *</span></label>
+          <input type="text" name="n_username" class="form-control" id="id_username" aria-describedby="emailHelp" placeholder="Enter email">
           <small id="emailHelp" class="form-text text-muted">Use the username used while registering for the site</small>
         </div>
         <div class="form-group row">
-          <label for="i_login_pw">Password<span class="req"> *</span></label>
-          <input type="password" name="n_login_pw" class="form-control" id="i_login_pw" placeholder="Password">
+          <label for="id_password">Password<span class="req"> *</span></label>
+          <input type="password" name="n_password" class="form-control" id="id_password" placeholder="Password">
         </div>
         <div class="form-check">
           <label class="form-check-label">
@@ -37,6 +38,14 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
+      
+      {% if form.errors %}
+        <p class=" label label-danger">
+          Your username and password didn't match. 
+          Please try again.
+        </p>
+      {% endif %}
+
     </div>
   </div>
 </div>

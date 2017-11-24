@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^event_detail/', views.event_detail, name='event_detail'),
     url(r'^'+SearchListing.base_url, SearchListing.render_page, name=SearchListing.name),
     url(r'^'+EventUpload.submit_url, EventUpload.event_upload_handler, name=EventUpload.submit_view_name),
-    url(r'^login/', views.login, name='Login Page'),
+    url(r'^login/', views.login,name='login'),
     url(r'^signup/', views.signup, name='SignUp Page'),
     url(r'^myevents/', views.myevents, name='My Events Page'),
 ]

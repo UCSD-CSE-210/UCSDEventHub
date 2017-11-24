@@ -26,44 +26,59 @@
     <div class="container">
       <form class="form-horizontal" role="form">
         <h2>New User Registration</h2>
+
+        <div class="form-group">
+            <label for="i_user_name" class="col-md-3 control-label">User Name<span class="req"> *</span></label>
+            <div class="col-md-9">
+                <input type="text" name="n_user_name" id="i_user_name" placeholder="User Name" class="form-control">
+            </div>
+        </div>
+
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="firstName" class="col-md-6 control-label">First Name</label>
+            <label for="i_userfn" class="col-md-6 control-label">First Name<span class="req"> *</span></label>
             <div class="col-md-9">
-              <input type="text" id="firstName" placeholder="Full Name" class="form-control" autofocus>
+              <input type="text" name="n_userfn" id="i_userfn" placeholder="Full Name" class="form-control" autofocus>
             </div>
           </div>
 
-        <div class="form-group col-md-6">
-          <label for="firstName" class="col-md-6 control-label">Last Name</label>
-          <div class="col-md-9">
-            <input type="text" id="lastName" placeholder="Last Name" class="form-control" autofocus>
+          <div class="form-group col-md-6">
+            <label for="i_user_ln" class="col-md-6 control-label">Last Name<span class="req"> *</span></label>
+            <div class="col-md-9">
+              <input type="text" name="n_user_ln" id="i_user_ln" placeholder="Last Name" class="form-control" autofocus>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="form-group">
-          <label for="email" class="col-md-3 control-label">Email</label>
-          <div class="col-md-9">
-              <input type="email" id="email" placeholder="Email" class="form-control">
+        <div class="form-group" style="display: block;">
+          <label class="col-md-4 control-label-left" for="i_user_img">Profile Picture<span class="req"> *</span></label>
+          <div class="controls">
+            <input name="n_user_img" id="i_user_img" class="form-control input-file" type="file" >
           </div>
-      </div>
+        </div>
 
-      <div class="form-group">
-        <label for="password" class="col-md-3 control-label">Password</label>
+        <div class="form-group">
+          <label for="i_user_email" class="col-md-3 control-label">Email<span class="req"> *</span></label>
           <div class="col-md-9">
-            <input type="password" id="password" placeholder="Password" class="form-control">
+              <input type="email" name="n_user_email" id="i_user_email" placeholder="Email" class="form-control">
           </div>
-      </div>
+        </div>
 
-      <div class="form-group">
-        <label for="confirmpassword" class="col-md-3 control-label">Confirm Password</label>
+        <div class="form-group">
+          <label for="i_user_password" class="col-md-3 control-label">Password<span class="req"> *</span></label>
           <div class="col-md-9">
-            <input type="password" id="confirmpassword" placeholder="Confirm Password" class="form-control">
+            <input type="password" name="n_user_password" id="i_user_password" placeholder="Password" class="form-control">
           </div>
-      </div>
+        </div>
 
-      <div class="form-group">
+        <div class="form-group">
+          <label for="i_user_confirmpassword" class="col-md-3 control-label">Confirm Password<span class="req"> *</span></label>
+          <div class="col-md-9">
+            <input type="password" name="n_user_confirmpassword" id="i_user_confirmpassword" placeholder="Confirm Password" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-group">
           <div class="col-sm-9 col-sm-offset-3">
               <div class="checkbox">
                   <label>
@@ -71,13 +86,13 @@
                   </label>
               </div>
           </div>
-      </div> <!-- /.form-group -->
+        </div> <!-- /.form-group -->
 
-      <div class="form-group">
+        <div class="form-group">
           <div class="col-sm-9 col-sm-offset-3">
               <button type="submit" class="btn btn-primary btn-block">Register</button>
           </div>
-      </div>
+        </div>
     </form> <!-- /form -->
   </div> <!-- ./container -->
 </div>
@@ -88,90 +103,97 @@
       <h2>New Organization Registration</h2>
 
       <div class="form-group">
-          <label for="i_uname" class="col-md-3 control-label">User Name</label>
+          <label for="i_org_name" class="col-md-3 control-label">User Name<span class="req"> *</span></label>
           <div class="col-md-9">
-              <input type="text" id="i_uname" placeholder="User Name" class="form-control">
+              <input type="text" name="i_org_name" id="i_org_name" placeholder="User Name" class="form-control">
           </div>
       </div>
 
       <div class="form-group">
-          <label for="email" class="col-md-3 control-label">Email</label>
+          <label for="i_org_email" class="col-md-3 control-label">Email<span class="req"> *</span></label>
           <div class="col-md-9">
-              <input type="email" id="email" placeholder="Email" class="form-control">
+              <input type="email" name="i_org_email" id="i_org_email" placeholder="Email" class="form-control">
           </div>
       </div>
 
       <div class="form-group">
-        <label for="password" class="col-md-3 control-label">Password</label>
+        <label for="i_org_password" class="col-md-3 control-label">Password<span class="req"> *</span></label>
           <div class="col-md-9">
-            <input type="password" id="password" placeholder="Password" class="form-control">
+            <input type="password" name="n_org_password" id="i_org_password" placeholder="Password" class="form-control">
           </div>
       </div>
 
       <div class="form-group">
-        <label for="confirmpassword" class="col-md-9 control-label">Confirm Password</label>
+        <label for="i_org_confirmpassword" class="col-md-9 control-label">Confirm Password<span class="req"> *</span></label>
           <div class="col-md-9">
-            <input type="password" id="confirmpassword" placeholder="Confirm Password" class="form-control">
+            <input type="password" name="n_org_confirmpassword" id="i_org_confirmpassword" placeholder="Confirm Password" class="form-control">
           </div>
       </div>
 
       <div class="form-group">
-        <label for="i_orgdesc" class="col-md-9 control-label">Description</label>
+        <label for="i_org_desc" class="col-md-9 control-label">Description<span class="req"> *</span></label>
           <div class="col-md-9">
-            <textarea id="i_orgdesc" class="form-control" placeholder="Write Something about your organization ..." rows="5"></textarea>
+            <textarea name="n_org_desc" id="i_org_desc" class="form-control" placeholder="Write Something about your organization ..." rows="5"></textarea>
           </div>
       </div>
 
+      <div class="form-group" style="display: block;">
+        <label class="col-md-4 control-label-left" for="i_org_img">Profile Picture<span class="req"> *</span></label>
+        <div class="controls">
+          <input name="n_org_img" id="i_org_img" class="form-control input-file" type="file" >
+        </div>
+      </div>
+
       <div class="form-group">
-        <label>Address</label>
-        <textarea placeholder="Enter Address Here.." rows="3" class="form-control"></textarea>
+        <label for="i_org_addr">Address</label>
+        <textarea name="i_org_addr" id="i_org_addr" placeholder="Enter Address Here.." rows="3" class="form-control"></textarea>
       </div>
 
       <div class="form-row">
         <div class="col-md-4 form-group">
-          <label>City</label>
-          <input type="text" placeholder="Enter City Name Here.." class="form-control">
+          <label for="i_org_city">City</label>
+          <input type="text" name="n_org_city" id="i_org_city" placeholder="Enter City Name Here.." class="form-control">
         </div>
 
         <div class="col-md-4 form-group">
-          <label>State</label>
-          <input type="text" placeholder="Enter State Name Here.." class="form-control">
+          <label for="i_org_state">State</label>
+          <input name="n_org_state" id="i_org_state" type="text" placeholder="Enter State Name Here.." class="form-control">
         </div>
 
         <div class="col-md-4 form-group">
-          <label>Zip</label>
-          <input type="text" placeholder="Enter Zip Code Here.." class="form-control">
+          <label for="i_org_zip">Zip</label>
+          <input name="n_org_zip" id="i_org_zip" type="text" placeholder="Enter Zip Code Here.." class="form-control">
         </div>
       </div>
 
       <h3>Point of Contact</h3>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="i_orgfn" class="col-md-6 control-label">First Name</label>
+          <label for="i_org_poc_fn" class="col-md-6 control-label">First Name</label>
           <div class="col-md-9">
-            <input type="text" id="i_orgfn" placeholder="First Name" class="form-control" autofocus>
+            <input type="text" name="n_org_poc_fn" id="i_org_poc_fn" placeholder="First Name" class="form-control" autofocus>
           </div>
         </div>
         
         <div class="form-group col-md-6">
-          <label for="i_orgln" class="col-md-6 control-label">Last Name</label>
+          <label for="i_org_poc_ln" class="col-md-6 control-label">Last Name</label>
           <div class="col-md-9">
-            <input type="text" id="i_orgln" placeholder="Last Name" class="form-control" autofocus>
+            <input type="text" name="n_org_poc_ln" id="i_org_poc_ln" placeholder="Last Name" class="form-control" autofocus>
           </div>
         </div>
       </div>
 
       <div class="form-group">
-          <label for="i_poc_email" class="col-md-3 control-label">Email</label>
+          <label for="i_org_poc_email" class="col-md-3 control-label">Email</label>
           <div class="col-md-9">
-              <input type="email" id="i_poc_email" placeholder="Email" class="form-control">
+              <input type="email" name="n_org_poc_email" id="i_org_poc_email" placeholder="Email" class="form-control">
           </div>
       </div>
 
       <div class="form-group">
-          <label for="i_poc_phone" class="col-md-3 control-label">Phone Number</label>
+          <label for="i_org_poc_phone" class="col-md-3 control-label">Phone Number</label>
           <div class="col-md-9">
-              <input type="phone" id="i_poc_phone" placeholder="Phone Number" class="form-control">
+              <input type="phone" name="n_org_poc_phone" id="i_org_poc_phone" placeholder="Phone Number" class="form-control">
           </div>
       </div>
 

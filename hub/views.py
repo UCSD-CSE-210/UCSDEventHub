@@ -6,6 +6,7 @@ from .apis import upcoming_events
 from django.http import HttpResponse
 from django.utils import dateparse
 from datetime import datetime
+from django.contrib.auth import authenticate, login
 import re
 
 import json
@@ -181,16 +182,28 @@ class SearchListing():
 
 
 def login(request):
-    return render(request, 'hub/login.html', {})
+	if(request.method == "POST"):
+		user_name = request.POST['n_username']
+		password = request.POST['n_password']
+		user = authenticate(request, username=user_name, password=password)
+		if user is not None:
+			return HttpResponse("<h1>dsa</h1>")
+		else:
+			return render(request, 'hub/login.html', {})
+	else:
+		return render(request, 'hub/login.html', {})
 
 def signup(request):
-    return render(request, 'hub/signup.html', {})
+	if(request.method == "POST"):
+		return HttpResponse("<h1>dsa</h1>")
+	else:
+		return render(request, 'hub/signup.html', {})
 
 #@login_required
 def myevents(request):
 	#dummy content until APIs for rsvp retreival are written
-    events=upcoming_events()#.sort(key=lambda e: e.date)[:3]
-    for event in events:
-        event["image_url"] = "/media/" + event["image"]
-        event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
-    return render(request, 'hub/my_events.html', {'events':events})
+	events=upcoming_events()#.sort(key=lambda e: e.date)[:3]
+	for event in events:
+		event["image_url"] = "/media/" + event["image"]
+		event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
+	return render(request, 'hub/my_events.html', {'events':events})
