@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Event
+from .models import Event,OrganizationDetails
 from .apis import add_event_to_db,event_details
 from .apis import search_events
 from .apis import upcoming_events
@@ -40,22 +40,47 @@ class Constants():
 def event_list(request):
     events=upcoming_events()#.sort(key=lambda e: e.date)[:3]
     for event in events:
-        event["image_url"] = "/media/" + event["image"]
+        event["image_url"] = Utils.get_image_url(event["image"])
         event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
+        event["event_url"]= EventDetails.get_url(event["id"])
     return render(request, 'hub/Homepage.html', {'events':events})
 
-
-def event_detail(request):
-    eventId = request.GET.get("id")
-    evntId = int(eventId)
-    events = event_details(evntId)
-    event = events[0]
-    event["googleDate"] = event["start_date"].strftime("%Y%m%dT%H%M%S")+"/"+event["end_date"].strftime("%Y%m%dT%H%M%S")
-    event["start_day"] = event["start_date"].strftime("%a, %b %d")
-    event["start_time"] = event["start_date"].strftime("%I:%M %p")
-    event["image_url"] = "/media/"+event["image"]
-    return render(request, 'hub/event_details.html', {'events':event})
-
+class EventDetails():
+	name = "event_details"
+	base_url = "event_details/"
+	template = Constants.app_name+"/event_details.html"
+	
+	
+	def __init__(self, request):
+		self.request = request
+	def _render_me(self):
+		return render(self.request, EventDetails.template, {'event':self.event})
+		
+	def _get_event_details(self,eventId):
+		evntId = int(eventId)
+		events = event_details(evntId)
+		event = events[0]
+		event["googleDate"] = event["start_date"].strftime("%Y%m%dT%H%M%S")+"/"+event["end_date"].strftime("%Y%m%dT%H%M%S")
+		event["start_day"] = event["start_date"].strftime("%a, %b %d")
+		event["start_time"] = event["start_date"].strftime("%I:%M %p")
+		event["image_url"] = Utils.get_image_url(event["image"])
+		event["organizer_url"] = OrganizationPage.get_url(1)
+			
+		return event
+	def render(self):
+		eventId = self.request.GET.get("id")
+		print("event_id",eventId)
+		self.event = self._get_event_details(eventId)
+		return self._render_me()
+		
+	@staticmethod
+	def render_page(request):
+		m = EventDetails(request)
+		return m.render()
+		
+	@staticmethod
+	def get_url(id):
+		return "/"+EventDetails.base_url +"?id="+str(id)
 
 class EventUpload():
 	name = "event_upload_form"
@@ -123,11 +148,12 @@ class SearchListing():
 			self.events = []
 			self.empty_search = True
 		
-	def __init__(self):
+	def __init__(self, request):
 		self.response = SearchListing.Response()
+		self.request = request
 		
-	def _get_keywords(self,request):
-		return request.GET.get("q")
+	def _get_keywords(self):
+		return self.request.GET.get("q")
 	
 	def _clean_search_keywords(self, key):
 		key = re.sub(' ', '-', key)
@@ -142,27 +168,28 @@ class SearchListing():
 			event["end_day"] = Utils.format_day(event["end_date"])
 			event["start_time"] = Utils.format_time(event["start_date"])
 			event["end_time"] = Utils.format_time(event["end_date"])
+			event["organizer_url"] = OrganizationPage.get_url(1)
 			if event["start_day"] == event["end_day"]:
 				event["ending_same_day"]=True
 			else:
 				event["ending_same_day"]=False
 			event["image_url"] = Utils.get_image_url(event["image"])
-		
+			event["event_url"] = EventDetails.get_url(event["id"])
 		self.response.empty_search = False
 		self.response.events = events
 	
-	def _render_me(self, request):
-		return render(request, self.template, 
+	def _render_me(self):
+		return render(self.request, SearchListing.template, 
 								{"events":self.response.events, 
 								"empty_search":self.response.empty_search}
 								)
 								
 	
-	def render(self, request):
-		search_keywords = self._get_keywords(request)
+	def render(self):
+		search_keywords = self._get_keywords()
 		
 		if not search_keywords:
-			return self._render_me(request)
+			return self._render_me()
 		
 		search_keywords = self._clean_search_keywords(search_keywords)
 		
@@ -170,15 +197,63 @@ class SearchListing():
 		
 		self._generate_repsonse(events)
 		
-		return self._render_me(request)
+		return self._render_me()
 
 	@staticmethod
 	def render_page(request):
-		module = SearchListing()
-		return module.render(request)
+		module = SearchListing(request)
+		return module.render()
 	
-	def build_url(self, keywords):
-		return base_url+"?"+keywords
+	def get_url(self, keywords):
+		return "/"+SearchListing.base_url+"?q="+keywords
+
+def get_event_details(id):
+	return OrganizationDetails() 
+	
+class OrganizationPage():
+	name = "Organization"
+	base_url = "organizer/"
+	template = Constants.app_name+"/org_details.html"
+	
+	class Response():
+		def __init__(self):
+			self.org_details = None
+		
+	def __init__(self, request):
+		self.request = request
+		self.response = OrganizationPage.Response()
+		
+	def _get_id(self):
+		return self.request.GET.get("id")
+	
+	def _render_me(self):
+		dummy = {
+			"name":"GSA@UCSD",
+			"description": "GSA is graduate student body",
+			"id":1,
+			"phone":"1234221234",
+			"address": "Somewhere, at, UCSD",
+			"image": Utils.get_image_url("events/Halloween-Hero-1-A.jpeg"),
+			"email":"gsa@ucsd.com"
+		}
+		return render(self.request, OrganizationPage.template, 
+								{"organizer": dummy}
+								)
+	
+	def render(self):
+		id = self._get_id()
+		organizer = get_event_details(id)
+		self.response.org_details = organizer
+		return self._render_me()
+		
+	@staticmethod
+	def render_page(request):
+		module = OrganizationPage(request)
+		return module.render()
+
+	@staticmethod
+	def get_url(id):
+		return "/"+OrganizationPage.base_url+"?id="+str(id)
 
 
 def login(request):

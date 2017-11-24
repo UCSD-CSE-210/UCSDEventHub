@@ -11,7 +11,7 @@
 	display: flex !important;
 	border-color:lightgrey;
 	width: 100%;
-	height: 350px;
+	height: 320px;
 	border-radius: 5px;
 	margin-top:7px;
 	margin-bottom:7px;
@@ -27,7 +27,7 @@
 	padding: 2px;
 	background:lightgrey;
 	border-radius: 4px;
-	width:60%;
+	width:55%;
 			
 }
 .poster_image{
@@ -40,7 +40,7 @@
 .details{
 	display: inline-block;
 	padding:1px;
-	width:40%;
+	width:45%;
 }
 .title{
 	border-bottom-style: solid;
