@@ -24,9 +24,9 @@
 <div class="tab-content" id="nav-tabContent">
   <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
     <div class="container">
-      <form class="form-horizontal" role="form">
+      <form id="user-signup-form" enctype="multipart/form-data" method="post" action="{% url 'signup' %}" class="form-horizontal" role="form">
+        {% csrf_token %}
         <h2>New User Registration</h2>
-
         <div class="form-group">
             <label for="i_user_name" class="col-md-3 control-label">User Name<span class="req"> *</span></label>
             <div class="col-md-9">
@@ -99,13 +99,13 @@
 
 <div class="tab-pane" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
   <div class="container">
-    <form class="form-horizontal" role="form">
+    <form id="org-signup-form" enctype="multipart/form-data" method="post" action="{% url 'signup' %}" class="form-horizontal" role="form">
+      {% csrf_token %}
       <h2>New Organization Registration</h2>
-
       <div class="form-group">
-          <label for="i_org_name" class="col-md-3 control-label">User Name<span class="req"> *</span></label>
+          <label for="i_org_uname" class="col-md-3 control-label">User Name<span class="req"> *</span></label>
           <div class="col-md-9">
-              <input type="text" name="i_org_name" id="i_org_name" placeholder="User Name" class="form-control">
+              <input type="text" name="i_org_uname" id="i_org_uname" placeholder="User Name" class="form-control">
           </div>
       </div>
 
@@ -129,6 +129,13 @@
             <input type="password" name="n_org_confirmpassword" id="i_org_confirmpassword" placeholder="Confirm Password" class="form-control">
           </div>
       </div>
+
+	  <div class="form-group">
+		<label for="i_org_name" class="col-md-9 control-label">Organization Name<span class="req"> *</span></label>
+		<div class="col-md-9">
+		  <input type="text" name="n_org_name" id="i_org_name" placeholder="Full Name" class="form-control" autofocus>
+		</div>
+	  </div>
 
       <div class="form-group">
         <label for="i_org_desc" class="col-md-9 control-label">Description<span class="req"> *</span></label>

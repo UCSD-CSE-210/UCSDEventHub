@@ -28,6 +28,9 @@ class UserProfile(models.Model):
     user_is_organization = models.BooleanField(default = False)
     user_image = models.ImageField(
         upload_to="users", default=None, null = True, blank = True)
+    user_first_name = models.CharField(max_length = 255, null = True)
+    user_last_name = models.CharField(max_length = 255, null = True)
+    user_email = models.EmailField(null = True)
 
 class OrganizationDetails(models.Model):
     organization = models.OneToOneField(
@@ -44,6 +47,9 @@ class OrganizationDetails(models.Model):
     # Using E.164 as recommended phone number format
     contact_number = models.CharField(
         validators = [phone_regex], max_length = 15, blank = True, null=True)
+    org_image = models.ImageField(
+        upload_to="orgs", default=None, null = True, blank = True)
+
 
 class RSVP(models.Model):
     rsvp_user = models.ForeignKey(User, on_delete=models.CASCADE)

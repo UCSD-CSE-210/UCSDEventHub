@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Event,OrganizationDetails
+from .models import Event,OrganizationDetails, UserProfile
 from .apis import add_event_to_db,event_details
 from .apis import search_events
 from .apis import upcoming_events
@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.utils import dateparse
 from datetime import datetime
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 import re
 
 import json
@@ -30,6 +31,19 @@ class Utils():
 	@staticmethod
 	def get_image_url(image):
 		return Constants.media_path+image
+
+	@staticmethod
+	def get_alert_html(text,alerttype):
+		div=""
+		if alerttype == 'fail':
+			div = '<div id="valErr" class="row viewerror clearfix">\n'
+			div = div + '   <div class="alert alert-danger">'+text+'</div>\n'
+			div = div+'</div>'
+		else:
+			div = '<div id="valErr" class="row viewerror clearfix">\n'
+			div = div + '   <div class="alert alert-success">'+text+'</div>\n'
+			div = div+'</div>'
+		return div
 
 
 class Constants():
@@ -270,7 +284,41 @@ def login(request):
 
 def signup(request):
 	if(request.method == "POST"):
-		return HttpResponse("<h1>dsa</h1>")
+		user_name = request.POST.get('n_user_name',"")
+		if user_name != "":
+			#This request is for new user
+			password = request.POST.get('n_user_password',"")
+			email = request.POST.get('n_user_email',"")
+			new_django_user = User.objects.create_user(user_name, email, password)
+			new_custom_user = UserProfile()
+			new_custom_user.user = new_django_user
+			new_custom_user.user_is_organization = False
+			new_custom_user.user_image = request.FILES['n_user_img']
+			new_custom_user.user_first_name = request.POST.get('n_user_fn',"")
+			new_custom_user.user_last_name = request.POST.get('n_user_ln',"")
+			new_custom_user.user_email = request.POST.get('n_user_email',"")
+			new_custom_user.save()
+			return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('New User Registration Sucessful, Please Login','sucess')})
+		else:
+			#This request is for new org
+			user_name = request.POST.get('n_org_uname',"")
+			password = request.POST.get('n_org_password',"")
+			email = request.POST.get('n_org_email',"")
+			new_django_user = User.objects.create_user(user_name, email, password)
+			new_org = OrganizationDetails()
+			new_org.user = new_django_user
+			new_org.description = request.POST.get("n_org_desc","")
+			new_org.contact_first_name = request.POST.get("n_org_poc_fn","")
+			new_org.contact_last_name = request.POST.get("n_org_poc_ln","")
+			new_org.contact_email = request.POST.get("n_org_poc_email","")
+			new_org.contact_number = request.POST.get("n_org_poc_phone","")
+			new_org.org_image = request.FILES['n_org_img']
+			new_org.address = (request.POST.get("n_org_addr","")+'\n' +
+				request.POST.get("n_org_city","") + '\n' +
+				request.POST.get("n_org_state","") + '\n' +
+				request.POST.get("n_org_zip",""))
+			new_org.save()
+			return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('New Organization Registration Sucessful, Please Login','sucess')})
 	else:
 		return render(request, 'hub/signup.html', {})
 

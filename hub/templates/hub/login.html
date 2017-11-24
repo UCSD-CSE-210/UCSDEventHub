@@ -18,6 +18,7 @@
 <link rel="stylesheet" type="text/css" href="{% static "css/loginui.css" %}">
 <div class="container">
   <div class="row">
+    {{ div_elem|safe }}
     <div class="col-md-6 col-centered">
       <form id="login-form" method="post" action="{% url 'login' %}" >
         {% csrf_token %}
