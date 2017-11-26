@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from datetime import datetime
 import pytz
-from .models import Event
+from .models import Event, UserProfile, OrganizationDetails
 
 pst = pytz.timezone('US/Pacific')
 # Hard coding PST as timezone as one time fix.
@@ -28,3 +28,12 @@ def event_details(event_id):
 
 def add_event_to_db(event):
 	event.save()
+
+def check_user_name(username,is_org):
+	if is_org:
+		if(OrganizationDetails.objects.filter(user_name = username).exists()):
+			return True
+	else:
+		if(UserProfile.objects.filter(user_name = username).exists()):
+			return True
+	return False

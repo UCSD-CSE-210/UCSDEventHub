@@ -3,10 +3,12 @@ from .models import Event,OrganizationDetails, UserProfile
 from .apis import add_event_to_db,event_details
 from .apis import search_events
 from .apis import upcoming_events
+from .apis import check_user_name
 from django.http import HttpResponse
 from django.utils import dateparse
 from datetime import datetime
 from django.contrib.auth import authenticate, login
+from django.contrib import auth
 from django.contrib.auth.models import User
 import re
 
@@ -274,11 +276,16 @@ def login(request):
 	if(request.method == "POST"):
 		user_name = request.POST['n_username']
 		password = request.POST['n_password']
+		is_org = request.POST.get('n_is_org',False)
+		if not check_user_name(user_name,is_org):
+			return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('User is not registered. Please Signup','fail')})
+
 		user = authenticate(request, username=user_name, password=password)
 		if user is not None:
-			return HttpResponse("<h1>dsa</h1>")
+			auth.login(request,user)
+			return HttpResponse("<h1>Congrats!! User Login Successful</h1>")
 		else:
-			return render(request, 'hub/login.html', {})
+			return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('Wrong Username, Password combination','fail')})
 	else:
 		return render(request, 'hub/login.html', {})
 
@@ -292,6 +299,7 @@ def signup(request):
 			new_django_user = User.objects.create_user(user_name, email, password)
 			new_custom_user = UserProfile()
 			new_custom_user.user = new_django_user
+			new_custom_user.user_name = user_name
 			new_custom_user.user_is_organization = False
 			new_custom_user.user_image = request.FILES['n_user_img']
 			new_custom_user.user_first_name = request.POST.get('n_user_fn',"")
@@ -307,6 +315,7 @@ def signup(request):
 			new_django_user = User.objects.create_user(user_name, email, password)
 			new_org = OrganizationDetails()
 			new_org.user = new_django_user
+			new_org.user_name = user_name
 			new_org.description = request.POST.get("n_org_desc","")
 			new_org.contact_first_name = request.POST.get("n_org_poc_fn","")
 			new_org.contact_last_name = request.POST.get("n_org_poc_ln","")

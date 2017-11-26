@@ -30,11 +30,13 @@ class UserProfile(models.Model):
         upload_to="users", default=None, null = True, blank = True)
     user_first_name = models.CharField(max_length = 255, null = True)
     user_last_name = models.CharField(max_length = 255, null = True)
+    user_name = models.CharField(max_length = 255, null = False, default="")
     user_email = models.EmailField(null = True)
 
 class OrganizationDetails(models.Model):
     organization = models.OneToOneField(
         User, on_delete = models.CASCADE, primary_key=True)
+    user_name = models.CharField(max_length = 255, null = False, default="")
     description = models.TextField(null = True, blank=True)
     contact_first_name = models.CharField(max_length = 255, null = False)
     contact_last_name = models.CharField(max_length = 255, null = False)
