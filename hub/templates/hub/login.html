@@ -18,6 +18,7 @@
 <link rel="stylesheet" type="text/css" href="{% static "css/loginui.css" %}">
 <div class="container">
   <div class="row">
+    {{ div_elem|safe }}
     <div class="col-md-6 col-centered">
       <form id="login-form" method="post" action="{% url 'login' %}" >
         {% csrf_token %}
@@ -32,7 +33,7 @@
         </div>
         <div class="form-check">
           <label class="form-check-label">
-            <input type="checkbox" class="form-check-input">
+            <input type="checkbox" name="n_is_org" id="i_is_org" class="form-check-input">
             Login as Organizer
           </label>
         </div>
