@@ -55,3 +55,9 @@ def remove_rsvp(user_id, event_id):
         rsvp = RSVP.objects.filter(
             rsvp_user_id=user_id, rsvp_event_id=event_id)
         rsvp.delete()
+
+def get_org_details(org_id):
+    if OrganizationDetails.objects.filter(organization_id=org_id).exists():
+        return OrganizationDetails.objects.get(organization_id=org_id)
+    else:
+        return None
