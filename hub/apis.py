@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from datetime import datetime
 import pytz
-from .models import Event, UserProfile, OrganizationDetails
+from .models import Event, UserProfile, OrganizationDetails, RSVP
 
 pst = pytz.timezone('US/Pacific')
 # Hard coding PST as timezone as one time fix.
@@ -37,3 +37,21 @@ def check_user_name(username,is_org):
 		if(UserProfile.objects.filter(user_name = username).exists()):
 			return True
 	return False
+
+def user_event_rsvpd(user_id, event_id):
+    rsvpd = RSVP.objects.filter(
+        rsvp_user_id=user_id, rsvp_event_id=event_id).exists()
+    return rsvpd
+
+def save_rsvp(user_id, event_id):
+    if not user_event_rsvpd(user_id, event_id):
+        rsvp = RSVP()
+        rsvp.rsvp_user_id = user_id
+        rsvp.rsvp_event_id = event_id
+        rsvp.save()
+
+def remove_rsvp(user_id, event_id):
+    if user_event_rsvpd(user_id, event_id):
+        rsvp = RSVP.objects.filter(
+            rsvp_user_id=user_id, rsvp_event_id=event_id)
+        rsvp.delete()

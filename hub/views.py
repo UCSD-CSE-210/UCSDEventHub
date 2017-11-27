@@ -4,6 +4,7 @@ from .apis import add_event_to_db,event_details
 from .apis import search_events
 from .apis import upcoming_events
 from .apis import check_user_name
+from .apis import user_event_rsvpd
 from django.http import HttpResponse
 from django.utils import dateparse
 from datetime import datetime
@@ -65,13 +66,14 @@ class EventDetails():
 	name = "event_details"
 	base_url = "event_details/"
 	template = Constants.app_name+"/event_details.html"
-	
-	
+
+
 	def __init__(self, request):
 		self.request = request
 	def _render_me(self):
-		return render(self.request, EventDetails.template, {'event':self.event})
-		
+		return render(
+			self.request, EventDetails.template, {'event':self.event})
+
 	def _get_event_details(self,eventId):
 		evntId = int(eventId)
 		events = event_details(evntId)
@@ -81,19 +83,27 @@ class EventDetails():
 		event["start_time"] = event["start_date"].strftime("%I:%M %p")
 		event["image_url"] = Utils.get_image_url(event["image"])
 		event["organizer_url"] = OrganizationPage.get_url(1)
-			
+		event["rsvpd"] = self._get_rsvp_info(eventId)
 		return event
+
+	def _get_rsvp_info(self, eventId):
+		user = self.request.user
+		if user.is_authenticated:
+			return user_event_rsvpd(user.id, eventId)
+		else:
+			return False
+
 	def render(self):
 		eventId = self.request.GET.get("id")
-		print("event_id",eventId)
+		# print("event_id",eventId)
 		self.event = self._get_event_details(eventId)
 		return self._render_me()
-		
+
 	@staticmethod
 	def render_page(request):
 		m = EventDetails(request)
 		return m.render()
-		
+
 	@staticmethod
 	def get_url(id):
 		return "/"+EventDetails.base_url +"?id="+str(id)
@@ -158,27 +168,27 @@ class SearchListing():
 	name = "search_page"
 	base_url = "event_search/"
 	template = Constants.app_name+"/search_page.html"
-		
+
 	class Response():
 		def __init__(self):
 			self.events = []
 			self.empty_search = True
-		
+
 	def __init__(self, request):
 		self.response = SearchListing.Response()
 		self.request = request
-		
+
 	def _get_keywords(self):
 		return self.request.GET.get("q")
-	
+
 	def _clean_search_keywords(self, key):
 		key = re.sub(' ', '-', key)
 		key = re.sub('[^A-Za-z0-9-]', '', key)
 		key = re.sub('-+',' ', key)
 		return key
-	
+
 	def _generate_repsonse(self, events):
-		
+
 		for event in events:
 			event["start_day"] = Utils.format_day(event["start_date"])
 			event["end_day"] = Utils.format_day(event["end_date"])
@@ -193,55 +203,55 @@ class SearchListing():
 			event["event_url"] = EventDetails.get_url(event["id"])
 		self.response.empty_search = False
 		self.response.events = events
-	
+
 	def _render_me(self):
-		return render(self.request, SearchListing.template, 
-								{"events":self.response.events, 
+		return render(self.request, SearchListing.template,
+								{"events":self.response.events,
 								"empty_search":self.response.empty_search}
 								)
-								
-	
+
+
 	def render(self):
 		search_keywords = self._get_keywords()
-		
+
 		if not search_keywords:
 			return self._render_me()
-		
+
 		search_keywords = self._clean_search_keywords(search_keywords)
-		
+
 		events = search_events(search_keywords)
-		
+
 		self._generate_repsonse(events)
-		
+
 		return self._render_me()
 
 	@staticmethod
 	def render_page(request):
 		module = SearchListing(request)
 		return module.render()
-	
+
 	def get_url(self, keywords):
 		return "/"+SearchListing.base_url+"?q="+keywords
 
 def get_event_details(id):
-	return OrganizationDetails() 
-	
+	return OrganizationDetails()
+
 class OrganizationPage():
 	name = "Organization"
 	base_url = "organizer/"
 	template = Constants.app_name+"/org_details.html"
-	
+
 	class Response():
 		def __init__(self):
 			self.org_details = None
-		
+
 	def __init__(self, request):
 		self.request = request
 		self.response = OrganizationPage.Response()
-		
+
 	def _get_id(self):
 		return self.request.GET.get("id")
-	
+
 	def _render_me(self):
 		dummy = {
 			"name":"GSA@UCSD",
@@ -252,16 +262,16 @@ class OrganizationPage():
 			"image": Utils.get_image_url("events/Halloween-Hero-1-A.jpeg"),
 			"email":"gsa@ucsd.com"
 		}
-		return render(self.request, OrganizationPage.template, 
+		return render(self.request, OrganizationPage.template,
 								{"organizer": dummy}
 								)
-	
+
 	def render(self):
 		id = self._get_id()
 		organizer = get_event_details(id)
 		self.response.org_details = organizer
 		return self._render_me()
-		
+
 	@staticmethod
 	def render_page(request):
 		module = OrganizationPage(request)
