@@ -45,10 +45,12 @@ def user_event_rsvpd(user_id, event_id):
 
 def save_rsvp(user_id, event_id):
     if not user_event_rsvpd(user_id, event_id):
-        rsvp = RSVP()
-        rsvp.rsvp_user_id = user_id
-        rsvp.rsvp_event_id = event_id
-        rsvp.save()
+        if UserProfile.objects.filter(user_id=user_id).exists() and \
+            Event.objects.filter(id=event_id).exists():
+            rsvp = RSVP()
+            rsvp.rsvp_user_id = user_id
+            rsvp.rsvp_event_id = event_id
+            rsvp.save()
 
 def remove_rsvp(user_id, event_id):
     if user_event_rsvpd(user_id, event_id):
@@ -61,3 +63,8 @@ def get_org_details(org_id):
         return OrganizationDetails.objects.get(organization_id=org_id)
     else:
         return None
+
+def get_rsvp_events(user_id):
+    user_events = RSVP.objects.filter(rsvp_user_id=user_id)
+    events = [Event.objects.get(id=e.rsvp_event_id) for e in user_events]
+    return events
