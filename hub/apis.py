@@ -3,6 +3,7 @@ from django.utils import timezone
 from datetime import datetime
 import pytz
 from .models import Event, UserProfile, OrganizationDetails, RSVP
+from django.db.models import Count
 
 pst = pytz.timezone('US/Pacific')
 # Hard coding PST as timezone as one time fix.
@@ -20,7 +21,8 @@ def search_events(search_text):
 def upcoming_events():
     today_date = datetime.now(pst).replace(hour=0, minute=0, second=0)
     events_results = list(Event.objects.filter(start_date__gte=today_date).all().values())
-    events_results.sort(key = lambda item:item['start_date'])
+    events_results.sort(key = lambda item:(
+        -get_rsvp_count(item['id']),item['start_date']))
     return events_results
 
 def event_details(event_id):
@@ -68,3 +70,7 @@ def get_rsvp_events(user_id):
     user_events = RSVP.objects.filter(rsvp_user_id=user_id)
     events = [Event.objects.get(id=e.rsvp_event_id) for e in user_events]
     return events
+
+def get_rsvp_count(event_id):
+    return RSVP.objects.filter(rsvp_event_id=event_id).values(
+        'rsvp_event_id').count()
