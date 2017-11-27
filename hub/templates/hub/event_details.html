@@ -12,9 +12,11 @@
    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
-
-     {% block title_content %}
-    <p></p>
+    	
+    {% block title_content %}
+    <p>{{event.id}}</p>
+    <p>{{event.isRsvpd}}</p>
+    <p>{{event.user.is_anonymous}}</p>
     <h1 class = "eventTitle">{{ event.title }}</h1>
     <p></p>
     {% endblock %}
@@ -62,12 +64,13 @@
 							Add to calendar
 							</p>
 						</a>
+						<div class="hashtag">
+							<p class="p_hashtag">
+								{{  event.hashtags }}
+							</p>
+						</div>
 					</div>
-					<div class="hashtag">
-						<p class="p_hashtag">
-							{{  event.hashtags }}
-						</p>
-					</div>
+					
 					
 				</div>
 			<br style="clear: both;">
@@ -96,11 +99,30 @@
 					</div>
 				</div>
 				<div class ="sidecolumn">
+
+					{%if event.isRsvpd %}
+						<input type="button" class="delRSVP" onclick="deleteRSVP()" value="Remove RSVP" name="delRSVP">
+					{% else %}
+						<input type="button" class="saveRSVP" onclick="saveRSVP()" value="RSVP" name="saveRSVP">
+					<!-- <button onclick="saveRSVP()">RSVP</button> -->
+					{% endif %}
 				</div>
 			</div>
 		</div>
 		<div class ="col"></div>
 	</div>
+	<script type="text/javascript">
+		function deleteRSVP(){
+			alert("In deleteRSVP")
+
+
+		}
+
+		function saveRSVP(){
+			alert("In saveRSVP")
+			save_RSVP(1,1)
+		}
+	</script>
 {% endblock %}
 </body>
 </html>
