@@ -7,6 +7,7 @@ from .apis import check_user_name
 from .apis import user_event_rsvpd
 from .apis import save_rsvp
 from .apis import remove_rsvp
+from .apis import get_rsvp_events
 from django.http import HttpResponse
 from django.utils import dateparse
 from datetime import datetime
@@ -14,7 +15,6 @@ from django.contrib.auth import authenticate, login
 from django.contrib import auth
 from django.contrib.auth.models import User
 import re
-
 import json
 from django.http import HttpResponse
 # Create your views here.
@@ -57,12 +57,18 @@ class Constants():
 
 
 def event_list(request):
-    events=upcoming_events()#.sort(key=lambda e: e.date)[:3]
-    for event in events:
-        event["image_url"] = Utils.get_image_url(event["image"])
-        event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
-        event["event_url"]= EventDetails.get_url(event["id"])
-    return render(request, 'hub/Homepage.html', {'events':events})
+	user = request.user
+	if user.is_authenticated:
+		events=get_rsvp_events(user.id)
+	else:
+		events=upcoming_events()
+    #events=get_rsvp_events()
+
+	for event in events:
+		event["image_url"] = Utils.get_image_url(event["image"])
+		event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
+		event["event_url"]= EventDetails.get_url(event["id"])
+	return render(request, 'hub/Homepage.html', {'events':events})
 
 class EventDetails():
 	name = "event_details"
@@ -346,8 +352,7 @@ def signup(request):
 
 #@login_required
 def myevents(request):
-	#dummy content until APIs for rsvp retreival are written
-	events=upcoming_events()#.sort(key=lambda e: e.date)[:3]
+	events=get_rsvp_events(request.user.id)
 	for event in events:
 		event["image_url"] = "/media/" + event["image"]
 		event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
@@ -355,7 +360,6 @@ def myevents(request):
 
 def save_RSVP(request):
     user_id = request.GET.get('userId', None)
-    # user_id = 3
     event_id = request.GET.get('eventId', None)
     save_rsvp(user_id,event_id)
     response ={}
