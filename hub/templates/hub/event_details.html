@@ -3,22 +3,19 @@
 <html>
     <head>
     	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-			<link rel="stylesheet" type="text/css" href="{% static "css/eventDetailsStyle.css" %}">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" type="text/css" href="{% static "css/eventDetailsStyle.css" %}">
 		<link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"
  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
  crossorigin="anonymous"></script>
-   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+   		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
     </head>
     <body>
     	
     {% block title_content %}
-    <p>{{event.id}}</p>
-    <p>{{event.isRsvpd}}</p>
-    <p>{{event.user.is_anonymous}}</p>
     <h1 class = "eventTitle">{{ event.title }}</h1>
-    <p></p>
     {% endblock %}
     {% block content %}
     <div class="row">
@@ -98,31 +95,86 @@
 						</div>
 					</div>
 				</div>
-				<div class ="sidecolumn">
-
-					{%if event.isRsvpd %}
-						<input type="button" class="delRSVP" onclick="deleteRSVP()" value="Remove RSVP" name="delRSVP">
+				<div class ="sidecolumn" id = "rsvpCol">
+					{%if event.rsvpd %}
+						<input type="button" id = "removeRSVP" onclick="remove_rsvp()" value="Remove RSVP">
 					{% else %}
-						<input type="button" class="saveRSVP" onclick="saveRSVP()" value="RSVP" name="saveRSVP">
-					<!-- <button onclick="saveRSVP()">RSVP</button> -->
+						<input type="button" id="saveRSVP" onclick="save_rsvp()" value="RSVP">					
 					{% endif %}
+					
 				</div>
 			</div>
 		</div>
 		<div class ="col"></div>
 	</div>
 	<script type="text/javascript">
-		function deleteRSVP(){
-			alert("In deleteRSVP")
+		function makeAJAXCall(url,flag){
+			var eventId = "{{event.id}}";
+			var userId = "{{event.user}}";
 
+			var request = $.ajax({
+		        url: url,
+		        type: 'GET',
+		        data: {
+		          'userId': userId,
+		          'eventId': eventId
+		        },
+		        dataType: 'json',
+		       
+		    });
 
+			request.done(function(data) {
+				if(flag){
+
+					var saveRSVPBtn = document.getElementById("saveRSVP");
+					saveRSVPBtn.parentNode.removeChild(saveRSVPBtn);
+					var sidecolumnDiv = document.getElementById("rsvpCol");
+    				var removeRSVPBtn = document.createElement("button");
+    				removeRSVPBtn.id="removeRSVP";
+					removeRSVPBtn.innerHTML = "Remove RSVP";
+					removeRSVPBtn.addEventListener ("click", remove_rsvp);
+					sidecolumnDiv.appendChild(removeRSVPBtn);			
+					alert('Your RSVP has been saved successfully!');		
+
+				}else{
+
+					var removeRSVPBtn = document.getElementById("removeRSVP");
+					removeRSVPBtn.parentNode.removeChild(removeRSVPBtn);
+					var sidecolumnDiv = document.getElementById("rsvpCol");
+    				var saveRSVPBtn = document.createElement("button");
+    				saveRSVPBtn.id="saveRSVP";
+					saveRSVPBtn.innerHTML = "RSVP";
+					saveRSVPBtn.addEventListener ("click", save_rsvp);
+					sidecolumnDiv.appendChild(saveRSVPBtn);
+					alert('Your RSVP has been removed successfully!');	
+			
+				}
+				
+			});
+
+			request.fail(function(jqXHR, textStatus) {
+			      $.alert({
+					    title: 'Confirmation',
+					    content: 'Failed to process your request.',
+					});	
+			});
 		}
 
-		function saveRSVP(){
-			alert("In saveRSVP")
-			save_RSVP(1,1)
+		function remove_rsvp(){
+			makeAJAXCall('/ajax/removeRSVP/',false)
+		}
+
+		function save_rsvp(){
+			var is_anonymous = "{{event.user.is_anonymous}}";
+			if (is_anonymous){
+				window.location.href = "/login/";
+			}else{
+				makeAJAXCall('/ajax/saveRSVP/',true)
+			}
+			
 		}
 	</script>
+
 {% endblock %}
 </body>
 </html>

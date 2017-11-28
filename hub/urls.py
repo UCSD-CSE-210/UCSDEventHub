@@ -12,5 +12,8 @@ urlpatterns = [
     url(r'^login/', views.login,name='login'),
     url(r'^signup/', views.signup, name='signup'),
     url(r'^myevents/', views.myevents, name='My Events Page'),
-	url(r'^'+OrganizationPage.base_url, OrganizationPage.render_page, name=OrganizationPage.name)
+	url(r'^'+OrganizationPage.base_url, OrganizationPage.render_page, name=OrganizationPage.name),
+	url(r'^ajax/validate_username/$', views.validate_username, name='validate_username'),
+	url(r'^ajax/saveRSVP/$', views.save_RSVP, name='saveRSVP'),
+	url(r'^ajax/removeRSVP/$', views.remove_RSVP, name='removeRSVP')
 ]

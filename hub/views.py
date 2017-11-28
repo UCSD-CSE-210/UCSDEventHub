@@ -5,6 +5,8 @@ from .apis import search_events
 from .apis import upcoming_events
 from .apis import check_user_name
 from .apis import user_event_rsvpd
+from .apis import save_rsvp
+from .apis import remove_rsvp
 from django.http import HttpResponse
 from django.utils import dateparse
 from datetime import datetime
@@ -84,6 +86,7 @@ class EventDetails():
 		event["image_url"] = Utils.get_image_url(event["image"])
 		event["organizer_url"] = OrganizationPage.get_url(1)
 		event["rsvpd"] = self._get_rsvp_info(eventId)
+		event["user"] = self.request.user
 		return event
 
 	def _get_rsvp_info(self, eventId):
@@ -349,3 +352,29 @@ def myevents(request):
 		event["image_url"] = "/media/" + event["image"]
 		event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
 	return render(request, 'hub/my_events.html', {'events':events})
+
+def save_RSVP(request):
+    user_id = request.GET.get('userId', None)
+    # user_id = 3
+    event_id = request.GET.get('eventId', None)
+    save_rsvp(user_id,event_id)
+    response ={}
+    response["isSuccess"] = True
+    return HttpResponse(json.dumps(response), content_type = "application/json")
+
+		
+def remove_RSVP(request):
+	user_id = request.GET.get('userId', None)
+	# user_id = 2
+	event_id = request.GET.get('eventId', None)
+	remove_rsvp(user_id,event_id)
+	response ={}
+	response["isSuccess"] = True
+	return HttpResponse(json.dumps(response), content_type = "application/json")
+
+
+def validate_username(request):
+    username = request.GET.get('username', None)
+    response ={}
+    response["isSuccess"] = True
+    return HttpResponse(json.dumps(response), content_type = "application/json")
