@@ -68,7 +68,9 @@ def get_org_details(org_id):
 
 def get_rsvp_events(user_id):
     user_events = RSVP.objects.filter(rsvp_user_id=user_id)
-    events = [Event.objects.get(id=e.rsvp_event_id) for e in user_events]
+    events=[]
+    for e in user_events:
+        events += (Event.objects.filter(id=e.rsvp_event_id).all().values())
     return events
 
 def get_rsvp_count(event_id):
