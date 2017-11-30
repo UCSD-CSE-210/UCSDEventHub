@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% extends 'hub/base.html' %}
+{% extends 'base.html' %}
 {% load staticfiles %}
 <html lang="en" >
 <head>
@@ -39,10 +39,10 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
-      
+
       {% if form.errors %}
         <p class=" label label-danger">
-          Your username and password didn't match. 
+          Your username and password didn't match.
           Please try again.
         </p>
       {% endif %}

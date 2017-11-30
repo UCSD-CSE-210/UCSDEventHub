@@ -1,0 +1,9 @@
+[run]
+omit =
+    tests/*
+    hub/migrations/*
+    hub/static/*
+    hub/templates/*
+    eventhub/*
+    media/*
+    static/*

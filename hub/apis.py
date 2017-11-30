@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from datetime import datetime
 import pytz
-from .models import Event, UserProfile, OrganizationDetails, RSVP
+from hub.models import Event, UserProfile, OrganizationDetails, RSVP
 from django.db.models import Count
 
 pst = pytz.timezone('US/Pacific')

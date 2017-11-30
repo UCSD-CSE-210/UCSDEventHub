@@ -1,13 +1,13 @@
 from django.shortcuts import render
-from .models import Event,OrganizationDetails, UserProfile
-from .apis import add_event_to_db,event_details
-from .apis import search_events
-from .apis import upcoming_events
-from .apis import check_user_name
-from .apis import user_event_rsvpd
-from .apis import save_rsvp
-from .apis import remove_rsvp
-from .apis import get_rsvp_events
+from hub.models import Event,OrganizationDetails, UserProfile
+from hub.apis import add_event_to_db,event_details
+from hub.apis import search_events
+from hub.apis import upcoming_events
+from hub.apis import check_user_name
+from hub.apis import user_event_rsvpd
+from hub.apis import save_rsvp
+from hub.apis import remove_rsvp
+from hub.apis import get_rsvp_events
 from django.http import HttpResponse
 from django.utils import dateparse
 from datetime import datetime
@@ -62,7 +62,7 @@ def event_list(request):
 		events=get_rsvp_events(user.id)
 	else:
 		events=upcoming_events()
-    #events=get_rsvp_events()
+	# events=get_rsvp_events()
 
 	for event in events:
 		event["image_url"] = Utils.get_image_url(event["image"])
@@ -366,7 +366,7 @@ def save_RSVP(request):
     response["isSuccess"] = True
     return HttpResponse(json.dumps(response), content_type = "application/json")
 
-		
+
 def remove_RSVP(request):
 	user_id = request.GET.get('userId', None)
 	# user_id = 2

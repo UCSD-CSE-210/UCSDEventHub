@@ -1,4 +1,4 @@
-{% extends 'hub\base.html' %}
+{% extends 'base.html' %}
 {% load staticfiles %}
 <html>
     <head>
@@ -13,7 +13,7 @@
 
     </head>
     <body>
-    	
+
     {% block title_content %}
     <h1 class = "eventTitle">{{ event.title }}</h1>
     {% endblock %}
@@ -57,7 +57,7 @@
 
 					<div class="calendar">
 						<a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{event.title}}&dates={{event.googleDate}}&details={{event.description}}&location={{event.location}}&trp=false&sprop=&sprop=name" target="_blank">
-							<p class="p_calendar">	
+							<p class="p_calendar">
 							Add to calendar
 							</p>
 						</a>
@@ -67,19 +67,19 @@
 							</p>
 						</div>
 					</div>
-					
-					
+
+
 				</div>
 			<br style="clear: both;">
 			</div>
 		</div>
 		<div class ="col"></div>
-		
+
 	</div>
 	<div class="row" style="margin-top:10px">
 		<div class ="col"></div>
 		<div class = "col-md-10">
-			
+
 			<div id="wrapper">
 				<div class ="description">
 					<h3 class ="heading">Description</h3>
@@ -99,9 +99,9 @@
 					{%if event.rsvpd %}
 						<input type="button" id = "removeRSVP" onclick="remove_rsvp()" value="Remove RSVP">
 					{% else %}
-						<input type="button" id="saveRSVP" onclick="save_rsvp()" value="RSVP">					
+						<input type="button" id="saveRSVP" onclick="save_rsvp()" value="RSVP">
 					{% endif %}
-					
+
 				</div>
 			</div>
 		</div>
@@ -120,7 +120,7 @@
 		          'eventId': eventId
 		        },
 		        dataType: 'json',
-		       
+
 		    });
 
 			request.done(function(data) {
@@ -133,8 +133,8 @@
     				removeRSVPBtn.id="removeRSVP";
 					removeRSVPBtn.innerHTML = "Remove RSVP";
 					removeRSVPBtn.addEventListener ("click", remove_rsvp);
-					sidecolumnDiv.appendChild(removeRSVPBtn);			
-					alert('Your RSVP has been saved successfully!');		
+					sidecolumnDiv.appendChild(removeRSVPBtn);
+					alert('Your RSVP has been saved successfully!');
 
 				}else{
 
@@ -146,17 +146,17 @@
 					saveRSVPBtn.innerHTML = "RSVP";
 					saveRSVPBtn.addEventListener ("click", save_rsvp);
 					sidecolumnDiv.appendChild(saveRSVPBtn);
-					alert('Your RSVP has been removed successfully!');	
-			
+					alert('Your RSVP has been removed successfully!');
+
 				}
-				
+
 			});
 
 			request.fail(function(jqXHR, textStatus) {
 			      $.alert({
 					    title: 'Confirmation',
 					    content: 'Failed to process your request.',
-					});	
+					});
 			});
 		}
 
@@ -171,7 +171,7 @@
 			}else{
 				makeAJAXCall('/ajax/saveRSVP/',true)
 			}
-			
+
 		}
 	</script>
 

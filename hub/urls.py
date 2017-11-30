@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.views.generic import TemplateView
-from . import views
-from .views import SearchListing, EventUpload, OrganizationPage, EventDetails
+from hub import views
+from hub.views import SearchListing, EventUpload, OrganizationPage, EventDetails
 
 urlpatterns = [
     url(r'^$', views.event_list, name='event_list'),
