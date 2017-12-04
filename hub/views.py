@@ -58,10 +58,10 @@ class Constants():
 
 def event_list(request):
 	user = request.user
-	if user.is_authenticated:
-		events=get_rsvp_events(user.id)
-	else:
-		events=upcoming_events()
+	#if user.is_authenticated:
+	#	events=get_rsvp_events(user.id)
+	#else:
+	events=upcoming_events()
 	# events=get_rsvp_events()
 
 	for event in events:
@@ -253,6 +253,7 @@ class OrganizationPage():
 	class Response():
 		def __init__(self):
 			self.org_details = None
+			self.events = []
 
 	def __init__(self, request):
 		self.request = request
@@ -271,9 +272,15 @@ class OrganizationPage():
 			"image": Utils.get_image_url("events/Halloween-Hero-1-A.jpeg"),
 			"email":"gsa@ucsd.com"
 		}
+		events = upcoming_events()
+		for event in events:
+			event["image_url"] = Utils.get_image_url(event["image"])
+			event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
+			event["event_url"]= EventDetails.get_url(event["id"])
+		
 		return render(self.request, OrganizationPage.template,
-								{"organizer": dummy}
-								)
+								{"organizer": dummy,
+								"events":events})
 
 	def render(self):
 		id = self._get_id()

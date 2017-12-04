@@ -1,16 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 <html>
-    <head>
-    	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-			<link rel="stylesheet" type="text/css" href="{% static "css/eventDetailsStyle.css" %}">
-		<link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js"
- integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
- crossorigin="anonymous"></script>
-   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    </head>
+    
     <body>
 
      {% block title_content %}
@@ -61,18 +52,85 @@
 		<div class = "col-md-10">
 
 			<div id="wrapper">
-				<div class ="description">
+				<div class ="description" style="height: unset;">
 					<h3 class ="heading">About Me</h3>
 					<div style="padding-bottom:20px">
 						<p class="p_description">{{organizer.description}} </p>
 					</div>
 				</div>
-				<div class ="sidecolumn">
+				<div class ="sidecolumn" style="height: unset;">
 				</div>
 			</div>
 		</div>
 		<div class ="col"></div>
 	</div>
-{% endblock %}
+	<div class="row" style="margin-top:10px">
+		<div class ="col"></div>
+		<div class = "col-md-10">
+
+			<div id="wrapper">
+				<div class ="description" style="height: unset;">
+					<h3 class ="heading">Upcoming Events</h3>
+				</div>
+				<div class ="sidecolumn" style="height: unset;">
+				</div>
+			</div>
+		</div>
+		<div class ="col"></div>
+	</div>
+	<div class="row">
+		<div class="col">
+		</div>
+		<div class="col-md-10" style="padding: 0px">
+			<div class="album text-muted" style="background:transparent">
+				<div class="container">
+					<div class="row">
+						{% for event in events %}
+						<div class="card">
+							<!-- <div class="card_i"> -->
+							<div class="homepage_poster">
+								<a href="{{ event.event_url }}">
+								<img src= "{{ event.image_url }}" class="homepage_poster_image">
+								</a>
+							</div>
+							<!-- </div> -->
+							<div class="card-text">
+								<a href="{{ event.event_url }}">
+									<div class="homepage_title">
+										<p class="homepage_p_title">
+											{{ event.title }}
+										</p>
+									</div>
+								</a>
+								<div class="homepage_datetime">
+									<p class="homepage_p_datetime">
+										{{ event.start_date }}
+									</p>
+								</div>
+								<div class="homepage_location">
+									<p class="homepage_p_location">
+										{{ event.location }}
+									</p>
+								</div>
+								<div class="homepage_hashtag">
+									<p class="homepage_p_hashtag" style="
+										margin-top: 0px;
+										">
+										{{ event.hashtags }}
+									</p>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div class="col">
+		</div>
+	</div>
+	{% endblock %}
 </body>
 </html>
