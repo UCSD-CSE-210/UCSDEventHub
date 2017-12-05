@@ -63,9 +63,11 @@
             <input class="form-control mr-sm-4 span10" id="search" method="put" type="text" placeholder="Search" onkeypress= "searchKeyPressListener(event)">
             <button class="btn btn-outline-success my-2 my-sm-0" onclick="SubmitSearchQuery()" id="searchButton">Search</button>
           </div>
-            <li class="nav-item">
-              <a class="nav-link" href="/event_upload">Create Event</a>
-            </li>
+            {% if request.user.is_authenticated and not is_user_attendee %}
+              <li class="nav-item">
+                <a class="nav-link" href="/event_upload">Create Event</a>
+              </li>
+            {% endif %}
             <li class="nav-item">
                 {% if not request.user.is_authenticated %}
                     <a class="nav-link" href="/signup/"><span class="glyphicon glyphicon-user"></span> Register</a>

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title_content %}
+    <h1>Authorization Denied</h1>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <p> You are not authorized to view this page. Please send a mail to admin to request access </p>
+                <div class="col-sm-6 col-sm-offset-3">
+                    <button tabindex="4" class="form-control btn btn-register" onclick="location.href='/'">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

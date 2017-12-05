@@ -168,7 +168,10 @@ class EventUpload():
 		return div
 
 	def _render_event_upload(self,request):
-		return render(request, self.template, {'div_elem': " ", 'is_user_attendee': self.user_attendee})
+		if request.user.is_authenticated and not self.user_attendee:
+			return render(request, self.template, {'div_elem': " ", 'is_user_attendee': self.user_attendee})
+		else:
+			return render(request, 'hub/permission_denied.html')
 
 	def _submit_event(self,request):
 		data = request.POST.items()

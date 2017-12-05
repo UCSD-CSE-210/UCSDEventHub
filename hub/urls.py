@@ -17,5 +17,6 @@ urlpatterns = [
 	url(r'^'+OrganizationPage.base_url, OrganizationPage.render_page, name=OrganizationPage.name),
 	url(r'^ajax/validate_username/$', views.validate_username, name='validate_username'),
     url(r'^'+RSVP.save_rsvp_base_url, RSVP.save_RSVP, name=RSVP.name),
-    url(r'^'+RSVP.remove_rsvp_base_url, RSVP.remove_RSVP, name=RSVP.name)
+    url(r'^'+RSVP.remove_rsvp_base_url, RSVP.remove_RSVP, name=RSVP.name),
+    url(r'^permission_denied/$', TemplateView.as_view(template_name='permission_denied.html')),
 ]
