@@ -1,0 +1,132 @@
+.search_event_tile_wrapper{
+  border-width: 1px;
+  border-style: outset;
+  border-color: lightgrey;
+  display: flex !important;
+  width: 100%;
+  height: 260px;
+  background: rgba(211, 211, 211, 0.16);
+  border-radius: 4px;
+  margin-top:17px;
+  margin-bottom:17px;
+}
+.search_poster{
+  float: left;
+  margin-right: 0px;
+  width:45%;
+  /* height: 180px;
+  */border-right: inherit;
+  padding: 2px;
+  background:lightgrey;
+  border-radius: 4px;
+}
+.search_poster_image{
+  /* margin: 3px; */
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  
+}
+.search_details{
+  width: 55%;
+  
+  /* border: black; */
+  /* background-color: snow; */
+  /* height: 2px; */
+  /* float: right; */
+  /* margin-left: 0; */
+  /* padding-left: 10px; */
+  /* margin-left: 0px; */
+  display: inline-block;
+  box-sizing:unset;
+}
+.search_title{
+  border-bottom-style: solid;
+  border-bottom-color: lightgrey;
+  border-bottom-width: 1px;
+  padding-left: 10px;
+}
+.search_p_title{
+  font-weight: bold;
+  font-family: inherit;
+  /* margin-top: 2px; */
+  /* margin-bottom: 0px; */
+  padding-top: 3px;
+  padding-bottom: 3px;
+  color: dimgrey;
+  font-size: 25px;
+  margin:0px;
+}
+.search_datetime{
+  padding-left: 10px;
+}
+.search_p_datetime{
+  font-family: monospace;
+  font-size: 19px;
+  color: gray;
+  margin:0px;
+}
+.search_organizer{
+  padding-top: 6px;
+  padding-left: 10px;
+  padding-bottom: 55px;
+
+}
+.search_p_organizer{
+  font-family: monospace;
+  font-size: 19px;
+  color: gray;
+  margin:0px;
+}
+.search_location{
+  padding-left: 10px;
+  padding-top: 6px;
+}
+.search_p_location{
+  font-family: monospace;
+  font-size: 19px;
+  color: gray;
+  margin:0px;
+}
+.search_hashtag{
+  padding-left: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.search_p_hashtag{
+  font-family: monospace;
+  font-size: 19px;
+  color: gray;
+  margin:0px;
+}
+#custom-search-input{
+  padding: 3px;
+  border: solid 3px #343a40;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+#custom-search-input input{
+  border: 0;
+  box-shadow: none;
+}
+
+#custom-search-input button{
+  margin: 2px 0 0 0;
+  background: none;
+  box-shadow: none;
+  border: 0;
+  color: #666666;
+  padding: 0 8px 0 10px;
+  border-left: solid 1px #ccc;
+}
+
+#custom-search-input button:hover{
+  border: 0;
+  box-shadow: none;
+  border-left: solid 1px #ccc;
+}
+
+#custom-search-input .glyphicon-search{
+  font-size: 23px;
+}
