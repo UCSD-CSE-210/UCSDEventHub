@@ -29,6 +29,11 @@ def upcoming_events():
         -get_rsvp_count(item['id']),item['start_date']))
     return events_results
 
+def upcoming_events_by_org(orgid):
+    today_date = datetime.now(pst).replace(hour=0, minute=0, second=0)
+    events_results = list(Event.objects.filter(org_id=orgid).filter(start_date__gte=today_date).all().values())
+    return events_results
+
 def event_details(event_id):
     return list(Event.objects.filter(id=event_id).all().values())
 
