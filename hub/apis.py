@@ -9,6 +9,10 @@ pst = pytz.timezone('US/Pacific')
 # Hard coding PST as timezone as one time fix.
 # Need to update this to get dynamic tz conversion
 
+def is_user_attendee(user):
+    if user.is_authenticated:
+        return UserProfile.objects.filter(user=user).exists()
+
 def search_events(search_text):
     today_date = datetime.now(pst).replace(hour=0, minute=0, second=0)
     events_results = []

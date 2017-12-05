@@ -8,6 +8,7 @@ from hub.apis import user_event_rsvpd
 from hub.apis import save_rsvp
 from hub.apis import remove_rsvp
 from hub.apis import get_rsvp_events
+from hub.apis import is_user_attendee
 from django.http import HttpResponse
 from django.utils import dateparse
 from datetime import datetime
@@ -58,6 +59,7 @@ class Constants():
 
 def event_list(request):
 	user = request.user
+	user_attendee = is_user_attendee(user)
 	#if user.is_authenticated:
 	#	events=get_rsvp_events(user.id)
 	#else:
@@ -68,7 +70,7 @@ def event_list(request):
 		event["image_url"] = Utils.get_image_url(event["image"])
 		event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
 		event["event_url"]= EventDetails.get_url(event["id"])
-	return render(request, 'hub/Homepage.html', {'events':events})
+	return render(request, 'hub/Homepage.html', {'events':events, 'is_user_attendee': user_attendee})
 
 class EventDetails():
 	name = "event_details"
@@ -78,9 +80,11 @@ class EventDetails():
 
 	def __init__(self, request):
 		self.request = request
+		self.user_attendee = is_user_attendee(request.user)
+
 	def _render_me(self):
 		return render(
-			self.request, EventDetails.template, {'event':self.event})
+			self.request, EventDetails.template, {'event':self.event, 'is_user_attendee': self.user_attendee})
 
 	def _get_event_details(self,eventId):
 		evntId = int(eventId)
@@ -124,6 +128,10 @@ class EventUpload():
 	submit_view_name = "submit_event"
 	template = Constants.app_name+"/event_upload.html"
 
+	def __init__(self, request):
+		self.request = request
+		self.user_attendee = is_user_attendee(request.user)
+
 	# Event Upload related views
 	def _get_alert_html(self,text,alerttype):
 		div=""
@@ -138,7 +146,7 @@ class EventUpload():
 		return div
 
 	def _render_event_upload(self,request):
-		return render(request, self.template, {'div_elem': " "})
+		return render(request, self.template, {'div_elem': " ", 'is_user_attendee': self.user_attendee})
 
 	def _submit_event(self,request):
 		data = request.POST.items()
@@ -164,7 +172,7 @@ class EventUpload():
 
 	@staticmethod
 	def render_page(request):
-		module = EventUpload()
+		module = EventUpload(request)
 		return module._render_event_upload(request)
 
 	@staticmethod
@@ -186,6 +194,7 @@ class SearchListing():
 	def __init__(self, request):
 		self.response = SearchListing.Response()
 		self.request = request
+		self.user_attendee = is_user_attendee(request.user)
 
 	def _get_keywords(self):
 		return self.request.GET.get("q")
@@ -216,7 +225,7 @@ class SearchListing():
 	def _render_me(self):
 		return render(self.request, SearchListing.template,
 								{"events":self.response.events,
-								"empty_search":self.response.empty_search}
+								"empty_search":self.response.empty_search, 'is_user_attendee': self.user_attendee}
 								)
 
 
@@ -258,6 +267,7 @@ class OrganizationPage():
 	def __init__(self, request):
 		self.request = request
 		self.response = OrganizationPage.Response()
+		self.user_attendee = is_user_attendee(request.user)
 
 	def _get_id(self):
 		return self.request.GET.get("id")
@@ -277,10 +287,10 @@ class OrganizationPage():
 			event["image_url"] = Utils.get_image_url(event["image"])
 			event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
 			event["event_url"]= EventDetails.get_url(event["id"])
-		
+
 		return render(self.request, OrganizationPage.template,
 								{"organizer": dummy,
-								"events":events})
+								"events":events, 'is_user_attendee': self.user_attendee})
 
 	def render(self):
 		id = self._get_id()
@@ -360,10 +370,11 @@ def signup(request):
 #@login_required
 def myevents(request):
 	events=get_rsvp_events(request.user.id)
+	user_attendee = is_user_attendee(request.user)
 	for event in events:
 		event["image_url"] = "/media/" + event["image"]
 		event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
-	return render(request, 'hub/my_events.html', {'events':events})
+	return render(request, 'hub/my_events.html', {'events':events, 'is_user_attendee': user_attendee})
 
 def save_RSVP(request):
     user_id = request.GET.get('userId', None)

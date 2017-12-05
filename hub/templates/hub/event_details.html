@@ -96,10 +96,10 @@
 					</div>
 				</div>
 				<div class ="sidecolumn" id = "rsvpCol">
-					{%if event.rsvpd %}
+					{% if event.rsvpd %}
 						<input type="button" id = "removeRSVP" onclick="remove_rsvp()" value="Remove RSVP">
 					{% else %}
-						<input type="button" id="saveRSVP" onclick="save_rsvp()" value="RSVP">
+						<input type="button" id="saveRSVP" onclick="save_rsvp({{ event.user.is_authenticated|yesno:'true,false' }})" value="RSVP">
 					{% endif %}
 
 				</div>
@@ -110,7 +110,7 @@
 	<script type="text/javascript">
 		function makeAJAXCall(url,flag){
 			var eventId = "{{event.id}}";
-			var userId = "{{event.user}}";
+			var userId = "{{event.user.id}}";
 
 			var request = $.ajax({
 		        url: url,
@@ -153,7 +153,7 @@
 			});
 
 			request.fail(function(jqXHR, textStatus) {
-			      $.alert({
+			      alert({
 					    title: 'Confirmation',
 					    content: 'Failed to process your request.',
 					});
@@ -164,12 +164,11 @@
 			makeAJAXCall('/ajax/removeRSVP/',false)
 		}
 
-		function save_rsvp(){
-			var is_anonymous = "{{event.user.is_anonymous}}";
-			if (is_anonymous){
+		function save_rsvp(is_auth){
+			if (is_auth){
+				makeAJAXCall('/ajax/saveRSVP/',true);
+			} else {
 				window.location.href = "/login/";
-			}else{
-				makeAJAXCall('/ajax/saveRSVP/',true)
 			}
 
 		}
