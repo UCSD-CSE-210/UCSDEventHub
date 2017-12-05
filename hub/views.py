@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from hub.models import Event,OrganizationDetails, UserProfile
 from hub.apis import add_event_to_db,event_details
 from hub.apis import search_events
@@ -344,11 +344,15 @@ def login(request):
 		user = authenticate(request, username=user_name, password=password)
 		if user is not None:
 			auth.login(request,user)
-			return HttpResponse("<h1>Congrats!! User Login Successful</h1>")
+			return redirect(Homepage.render_page)
 		else:
 			return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('Wrong Username, Password combination','fail')})
 	else:
 		return render(request, 'hub/login.html', {})
+
+def logout(request):
+	auth.logout(request)
+	return redirect(Homepage.render_page)
 
 def signup(request):
 	if(request.method == "POST"):
