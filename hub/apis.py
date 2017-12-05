@@ -85,3 +85,9 @@ def get_rsvp_events(user_id):
 def get_rsvp_count(event_id):
     return RSVP.objects.filter(rsvp_event_id=event_id).values(
         'rsvp_event_id').count()
+
+def get_organization_id(org_name):
+    return OrganizationDetails.objects.get(user_name=org_name).organization_id
+
+def get_organization_name(org_id):
+    return OrganizationDetails.objects.get(organization_id=org_id).org_name

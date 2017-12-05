@@ -6,22 +6,6 @@ from django.dispatch import receiver
 import pytz
 
 # Create your models here.
-class Event(models.Model):
-    title = models.CharField(max_length=255)
-    description = models.TextField(null = True)
-    location = models.CharField(max_length=255)
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
-    image = models.ImageField(upload_to="events")
-    hashtags = models.CharField(max_length=255)
-    #org_id = models.IntegerField()
-    organizer = models.CharField(max_length=255)
-    contact_email = models.EmailField()
-    # create_user = models.CharField(max_length = 255, validators=[MinLengthValidator(1)])
-    # create_date = models.DateTimeField(null = False)
-    # modify_user = models.CharField(max_length = 255, validators=[MinLengthValidator(1)])
-    # modify_date = models.DateTimeField(null = False)
-    # delete_date = models.DateTimeField(null = True)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(
@@ -37,6 +21,7 @@ class UserProfile(models.Model):
 class OrganizationDetails(models.Model):
     organization = models.OneToOneField(
         User, on_delete = models.CASCADE, primary_key=True)
+    org_name = models.CharField(max_length = 255, null = False, default="")
     user_name = models.CharField(max_length = 255, null = False, default="")
     description = models.TextField(null = True, blank=True)
     contact_first_name = models.CharField(max_length = 255, null = False)
@@ -52,6 +37,23 @@ class OrganizationDetails(models.Model):
         validators = [phone_regex], max_length = 15, blank = True, null=True)
     org_image = models.ImageField(
         upload_to="orgs", default=None, null = True, blank = True)
+
+class Event(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField(null = True)
+    location = models.CharField(max_length=255)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+    image = models.ImageField(upload_to="events")
+    hashtags = models.CharField(max_length=255)
+    #org_id = models.IntegerField()
+    contact_email = models.EmailField()
+    org = models.ForeignKey(OrganizationDetails, on_delete=models.CASCADE)
+    # create_user = models.CharField(max_length = 255, validators=[MinLengthValidator(1)])
+    # create_date = models.DateTimeField(null = False)
+    # modify_user = models.CharField(max_length = 255, validators=[MinLengthValidator(1)])
+    # modify_date = models.DateTimeField(null = False)
+    # delete_date = models.DateTimeField(null = True)
 
 
 class RSVP(models.Model):

@@ -9,6 +9,8 @@ from hub.apis import save_rsvp
 from hub.apis import remove_rsvp
 from hub.apis import get_rsvp_events
 from hub.apis import is_user_attendee
+from hub.apis import get_organization_id
+from hub.apis import get_organization_name
 from django.http import HttpResponse
 from django.utils import dateparse
 from datetime import datetime
@@ -113,7 +115,8 @@ class EventDetails():
 		event["start_day"] = event["start_date"].strftime("%a, %b %d")
 		event["start_time"] = event["start_date"].strftime("%I:%M %p")
 		event["image_url"] = Utils.get_image_url(event["image"])
-		event["organizer_url"] = OrganizationPage.get_url(1)
+		event["organizer_url"] = OrganizationPage.get_url(event["org_id"])
+		event["org_name"] = get_organization_name(event["org_id"])
 		event["rsvpd"] = self._get_rsvp_info(eventId)
 		event["user"] = self.request.user
 		return event
@@ -176,7 +179,7 @@ class EventUpload():
 		new_event = Event()
 		new_event.title = request.POST.get('n_title',"")
 		new_event.contact_email = request.POST.get('n_email',"")
-		new_event.organizer = request.POST.get('n_org',"")
+		# new_event.organizer = request.POST.get('n_org',"")
 		new_event.location = request.POST.get('n_loc',"")
 		new_event.description = request.POST.get('n_title',"n_desc")
 		startdate_object = datetime.strptime(request.POST.get('n_startdate'),'%m/%d/%Y %I:%M %p')
@@ -186,6 +189,7 @@ class EventUpload():
 		uploaded_poster = request.FILES['n_uploadedposter']
 		new_event.image = uploaded_poster
 		new_event.hashtags = request.POST.get('n_tags')
+		new_event.org_id = get_organization_id(request.user.username)
 		add_event_to_db(new_event)
 		return render(request, 'hub/event_upload.html', {'div_elem':self._get_alert_html('Event Upload is Successful','sucess')})
 
@@ -196,7 +200,7 @@ class EventUpload():
 
 	@staticmethod
 	def event_upload_handler(request):
-		module = EventUpload()
+		module = EventUpload(request)
 		return module._submit_event(request)
 
 
@@ -373,6 +377,7 @@ def signup(request):
 			new_org = OrganizationDetails()
 			new_org.user = new_django_user
 			new_org.user_name = user_name
+			new_org.org_name = request.POST.get("n_org_name", "")
 			new_org.description = request.POST.get("n_org_desc","")
 			new_org.contact_first_name = request.POST.get("n_org_poc_fn","")
 			new_org.contact_last_name = request.POST.get("n_org_poc_ln","")
