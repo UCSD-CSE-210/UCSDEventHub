@@ -290,20 +290,22 @@ class OrganizationPage():
 			"image": Utils.get_image_url("events/Halloween-Hero-1-A.jpeg"),
 			"email":"gsa@ucsd.com"
 		}
-		events = upcoming_events()
-		for event in events:
+		for event in self.events:
 			event["image_url"] = Utils.get_image_url(event["image"])
 			event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
 			event["event_url"]= EventDetails.get_url(event["id"])
 		
 		return render(self.request, OrganizationPage.template,
 								{"organizer": dummy,
-								"events":events})
+								"events":self.events})
 
 	def render(self):
 		id = self._get_id()
 		organizer = get_event_details(id)
 		self.response.org_details = organizer
+		self.events = upcoming_events()
+		#self.events = upcoming_events_by_org(id)
+		
 		return self._render_me()
 
 	@staticmethod

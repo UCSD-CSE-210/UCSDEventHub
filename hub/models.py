@@ -14,6 +14,7 @@ class Event(models.Model):
     end_date = models.DateTimeField()
     image = models.ImageField(upload_to="events")
     hashtags = models.CharField(max_length=255)
+    #org_id = models.IntegerField()
     organizer = models.CharField(max_length=255)
     contact_email = models.EmailField()
     # create_user = models.CharField(max_length = 255, validators=[MinLengthValidator(1)])
