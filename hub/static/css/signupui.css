@@ -15,3 +15,8 @@ signup-body {
     margin-bottom: 1em;
 }
 
+.form-horizontal .control-label{
+  /* text-align:right; */
+  /* display:block; */
+  text-align:left;
+}

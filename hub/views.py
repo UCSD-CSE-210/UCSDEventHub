@@ -57,27 +57,46 @@ class Constants():
 	media_path="/media/"
 
 
-def event_list(request):
-	user = request.user
-	user_attendee = is_user_attendee(user)
-	#if user.is_authenticated:
-	#	events=get_rsvp_events(user.id)
-	#else:
-	events=upcoming_events()
-	# events=get_rsvp_events()
+class Homepage():
+	base_url = "$"
+	template = Constants.app_name+"/Homepage.html"
+	name ='event_list'
 
-	for event in events:
-		event["image_url"] = Utils.get_image_url(event["image"])
-		event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
-		event["event_url"]= EventDetails.get_url(event["id"])
-	return render(request, 'hub/Homepage.html', {'events':events, 'is_user_attendee': user_attendee})
+	def __init__(self, request):
+		self.request = request
+		user = request.user
+		self.user_attendee = is_user_attendee(user)
+
+	def _render_me(self):
+		return render(self.request, Homepage.template, {'events':self.events, 'is_user_attendee': self.user_attendee})
+
+	def event_list(self):
+		user = self.request.user
+		events=upcoming_events()
+		for event in events:
+			event["image_url"] = Utils.get_image_url(event["image"])
+			event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
+			event["event_url"]= EventDetails.get_url(event["id"])
+		return events
+		#return render(request, 'hub/Homepage.html', {'events':events})
+
+	def render(self):
+		self.events = self.event_list()
+		return self._render_me()
+
+	@staticmethod
+	def render_page(request):
+		m = Homepage(request)
+		return m.render()
+
+	@staticmethod
+	def get_url(id):
+		return "/"+EventDetails.base_url +"?id="+str(id)
 
 class EventDetails():
 	name = "event_details"
 	base_url = "event_details/"
 	template = Constants.app_name+"/event_details.html"
-
-
 	def __init__(self, request):
 		self.request = request
 		self.user_attendee = is_user_attendee(request.user)
@@ -367,33 +386,66 @@ def signup(request):
 	else:
 		return render(request, 'hub/signup.html', {})
 
-#@login_required
-def myevents(request):
-	events=get_rsvp_events(request.user.id)
-	user_attendee = is_user_attendee(request.user)
-	for event in events:
-		event["image_url"] = "/media/" + event["image"]
-		event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
-	return render(request, 'hub/my_events.html', {'events':events, 'is_user_attendee': user_attendee})
+class Myevents():
+	base_url = "myevents/"
+	template = Constants.app_name+"/my_events.html"
+	name ='My Events Page'
 
-def save_RSVP(request):
-    user_id = request.GET.get('userId', None)
-    event_id = request.GET.get('eventId', None)
-    save_rsvp(user_id,event_id)
-    response ={}
-    response["isSuccess"] = True
-    return HttpResponse(json.dumps(response), content_type = "application/json")
+	def __init__(self, request):
+		self.request = request
+		self.user_attendee = is_user_attendee(request.user)
 
+	def _render_me(self):
+		return render(self.request, Myevents.template, {'events':self.events, 'is_user_attendee': self.user_attendee})
 
-def remove_RSVP(request):
-	user_id = request.GET.get('userId', None)
-	# user_id = 2
-	event_id = request.GET.get('eventId', None)
-	remove_rsvp(user_id,event_id)
-	response ={}
-	response["isSuccess"] = True
-	return HttpResponse(json.dumps(response), content_type = "application/json")
+	def event_list(self):
+		events=get_rsvp_events(self.request.user.id)
+		for event in events:
+			event["image_url"] = Utils.get_image_url(event["image"])
+			event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
+			event["event_url"]= EventDetails.get_url(event["id"])
+		return events
 
+	def render(self):
+		self.events = self.event_list()
+		return self._render_me()
+
+	#@login_required
+	@staticmethod
+	def render_page(request):
+		m = Myevents(request)
+		return m.render()
+
+	@staticmethod
+	def get_url(id):
+		return "/"+Myevents.base_url +"?id="+str(id)
+
+class RSVP():
+	name = "updateRSVP"
+	save_rsvp_base_url = "ajax/saveRSVP/"
+	remove_rsvp_base_url = "ajax/removeRSVP/"
+
+	def __init__(self, request):
+		self.request = request
+
+	@staticmethod
+	def save_RSVP(request):
+	    user_id = request.GET.get('userId', None)
+	    event_id = request.GET.get('eventId', None)
+	    save_rsvp(user_id,event_id)
+	    response ={}
+	    response["isSuccess"] = True
+	    return HttpResponse(json.dumps(response), content_type = "application/json")
+
+	@staticmethod
+	def remove_RSVP(request):
+		user_id = request.GET.get('userId', None)
+		# user_id = 2
+		event_id = request.GET.get('eventId', None)
+		remove_rsvp(user_id,event_id)
+		response ={}
+		response["isSuccess"] = True
+		return HttpResponse(json.dumps(response), content_type = "application/json")
 
 def validate_username(request):
     username = request.GET.get('username', None)
