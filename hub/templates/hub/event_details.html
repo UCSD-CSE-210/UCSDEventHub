@@ -34,11 +34,14 @@
 					<div class="datetime">
 						<p class="p_datetime">
 							{{  event.start_day }}
+							{%  if not event.ending_same_day %}
+							  - {{event.end_day}}
+							{%  endif%}
 						</p>
 					</div>
 					<div class="datetime">
 						<p class="p_datetime">
-							{{  event.start_time }}
+							{{  event.start_time }} - {{  event.end_time }}
 						</p>
 					</div>
 					<div class="location">
@@ -46,7 +49,6 @@
 							At: {{event.location}}
 						</p>
 					</div>
-
 					<div class="organizer">
 						<p class="p_organizer">
 							By: <a href="{{ event.organizer_url }}">

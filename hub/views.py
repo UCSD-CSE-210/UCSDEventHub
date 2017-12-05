@@ -112,8 +112,14 @@ class EventDetails():
 		events = event_details(evntId)
 		event = events[0]
 		event["googleDate"] = event["start_date"].strftime("%Y%m%dT%H%M%S")+"/"+event["end_date"].strftime("%Y%m%dT%H%M%S")
-		event["start_day"] = event["start_date"].strftime("%a, %b %d")
-		event["start_time"] = event["start_date"].strftime("%I:%M %p")
+		event["start_day"] = Utils.format_day(event["start_date"])
+		event["end_day"] = Utils.format_day(event["end_date"])
+		event["start_time"] = Utils.format_time(event["start_date"])
+		event["end_time"] = Utils.format_time(event["end_date"])
+		if event["start_day"] == event["end_day"]:
+			event["ending_same_day"]=True
+		else:
+			event["ending_same_day"]=False
 		event["image_url"] = Utils.get_image_url(event["image"])
 		event["organizer_url"] = OrganizationPage.get_url(event["org_id"])
 		event["org_name"] = get_organization_name(event["org_id"])
