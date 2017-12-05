@@ -17,8 +17,9 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static "css/loginui.css" %}">
 <div class="container">
-  <div class="row">
+    <div class="col-md-6 col-centered">
     {{ div_elem|safe }}
+    </div>
     <div class="col-md-6 col-centered">
       <form id="login-form" method="post" action="{% url 'login' %}" >
         {% csrf_token %}
@@ -31,10 +32,10 @@
           <label for="id_password">Password<span class="req"> *</span></label>
           <input type="password" name="n_password" class="form-control" id="id_password" placeholder="Password">
         </div>
-        <div class="form-check">
-          <label class="form-check-label">
+        <div class="form-group row form-check">
+          <label class="form-check-label" for="i_is_org">
             <input type="checkbox" name="n_is_org" id="i_is_org" class="form-check-input">
-            Login as Organizer
+               &nbsp &nbsp &nbsp Login as Organizer
           </label>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>

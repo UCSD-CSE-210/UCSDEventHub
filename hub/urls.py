@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^'+SearchListing.base_url, SearchListing.render_page, name=SearchListing.name),
     url(r'^'+EventUpload.submit_url, EventUpload.event_upload_handler, name=EventUpload.submit_view_name),
     url(r'^login/', views.login,name='login'),
+    url(r'^logout/', views.logout,name='logout'),
     url(r'^signup/', views.signup, name='signup'),
     url(r'^'+Myevents.base_url, Myevents.render_page, name=Myevents.name),
 	url(r'^'+OrganizationPage.base_url, OrganizationPage.render_page, name=OrganizationPage.name),
