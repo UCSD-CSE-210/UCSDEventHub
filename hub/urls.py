@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.views.generic import TemplateView
 from hub import views
-from hub.views import SearchListing, EventUpload, OrganizationPage, EventDetails, Homepage, Myevents
+from hub.views import SearchListing, EventUpload, OrganizationPage, EventDetails, Homepage, Myevents, RSVP
 
 urlpatterns = [
     #url(r'^$', views.event_list, name='event_list'),
@@ -15,6 +15,6 @@ urlpatterns = [
     url(r'^'+Myevents.base_url, Myevents.render_page, name=Myevents.name),
 	url(r'^'+OrganizationPage.base_url, OrganizationPage.render_page, name=OrganizationPage.name),
 	url(r'^ajax/validate_username/$', views.validate_username, name='validate_username'),
-	url(r'^ajax/saveRSVP/$', views.save_RSVP, name='saveRSVP'),
-	url(r'^ajax/removeRSVP/$', views.remove_RSVP, name='removeRSVP')
+    url(r'^'+RSVP.save_rsvp_base_url, RSVP.save_RSVP, name=RSVP.name),
+    url(r'^'+RSVP.remove_rsvp_base_url, RSVP.remove_RSVP, name=RSVP.name)
 ]

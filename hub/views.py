@@ -407,23 +407,32 @@ class Myevents():
 	def get_url(id):
 		return "/"+Myevents.base_url +"?id="+str(id)
 
-def save_RSVP(request):
-    user_id = request.GET.get('userId', None)
-    event_id = request.GET.get('eventId', None)
-    save_rsvp(user_id,event_id)
-    response ={}
-    response["isSuccess"] = True
-    return HttpResponse(json.dumps(response), content_type = "application/json")
+class RSVP():
+	name = "updateRSVP"
+	save_rsvp_base_url = "ajax/saveRSVP/"
+	remove_rsvp_base_url = "ajax/removeRSVP/"
+	
+	def __init__(self, request):
+		self.request = request
+	
+	@staticmethod	
+	def save_RSVP(request):
+	    user_id = request.GET.get('userId', None)
+	    event_id = request.GET.get('eventId', None)
+	    save_rsvp(user_id,event_id)
+	    response ={}
+	    response["isSuccess"] = True
+	    return HttpResponse(json.dumps(response), content_type = "application/json")
 
-
-def remove_RSVP(request):
-	user_id = request.GET.get('userId', None)
-	# user_id = 2
-	event_id = request.GET.get('eventId', None)
-	remove_rsvp(user_id,event_id)
-	response ={}
-	response["isSuccess"] = True
-	return HttpResponse(json.dumps(response), content_type = "application/json")
+	@staticmethod
+	def remove_RSVP(request):
+		user_id = request.GET.get('userId', None)
+		# user_id = 2
+		event_id = request.GET.get('eventId', None)
+		remove_rsvp(user_id,event_id)
+		response ={}
+		response["isSuccess"] = True
+		return HttpResponse(json.dumps(response), content_type = "application/json")
 
 def validate_username(request):
     username = request.GET.get('username', None)
