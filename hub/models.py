@@ -38,7 +38,12 @@ class OrganizationDetails(models.Model):
     org_image = models.ImageField(
         upload_to="orgs", default=None, null = True, blank = True)
 
+
+class Category(models.Model):
+    category = models.CharField(max_length=255)
+
 class Event(models.Model):
+    # categories = models.ManyToManyField(Category)
     title = models.CharField(max_length=255)
     description = models.TextField(null = True)
     location = models.CharField(max_length=255)
@@ -49,13 +54,15 @@ class Event(models.Model):
     #org_id = models.IntegerField()
     contact_email = models.EmailField()
     org = models.ForeignKey(OrganizationDetails, on_delete=models.CASCADE)
+    categories = models.ManyToManyField(Category)
     # create_user = models.CharField(max_length = 255, validators=[MinLengthValidator(1)])
     # create_date = models.DateTimeField(null = False)
     # modify_user = models.CharField(max_length = 255, validators=[MinLengthValidator(1)])
     # modify_date = models.DateTimeField(null = False)
     # delete_date = models.DateTimeField(null = True)
 
-
 class RSVP(models.Model):
     rsvp_user = models.ForeignKey(User, on_delete=models.CASCADE)
     rsvp_event = models.ForeignKey(Event, on_delete=models.CASCADE)
+
+
