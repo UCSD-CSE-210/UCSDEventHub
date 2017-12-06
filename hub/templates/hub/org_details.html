@@ -10,27 +10,28 @@
     <p></p>
     {% endblock %}
     {% block content %}
+	{% if not invalid %}
     <div class="row">
 		<div class ="col"></div>
 		<div class = "col-md-10">
 			<div class="org_event_tile_wrapper no-padding">
 				<div class="org_poster">
-					<img src="{{organizer.image}}" class="poster_image img-responsive"/>
+					<img src="{{organizer.org_image}}" class="poster_image img-responsive"/>
 				</div>
 				<div class="org_details">
 					<div class="title">
 						<p class="p_title">
-							{{organizer.name}}
+							{{organizer.org_name}}
 						</p>
 					</div>
 					<div class="org_text">
 						<p class="p_org_text">
-							Email: {{organizer.email}}
+							Email: {{organizer.contact_email}}
 						</p>
 					</div>
 					<div class="org_text">
 						<p class="p_org_text">
-							Phone: {{organizer.phone}}
+							Phone: {{organizer.contact_number}}
 						</p>
 					</div>
 					<div class="org_text">
@@ -131,6 +132,7 @@
 		<div class="col">
 		</div>
 	</div>
+	{% endif %}
 	{% endblock %}
 </body>
 </html>

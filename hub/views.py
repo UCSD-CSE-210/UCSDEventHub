@@ -2,14 +2,14 @@ from django.shortcuts import render,redirect
 from hub.models import Event,OrganizationDetails, UserProfile
 from hub.apis import add_event_to_db,event_details
 from hub.apis import search_events
-from hub.apis import upcoming_events
+from hub.apis import upcoming_events, upcoming_events_by_org
 from hub.apis import check_user_name
 from hub.apis import user_event_rsvpd
 from hub.apis import save_rsvp
 from hub.apis import remove_rsvp
 from hub.apis import get_rsvp_events
 from hub.apis import is_user_attendee
-from hub.apis import get_organization_id
+from hub.apis import get_organization_id, get_org_details
 from hub.apis import get_organization_name
 from django.http import HttpResponse
 from django.utils import dateparse
@@ -244,7 +244,8 @@ class SearchListing():
 			event["end_day"] = Utils.format_day(event["end_date"])
 			event["start_time"] = Utils.format_time(event["start_date"])
 			event["end_time"] = Utils.format_time(event["end_date"])
-			event["organizer_url"] = OrganizationPage.get_url(1)
+			event["organizer_url"] = OrganizationPage.get_url(event["org_id"])
+			event["org_name"] = get_organization_name(event["org_id"])
 			if event["start_day"] == event["end_day"]:
 				event["ending_same_day"]=True
 			else:
@@ -291,44 +292,36 @@ class OrganizationPage():
 	base_url = "organizer/"
 	template = Constants.app_name+"/org_details.html"
 
-	class Response():
-		def __init__(self):
-			self.org_details = None
-			self.events = []
-
+	
 	def __init__(self, request):
 		self.request = request
-		self.response = OrganizationPage.Response()
 		self.user_attendee = is_user_attendee(request.user)
-
+		self.org_details = None
+		self.events = []
+		self.invalid = False
 	def _get_id(self):
 		return self.request.GET.get("id")
 
 	def _render_me(self):
-		dummy = {
-			"name":"GSA@UCSD",
-			"description": "GSA is graduate student body",
-			"id":1,
-			"phone":"1234221234",
-			"address": "Somewhere, at, UCSD",
-			"image": Utils.get_image_url("events/Halloween-Hero-1-A.jpeg"),
-			"email":"gsa@ucsd.com"
-		}
+		
 		for event in self.events:
 			event["image_url"] = Utils.get_image_url(event["image"])
 			event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
 			event["event_url"]= EventDetails.get_url(event["id"])
-
+		#print(str(self.org_details))
+		if self.org_details:
+			self.org_details.org_image = Utils.get_image_url(str(self.org_details.org_image))
 		return render(self.request, OrganizationPage.template,
-								{"organizer": dummy,
-								"events":self.events, 'is_user_attendee': self.user_attendee})
+								{"organizer": self.org_details,
+								"events":self.events, 'is_user_attendee': self.user_attendee,
+								"invalid":self.invalid})
 
 	def render(self):
 		id = self._get_id()
-		organizer = get_event_details(id)
-		self.response.org_details = organizer
-		self.events = upcoming_events()
-		#self.events = upcoming_events_by_org(id)
+		if not id:
+			self.invalid = True
+		self.org_details = get_org_details(id)
+		self.events = upcoming_events_by_org(id)
 
 		return self._render_me()
 
