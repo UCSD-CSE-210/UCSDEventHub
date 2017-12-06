@@ -4,6 +4,7 @@ from datetime import datetime
 import pytz
 from hub.models import Event, UserProfile, OrganizationDetails, RSVP
 from django.db.models import Count
+from django.db.models import Q
 
 pst = pytz.timezone('US/Pacific')
 # Hard coding PST as timezone as one time fix.
@@ -15,12 +16,12 @@ def is_user_attendee(user):
 
 def search_events(search_text):
     today_date = datetime.now(pst).replace(hour=0, minute=0, second=0)
-    events_results = []
+    event_results = []
     for keywords in search_text.split():
-        events_results += Event.objects.filter(
-            title__icontains=keywords, start_date__gte=today_date).all().values()
-    events_results.sort(key = lambda item:item['start_date'])
-    return events_results
+        event_results += Event.objects.filter((Q(title__icontains=keywords)|Q(location__icontains=keywords)|Q(hashtags__icontains=keywords)|Q(org__org_name__icontains=keywords))&Q(start_date__gte=today_date)).all().values()
+    event_results = list({v['id']:v for v in event_results}.values())
+    event_results.sort(key = lambda item:item['start_date'])
+    return event_results
 
 def upcoming_events():
     today_date = datetime.now(pst).replace(hour=0, minute=0, second=0)
