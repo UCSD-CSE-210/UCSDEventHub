@@ -19,7 +19,7 @@ def search_events(search_text):
     today_date = datetime.now(pst).replace(hour=0, minute=0, second=0)
     event_results = []
     for keywords in search_text.split():
-        event_results += Event.objects.filter((Q(title__icontains=keywords)|Q(location__icontains=keywords)|Q(hashtags__icontains=keywords)|Q(org__org_name__icontains=keywords))&Q(start_date__gte=today_date)).all().values()
+        event_results += Event.objects.filter((Q(title__icontains=keywords)|Q(location__icontains=keywords)|Q(hashtags__icontains=keywords)|Q(org__org_name__icontains=keywords)|Q(categories__category__icontains=keywords))&Q(start_date__gte=today_date)).all().values()
     event_results = list({v['id']:v for v in event_results}.values())
     event_results.sort(key = lambda item:item['start_date'])
     return event_results
