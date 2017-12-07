@@ -111,10 +111,12 @@
 					</div>
 				</div>
 				<div class ="sidecolumn" id = "rsvpCol">
-					{% if event.rsvpd %}
-						<input type="button" id = "removeRSVP" onclick="remove_rsvp()" value="Remove RSVP">
-					{% else %}
-						<input type="button" id="saveRSVP" onclick="save_rsvp({{ event.user.is_authenticated|yesno:'true,false' }})" value="RSVP">
+					{%if is_user_attendee%}
+						{% if event.rsvpd %}
+							<input type="button" id = "removeRSVP" onclick="remove_rsvp()" value="Remove RSVP">
+						{% else %}
+							<input type="button" id="saveRSVP" onclick="save_rsvp({{ event.user.is_authenticated|yesno:'true,false' }})" value="RSVP">
+						{% endif %}
 					{% endif %}
 
 				</div>
