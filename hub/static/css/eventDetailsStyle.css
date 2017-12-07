@@ -98,18 +98,25 @@
 	font-size: 20px;
 	color: gray;
 }
-.hashtag{
-	margin-top: 0px;
-	padding-left: 10px;
-	padding-top: 2px;
-	padding-bottom: 2px;
-}
+
 .p_hashtag{
+	padding-left: 10px;
 	margin-bottom: 0px;
 	font-family: sans-serif;
 	font-size: 20px;
-	color: gray;
+	color: #5a5a5a;	
+	position: relative;
+	float: left;
 }
+
+.hashtagContent{
+	padding-left: 1px;
+	margin-bottom: 0px;
+	font-family: sans-serif;
+	font-size: 20px;
+	color: gray;	
+}
+
 
 #wrapper{
     width:100%;
@@ -134,11 +141,15 @@
 	font-size: 20px;
 	color: gray;
 }
+
 .p_description{
+	padding-left: 10px;
 	margin-bottom: 0px;
 	font-family: sans-serif;
 	font-size: 20px;
 	color: #5a5a5a;	
+	position: relative;
+	float: left;
 }
 .sidecolumn{
     float:right;
