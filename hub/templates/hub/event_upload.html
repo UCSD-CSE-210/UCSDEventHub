@@ -16,7 +16,7 @@
 				<div class="row">
 					<div class="col"></div>
 					<div class="col-md-10">
-						<form action="../submit_event/" id="formentry" class="form-horizontal" role="form"  enctype="multipart/form-data" method='post' data-parsley-validate novalidate>
+						<form id="eventupload" action="../submit_event/" id="formentry" class="form-horizontal" role="form"  enctype="multipart/form-data" method='post' data-parsley-validate novalidate>
 						{% csrf_token %}
 						<div class="container-fluid shadow">
 							<div class="row">
@@ -80,6 +80,17 @@
 														<input id="email" name="n_email" type="text" class="form-control k-textbox" data-role="text" data-parsley-errors-container="#errId7"><span id="errId7" class="error"></span>
 													</div>
 												</div>
+												<div class="form-group" style="display: block;">
+													<label class="control-label" for="category">Category<span class="req"> *</span></label>
+													<div class="controls">
+														<select multiple="multiple" id="category" name="n_category" class="form-control" data-parsley-errors-container="#errId8">
+															{% for c in categories %}
+																<option value={{c.id}}>{{c.category}}</option>
+															{% endfor %}
+														</select>
+														<span id="errId8" class="error"></span>
+													</div>
+												</div>
 												<div class="form-group">
 													<div class="col-md-4">
 														<button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary btn-lg">Submit</button>
@@ -103,6 +114,16 @@
 		<script type="text/javascript">
 			$(function () {
 				$('#datetimepicker2').datetimepicker();
+			});
+		</script>
+		<script>
+			$(document).ready(function() {
+			    $('#category').multiselect({
+	                enableFiltering: true,
+	                includeSelectAllOption: true,
+	            });
+	            var node = document.querySelector('[title="None selected"]');
+	            node.removeChild(node.childNodes[2])
 			});
 		</script>
 

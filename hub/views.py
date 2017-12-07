@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from hub.models import Event,OrganizationDetails, UserProfile
+from hub.models import Category
 from hub.apis import add_event_to_db,event_details
 from hub.apis import search_events
 from hub.apis import upcoming_events, upcoming_events_by_org
@@ -11,6 +12,7 @@ from hub.apis import get_rsvp_events
 from hub.apis import is_user_attendee
 from hub.apis import get_organization_id, get_org_details
 from hub.apis import get_organization_name
+from hub.apis import get_categories
 from django.http import HttpResponse
 from django.utils import dateparse
 from datetime import datetime
@@ -125,6 +127,7 @@ class EventDetails():
 		event["org_name"] = get_organization_name(event["org_id"])
 		event["rsvpd"] = self._get_rsvp_info(eventId)
 		event["user"] = self.request.user
+		event["categories"] = event["categories"]
 		return event
 
 	def _get_rsvp_info(self, eventId):
@@ -159,6 +162,7 @@ class EventUpload():
 	def __init__(self, request):
 		self.request = request
 		self.user_attendee = is_user_attendee(request.user)
+		self.categories = Category.objects.all()
 
 	# Event Upload related views
 	def _get_alert_html(self,text,alerttype):
@@ -175,7 +179,7 @@ class EventUpload():
 
 	def _render_event_upload(self,request):
 		if request.user.is_authenticated and not self.user_attendee:
-			return render(request, self.template, {'div_elem': " ", 'is_user_attendee': self.user_attendee})
+			return render(request, self.template, {'div_elem': " ", 'is_user_attendee': self.user_attendee, 'categories': self.categories})
 		else:
 			return render(request, 'hub/permission_denied.html')
 
@@ -200,6 +204,8 @@ class EventUpload():
 		new_event.hashtags = request.POST.get('n_tags')
 		new_event.org_id = get_organization_id(request.user.username)
 		add_event_to_db(new_event)
+		new_event.categories = get_categories(request.POST.getlist('n_category'))
+		new_event.save()
 		return render(request, 'hub/event_upload.html', {'div_elem':self._get_alert_html('Event Upload is Successful','sucess')})
 
 	@staticmethod
@@ -292,7 +298,7 @@ class OrganizationPage():
 	base_url = "organizer/"
 	template = Constants.app_name+"/org_details.html"
 
-	
+
 	def __init__(self, request):
 		self.request = request
 		self.user_attendee = is_user_attendee(request.user)
@@ -303,7 +309,7 @@ class OrganizationPage():
 		return self.request.GET.get("id")
 
 	def _render_me(self):
-		
+
 		for event in self.events:
 			event["image_url"] = Utils.get_image_url(event["image"])
 			event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")

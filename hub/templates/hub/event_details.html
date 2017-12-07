@@ -57,15 +57,15 @@
 						</p>
 					</div>
 
-					<div class="calendar">
-						<a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{event.title}}&dates={{event.googleDate}}&details={{event.description}}&location={{event.location}}&trp=false&sprop=&sprop=name" target="_blank">
+					<div>
+						<a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{event.title}}&dates={{event.googleDate}}&details={{event.description}}&location={{event.location}}&trp=false&sprop=&sprop=name" target="_blank" class="btn btn-default">
 							<p class="p_calendar">
 							Add to calendar
 							</p>
 						</a>
-						<div class="hashtag">
+						<div class="location">
 							<p class="p_hashtag">
-								{{  event.hashtags }}
+								Tags: {{  event.hashtags }}
 							</p>
 						</div>
 					</div>
@@ -88,6 +88,14 @@
 					<div style="padding-bottom:20px">
 						<p class="p_description">{{event.description}}</p>
 					</div>
+					<h3 class="heading">Categories</h3>
+						<ul>
+						{% for c in event.categories %}
+							<li class="p_description">
+								{{ c.categories__category }}
+							</li>
+							{% endfor %}
+						</ul>
 					<div  class="text">
 						<div>
 							<h3 class ="heading">Tags</h3>
