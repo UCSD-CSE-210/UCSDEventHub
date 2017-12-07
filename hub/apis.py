@@ -3,6 +3,7 @@ from django.utils import timezone
 from datetime import datetime
 import pytz
 from hub.models import Event, UserProfile, OrganizationDetails, RSVP
+from hub.models import Category
 from django.db.models import Count
 from django.db.models import Q
 
@@ -18,7 +19,7 @@ def search_events(search_text):
     today_date = datetime.now(pst).replace(hour=0, minute=0, second=0)
     event_results = []
     for keywords in search_text.split():
-        event_results += Event.objects.filter((Q(title__icontains=keywords)|Q(location__icontains=keywords)|Q(hashtags__icontains=keywords)|Q(org__org_name__icontains=keywords))&Q(start_date__gte=today_date)).all().values()
+        event_results += Event.objects.filter((Q(title__icontains=keywords)|Q(location__icontains=keywords)|Q(hashtags__icontains=keywords)|Q(org__org_name__icontains=keywords)|Q(categories__category__icontains=keywords))&Q(start_date__gte=today_date)).all().values()
     event_results = list({v['id']:v for v in event_results}.values())
     event_results.sort(key = lambda item:item['start_date'])
     return event_results
@@ -36,7 +37,9 @@ def upcoming_events_by_org(orgid):
     return events_results
 
 def event_details(event_id):
-    return list(Event.objects.filter(id=event_id).all().values())
+    event = list(Event.objects.filter(id=event_id).all().values())
+    event[0]["categories"] = list(Event.objects.filter(id=event_id).exclude(categories__isnull=True).all().values("categories__category"))
+    return event
 
 def add_event_to_db(event):
 	event.save()
@@ -92,3 +95,6 @@ def get_organization_id(org_name):
 
 def get_organization_name(org_id):
     return OrganizationDetails.objects.get(organization_id=org_id).org_name
+
+def get_categories(id_list):
+    return Category.objects.filter(id__in=id_list)
