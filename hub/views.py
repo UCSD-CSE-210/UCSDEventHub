@@ -414,9 +414,20 @@ class Myevents():
 	def event_list(self):
 		events=get_rsvp_events(self.request.user.id)
 		for event in events:
+			event["start_day"] = Utils.format_day(event["start_date"])
+			event["end_day"] = Utils.format_day(event["end_date"])
+			event["start_time"] = Utils.format_time(event["start_date"])
+			event["end_time"] = Utils.format_time(event["end_date"])
+			event["organizer_url"] = OrganizationPage.get_url(event["org_id"])
+			event["org_name"] = get_organization_name(event["org_id"])
+			if event["start_day"] == event["end_day"]:
+				event["ending_same_day"]=True
+			else:
+				event["ending_same_day"]=False
 			event["image_url"] = Utils.get_image_url(event["image"])
-			event["start_date"] = event["start_date"].strftime("%a, %b %d, %I:%M %p")
-			event["event_url"]= EventDetails.get_url(event["id"])
+			event["event_url"] = EventDetails.get_url(event["id"])
+
+
 		return events
 
 	def render(self):
