@@ -347,9 +347,11 @@ def login(request):
 	if(request.method == "POST"):
 		user_name = request.POST['n_username']
 		password = request.POST['n_password']
-		is_org = request.POST.get('n_is_org',False)
-		if not check_user_name(user_name,is_org):
+		if not check_user_name(user_name, is_org=True) and not check_user_name(user_name, is_org=False):
 			return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('User is not registered. Please Signup','fail')})
+		# is_org = request.POST.get('n_is_org',False)
+		# if not check_user_name(user_name,is_org):
+		# 	return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('User is not registered. Please Signup','fail')})
 
 		user = authenticate(request, username=user_name, password=password)
 		if user is not None:
