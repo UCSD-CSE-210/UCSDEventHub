@@ -63,9 +63,11 @@
 							Add to calendar
 							</p>
 						</a>
-						<div class="location">
-							<p class="p_hashtag">
-								Tags: {{  event.hashtags }}
+
+						<div>
+							<p class="hashtagContent">
+								{{  event.hashtags }}
+
 							</p>
 						</div>
 					</div>
@@ -96,12 +98,15 @@
 							</li>
 							{% endfor %}
 						</ul>
+					<p></p>
+						<br/>
+					
 					<div  class="text">
 						<div>
-							<h3 class ="heading">Tags</h3>
-							<section>
-								{{event.hashtags}}
-							</section>
+							<p><h3 class ="heading">Tags</h3></p>
+							<p class="p_hashtag">
+								{{  event.hashtags }}
+							</p>
 						</div>
 					</div>
 				</div>
