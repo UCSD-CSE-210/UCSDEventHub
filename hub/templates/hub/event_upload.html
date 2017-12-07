@@ -16,7 +16,7 @@
 				<div class="row">
 					<div class="col"></div>
 					<div class="col-md-10">
-						<form id="eventupload" action="../submit_event/" id="formentry" class="form-horizontal" role="form"  enctype="multipart/form-data" method='post' data-parsley-validate novalidate>
+						<form id="eventupload" action="../submit_event/" class="form-horizontal" role="form"  enctype="multipart/form-data" method='post' novalidate>
 						{% csrf_token %}
 						<div class="container-fluid shadow">
 							<div class="row">
@@ -29,66 +29,92 @@
 												<div class="form-group">
 													<label class="control-label-left" for="title">Title<span class="req"> *</span></label>
 													<div class="controls">
-														<input id="title" name="n_title" type="text" class="form-control k-textbox" data-role="text" required="required" placeholder="Title of your event" data-parsley-errors-container="#errId1"><span id="errId1" class="error"></span>
+														<input id="title" name="n_title" type="text" class="form-control k-textbox" data-role="text" placeholder="Title of your event" required>
+														<div class="invalid-feedback">
+													    	Please provide a valid title.
+													    </div>
 													</div>
 												</div>
 												<div class="form-group">
 													<label class="control-label-left" for="desc">Description<span class="req"> *</span></label>
 													<div class="controls">
-														<textarea id="desc" name="n_desc" rows="3" class="form-control k-textbox" data-role="textarea" required="required" data-parsley-errors-container="#errId2"></textarea><span id="errId2" class="error"></span>
+														<textarea id="desc" name="n_desc" rows="3" class="form-control k-textbox" data-role="textarea" required></textarea>
+														<div class="invalid-feedback">
+													    	Please provide a valid description.
+													    </div>
 													</div>
 												</div>
 												<div class="form-group" style="display: block;">
 													<label class="col-md-4 control-label-left" for="filebutton">Poster<span class="req"> *</span></label>
 													<div class="controls">
-														<input id="filebutton" name="n_uploadedposter" class="form-control input-file" type="file" >
+														<input id="filebutton" name="n_uploadedposter" class="form-control input-file" type="file" required>
+														<div class="invalid-feedback">
+													    	Please provide a valid image as poster.
+													    </div>
 													</div>
 												</div>
 												<div class="form-group" style="display: block;">
 													<label class="control-label-left" for="loc">Location</label>
 													<div class="controls">
-														<input id="loc" name="n_loc" type="text" class="form-control k-textbox" data-role="text" placeholder="Location of the event" data-parsley-errors-container="#errId3"><span id="errId3" class="error"></span>
+														<input id="loc" name="n_loc" type="text" class="form-control k-textbox" data-role="text" placeholder="Location of the event" required>
+														<div class="invalid-feedback">
+												    		Please provide a valid location.
+												    	</div>
 													</div>
 												</div>
 												<div class="form-group"  style="display: block;">
 						                          <label class="control-label" for="startdate">Event Start Date<span class="req"> *</span></label>
 						                          <div class='input-group date' id='datetimepicker1'>
-						                              <input type='text' class="form-control" id="startdate" name="n_startdate"/>
+						                              <input type='text' class="form-control" id="startdate" name="n_startdate" required/>
 						                              <span class="input-group-addon">
 						                                  <span class="glyphicon glyphicon-calendar"></span>
 						                              </span>
+						                              <div class="invalid-feedback">
+												    	Please provide a valid start date.
+												      </div>
 						                          </div>
 						                        </div>
 						                        <div class="form-group"  style="display: block;">
 						                          <label class="control-label" for="startdate">Event End Date<span class="req"> *</span></label>
 						                          <div class='input-group date' id='datetimepicker2'>
-						                              <input type='text' class="form-control" id="enddate" name="n_enddate"/>
+						                              <input type='text' class="form-control" id="enddate" name="n_enddate" required/>
 						                              <span class="input-group-addon">
 						                                  <span class="glyphicon glyphicon-calendar"></span>
 						                              </span>
+						                              <div class="invalid-feedback">
+												    	Please provide a valid end date.
+												      </div>
 						                          </div>
 						                        </div>
 												<div class="form-group" style="display: block;">
 													<label class="control-label" for="tags">Hash Tags</label>
 													<div class="controls">
-														<input id="tags" name="n_tags" type="text" class="form-control k-textbox c_tags" data-role="tagsinput" data-parsley-errors-container="#errId5"><span id="errId5" class="error"></span>
+														<input id="tags" name="n_tags" type="text" class="form-control k-textbox c_tags" data-role="tagsinput" required>
+							                            <div class="invalid-feedback">
+															Please provide valid hashtags.
+													    </div>
 													</div>
 												</div>
 												<div class="form-group" style="display: block;">
 													<label class="control-label" for="email">Contact Email<span class="req"> *</span></label>
 													<div class="controls">
-														<input id="email" name="n_email" type="text" class="form-control k-textbox" data-role="text" data-parsley-errors-container="#errId7"><span id="errId7" class="error"></span>
+														<input id="email" name="n_email" type="email" class="form-control k-textbox" data-role="text" required>
+							                              <div class="invalid-feedback">
+													    	Please provide a valid email.
+													      </div>
 													</div>
 												</div>
 												<div class="form-group" style="display: block;">
 													<label class="control-label" for="category">Category<span class="req"> *</span></label>
 													<div class="controls">
-														<select multiple="multiple" id="category" name="n_category" class="form-control" data-parsley-errors-container="#errId8">
+														<select multiple="multiple" id="category" name="n_category" class="form-control" required>
 															{% for c in categories %}
 																<option value={{c.id}}>{{c.category}}</option>
 															{% endfor %}
 														</select>
-														<span id="errId8" class="error"></span>
+						                              <div class="invalid-feedback">
+												    	Please select atleast one category.
+												      </div>
 													</div>
 												</div>
 												<div class="form-group">
@@ -125,6 +151,23 @@
 	            var node = document.querySelector('[title="None selected"]');
 	            node.removeChild(node.childNodes[2])
 			});
+		</script>
+		<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+			(function() {
+			  'use strict';
+
+			  window.addEventListener('load', function() {
+			    var form = document.getElementById('eventupload');
+			    form.addEventListener('submit', function(event) {
+			      if (form.checkValidity() === false) {
+			        event.preventDefault();
+			        event.stopPropagation();
+			      }
+			      form.classList.add('was-validated');
+			    }, false);
+			  }, false);
+			})();
 		</script>
 
 	{% endblock %}
