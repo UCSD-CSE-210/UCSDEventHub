@@ -24,13 +24,16 @@
 <div class="tab-content" id="nav-tabContent">
   <div class="tab-pane fade in active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
     <div class="container">
-      <form id="user-signup-form" enctype="multipart/form-data" method="post" action="{% url 'signup' %}" class="form-horizontal" role="form">
+      <form id="user-signup-form" enctype="multipart/form-data" method="post" action="{% url 'signup' %}" class="form-horizontal" role="form" novalidate>
         {% csrf_token %}
         <h2>New User Registration</h2>
         <div class="form-group">
             <label for="i_user_name" class="col-md-6 control-label">User Name<span class="req"> *</span></label>
             <div class="col-md-9">
-                <input type="text" name="n_user_name" id="i_user_name" placeholder="User Name" class="form-control">
+                <input type="text" name="n_user_name" id="i_user_name" placeholder="User Name" class="form-control" required>
+                <div class="invalid-feedback">
+                  Please provide a username.
+                </div>
             </div>
         </div>
 
@@ -38,14 +41,20 @@
           <div class="form-group col-md-6">
             <label for="i_userfn" class="col-md-6 control-label">First Name<span class="req"> *</span></label>
             <div class="col-md-9">
-              <input type="text" name="n_userfn" id="i_userfn" placeholder="Full Name" class="form-control" autofocus>
+              <input type="text" name="n_userfn" id="i_userfn" placeholder="First Name" class="form-control" autofocus required>
+              <div class="invalid-feedback">
+                Please provide a first name.
+              </div>
             </div>
           </div>
 
           <div class="form-group col-md-6">
             <label for="i_user_ln" class="col-md-9 control-label">Last Name<span class="req"> *</span></label>
             <div class="col-md-9">
-              <input type="text" name="n_user_ln" id="i_user_ln" placeholder="Last Name" class="form-control" autofocus>
+              <input type="text" name="n_user_ln" id="i_user_ln" placeholder="Last Name" class="form-control" autofocus required>
+              <div class="invalid-feedback">
+                Please provide a last name.
+              </div>
             </div>
           </div>
         </div>
@@ -53,28 +62,40 @@
         <div class="form-group" style="display: block;">
           <label class="col-md-4 control-label-left" for="i_user_img">Profile Picture<span class="req"> *</span></label>
           <div class="controls col-md-9">
-            <input name="n_user_img" id="i_user_img" class="form-control input-file" type="file" >
+            <input name="n_user_img" id="i_user_img" class="form-control input-file" type="file" required>
+              <div class="invalid-feedback">
+                Please provide a profile picture.
+              </div>
           </div>
         </div>
 
         <div class="form-group">
           <label for="i_user_email" class="col-md-6 control-label">Email<span class="req"> *</span></label>
           <div class="col-md-9">
-              <input type="email" name="n_user_email" id="i_user_email" placeholder="Email" class="form-control">
+              <input type="email" name="n_user_email" id="i_user_email" placeholder="Email" class="form-control" required>
+              <div class="invalid-feedback">
+                Please provide a valid email.
+              </div>
           </div>
         </div>
 
         <div class="form-group">
           <label for="i_user_password" class="col-md-6 control-label">Password<span class="req"> *</span></label>
           <div class="col-md-9">
-            <input type="password" name="n_user_password" id="i_user_password" placeholder="Password" class="form-control">
+            <input type="password" name="n_user_password" id="i_user_password" placeholder="Password" class="form-control" required>
+            <div class="invalid-feedback">
+              Please provide a password.
+            </div>
           </div>
         </div>
 
         <div class="form-group">
           <label for="i_user_confirmpassword" class="col-md-6 control-label">Confirm Password<span class="req"> *</span></label>
           <div class="col-md-9">
-            <input type="password" name="n_user_confirmpassword" id="i_user_confirmpassword" placeholder="Confirm Password" class="form-control">
+            <input type="password" name="n_user_confirmpassword" id="i_user_confirmpassword" placeholder="Confirm Password" class="form-control" required>
+            <div class="invalid-feedback">
+              Please provide the password again.
+            </div>
           </div>
         </div>
 
@@ -99,55 +120,76 @@
 
 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
   <div class="container">
-    <form id="org-signup-form" enctype="multipart/form-data" method="post" action="{% url 'signup' %}" class="form-horizontal" role="form">
+    <form id="org-signup-form" enctype="multipart/form-data" method="post" action="{% url 'signup' %}" class="form-horizontal" role="form" novalidate>
       {% csrf_token %}
       <h2>New Organization Registration</h2>
       <div class="form-group">
           <label for="i_org_uname" class="col-md-6 control-label">User Name<span class="req"> *</span></label>
           <div class="col-md-9">
-              <input type="text" name="n_org_uname" id="i_org_uname" placeholder="User Name" class="form-control">
+              <input type="text" name="n_org_uname" id="i_org_uname" placeholder="User Name" class="form-control" required>
+              <div class="invalid-feedback">
+                Please provide a username.
+              </div>
           </div>
       </div>
 
       <div class="form-group">
           <label for="i_org_email" class="col-md-6 control-label">Email<span class="req"> *</span></label>
           <div class="col-md-9">
-              <input type="email" name="i_org_email" id="i_org_email" placeholder="Email" class="form-control">
+              <input type="email" name="i_org_email" id="i_org_email" placeholder="Email" class="form-control" required>
+              <div class="invalid-feedback">
+                Please provide a valid email.
+              </div>
           </div>
       </div>
 
       <div class="form-group">
         <label for="i_org_password" class="col-md-6 control-label">Password<span class="req"> *</span></label>
           <div class="col-md-9">
-            <input type="password" name="n_org_password" id="i_org_password" placeholder="Password" class="form-control">
+            <input type="password" name="n_org_password" id="i_org_password" placeholder="Password" class="form-control" required>
+            <div class="invalid-feedback">
+              Please provide a valid password.
+            </div>
           </div>
       </div>
 
       <div class="form-group">
         <label for="i_org_confirmpassword" class="col-md-9 control-label">Confirm Password<span class="req"> *</span></label>
           <div class="col-md-9">
-            <input type="password" name="n_org_confirmpassword" id="i_org_confirmpassword" placeholder="Confirm Password" class="form-control">
+            <input type="password" name="n_org_confirmpassword" id="i_org_confirmpassword" placeholder="Confirm Password" class="form-control" required>
+            <div class="invalid-feedback">
+              Please provide the password again.
+            </div>
           </div>
       </div>
 
 	  <div class="form-group">
 		<label for="i_org_name" class="col-md-9 control-label">Organization Name<span class="req"> *</span></label>
 		<div class="col-md-9">
-		  <input type="text" name="n_org_name" id="i_org_name" placeholder="Full Name" class="form-control" autofocus>
+		  <input type="text" name="n_org_name" id="i_org_name" placeholder="Full Name" class="form-control" autofocus required>
+      <div class="invalid-feedback">
+        Please provide an organization name.
+      </div>
 		</div>
 	  </div>
 
       <div class="form-group">
         <label for="i_org_desc" class="col-md-9 control-label">Description<span class="req"> *</span></label>
           <div class="col-md-9">
-            <textarea name="n_org_desc" id="i_org_desc" class="form-control" placeholder="Write Something about your organization ..." rows="5"></textarea>
+            <textarea name="n_org_desc" id="i_org_desc" class="form-control" placeholder="Write Something about your organization ..." rows="5" required></textarea>
+            <div class="invalid-feedback">
+              Please provide a description of the organization.
+            </div>
           </div>
       </div>
 
       <div class="form-group" style="display: block;">
         <label class="col-md-4 control-label-left" for="i_org_img">Profile Picture<span class="req"> *</span></label>
         <div class="controls">
-          <input name="n_org_img" id="i_org_img" class="form-control input-file" type="file" >
+          <input name="n_org_img" id="i_org_img" class="form-control input-file" type="file" required>
+          <div class="invalid-feedback">
+            Please provide a valid organization profile picture.
+          </div>
         </div>
       </div>
 
@@ -178,14 +220,20 @@
         <div class="form-group col-md-6">
           <label for="i_org_poc_fn" class="col-md-6 control-label">First Name</label>
           <div class="col-md-9">
-            <input type="text" name="n_org_poc_fn" id="i_org_poc_fn" placeholder="First Name" class="form-control" autofocus>
+            <input type="text" name="n_org_poc_fn" id="i_org_poc_fn" placeholder="First Name" class="form-control" autofocus required>
+            <div class="invalid-feedback">
+              Please provide a point of contact first name.
+            </div>
           </div>
         </div>
 
         <div class="form-group col-md-6">
           <label for="i_org_poc_ln" class="col-md-6 control-label">Last Name</label>
           <div class="col-md-9">
-            <input type="text" name="n_org_poc_ln" id="i_org_poc_ln" placeholder="Last Name" class="form-control" autofocus>
+            <input type="text" name="n_org_poc_ln" id="i_org_poc_ln" placeholder="Last Name" class="form-control" autofocus required>
+            <div class="invalid-feedback">
+              Please provide a point of contact last name.
+            </div>
           </div>
         </div>
       </div>
@@ -193,7 +241,10 @@
       <div class="form-group">
           <label for="i_org_poc_email" class="col-md-6 control-label">Email</label>
           <div class="col-md-9">
-              <input type="email" name="n_org_poc_email" id="i_org_poc_email" placeholder="Email" class="form-control">
+              <input type="email" name="n_org_poc_email" id="i_org_poc_email" placeholder="Email" class="form-control" required>
+              <div class="invalid-feedback">
+                Please provide a point of contact email.
+              </div>
           </div>
       </div>
 
@@ -224,12 +275,44 @@
   </div>
 </div>
 </div>
-<script type="text/javascript" language="javascript">
-$(".nav a").on("click", function(){
-   $(".nav").find(".active").removeClass("active");
-   $(this).addClass("active");
-});
-</script>
+  <script type="text/javascript" language="javascript">
+  $(".nav a").on("click", function(){
+     $(".nav").find(".active").removeClass("active");
+     $(this).addClass("active");
+  });
+  </script>
+  <script>
+    (function() {
+      'use strict';
+
+      window.addEventListener('load', function() {
+        var form = document.getElementById('user-signup-form');
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      }, false);
+    })();
+  </script>
+  <script>
+    (function() {
+      'use strict';
+
+      window.addEventListener('load', function() {
+        var form = document.getElementById('org-signup-form');
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      }, false);
+    })();
+  </script>
 {% endblock %}
 </body>
 </html>
