@@ -197,6 +197,8 @@ class EventUpload():
 		new_event.description = request.POST.get('n_title',"n_desc")
 		startdate_object = datetime.strptime(request.POST.get('n_startdate'),'%m/%d/%Y %I:%M %p')
 		enddate_object = datetime.strptime(request.POST.get('n_enddate'),'%m/%d/%Y %I:%M %p')
+		if enddate_object < startdate_object:
+			return render(request, 'hub/event_upload.html', {'div_elem':self._get_alert_html('End date must be after the Start date!','fail')})
 		new_event.start_date = startdate_object
 		new_event.end_date = enddate_object
 		uploaded_poster = request.FILES['n_uploadedposter']
