@@ -22,6 +22,7 @@ from django.contrib.auth.models import User
 import re
 import json
 from django.http import HttpResponse
+from django.db.utils import IntegrityError
 # Create your views here.
 
 class Utils():
@@ -70,7 +71,7 @@ class Homepage():
 		self.request = request
 		user = request.user
 		self.user_attendee = is_user_attendee(user)
-		if not self.user_attendee:
+		if request.user.is_authenticated and not self.user_attendee:
 			self.org_id = get_organization_id(user.username)
 		else:
 			self.org_id=None
@@ -108,7 +109,7 @@ class EventDetails():
 	def __init__(self, request):
 		self.request = request
 		self.user_attendee = is_user_attendee(request.user)
-		if not self.user_attendee:
+		if request.user.is_authenticated and not self.user_attendee:
 			self.org_id = get_organization_id(request.user.username)
 		else:
 			self.org_id=None
@@ -171,7 +172,7 @@ class EventUpload():
 		self.request = request
 		self.user_attendee = is_user_attendee(request.user)
 		self.categories = Category.objects.all()
-		if not self.user_attendee:
+		if request.user.is_authenticated and not self.user_attendee:
 			self.org_id = get_organization_id(request.user.username)
 		else:
 			self.org_id=None
@@ -247,7 +248,7 @@ class SearchListing():
 		self.response = SearchListing.Response()
 		self.request = request
 		self.user_attendee = is_user_attendee(request.user)
-		if not self.user_attendee:
+		if request.user.is_authenticated and not self.user_attendee:
 			self.org_id = get_organization_id(request.user.username)
 		else:
 			self.org_id=None
@@ -322,7 +323,7 @@ class OrganizationPage():
 		self.org_details = None
 		self.events = []
 		self.invalid = False
-		if not self.user_attendee:
+		if request.user.is_authenticated and not self.user_attendee:
 			self.org_id = get_organization_id(request.user.username)
 		else:
 			self.org_id=None
@@ -391,41 +392,53 @@ def signup(request):
 		user_name = request.POST.get('n_user_name',"")
 		if user_name != "":
 			#This request is for new user
-			password = request.POST.get('n_user_password',"")
-			email = request.POST.get('n_user_email',"")
-			new_django_user = User.objects.create_user(user_name, email, password)
-			new_custom_user = UserProfile()
-			new_custom_user.user = new_django_user
-			new_custom_user.user_name = user_name
-			new_custom_user.user_is_organization = False
-			new_custom_user.user_image = request.FILES['n_user_img']
-			new_custom_user.user_first_name = request.POST.get('n_user_fn',"")
-			new_custom_user.user_last_name = request.POST.get('n_user_ln',"")
-			new_custom_user.user_email = request.POST.get('n_user_email',"")
-			new_custom_user.save()
-			return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('New User Registration Sucessful, Please Login','sucess')})
+			try:
+				password = request.POST.get('n_user_password',"")
+				email = request.POST.get('n_user_email',"")
+				new_django_user = User.objects.create_user(user_name, email, password)
+				new_custom_user = UserProfile()
+				new_custom_user.user = new_django_user
+				new_custom_user.user_name = user_name
+				new_custom_user.user_is_organization = False
+				new_custom_user.user_image = request.FILES['n_user_img']
+				new_custom_user.user_first_name = request.POST.get('n_user_fn',"")
+				new_custom_user.user_last_name = request.POST.get('n_user_ln',"")
+				new_custom_user.user_email = request.POST.get('n_user_email',"")
+				new_custom_user.save()
+				return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('New User Registration Successful, Please Login','success')})
+			except IntegrityError as e:
+				if(str(e)=="UNIQUE constraint failed: auth_user.username"):
+					return render(request, 'hub/signup.html', {'div_elem':Utils.get_alert_html('Username '+user_name+' already registered. Please register with a new username','fail')})
+				else:
+					return render(request, 'hub/signup.html', {'div_elem':Utils.get_alert_html(str(e),'fail')})
 		else:
 			#This request is for new org
-			user_name = request.POST.get('n_org_uname',"")
-			password = request.POST.get('n_org_password',"")
-			email = request.POST.get('n_org_email',"")
-			new_django_user = User.objects.create_user(user_name, email, password)
-			new_org = OrganizationDetails()
-			new_org.user = new_django_user
-			new_org.user_name = user_name
-			new_org.org_name = request.POST.get("n_org_name", "")
-			new_org.description = request.POST.get("n_org_desc","")
-			new_org.contact_first_name = request.POST.get("n_org_poc_fn","")
-			new_org.contact_last_name = request.POST.get("n_org_poc_ln","")
-			new_org.contact_email = request.POST.get("n_org_poc_email","")
-			new_org.contact_number = request.POST.get("n_org_poc_phone","")
-			new_org.org_image = request.FILES['n_org_img']
-			new_org.address = (request.POST.get("n_org_addr","")+'\n' +
-				request.POST.get("n_org_city","") + '\n' +
-				request.POST.get("n_org_state","") + '\n' +
-				request.POST.get("n_org_zip",""))
-			new_org.save()
-			return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('New Organization Registration Sucessful, Please Login','sucess')})
+			try:
+				user_name = request.POST.get('n_org_uname',"")
+				password = request.POST.get('n_org_password',"")
+				email = request.POST.get('n_org_email',"")
+				new_django_user = User.objects.create_user(user_name, email, password)
+				new_org = OrganizationDetails()
+				new_org.user = new_django_user
+				new_org.user_name = user_name
+				new_org.org_name = request.POST.get("n_org_name", "")
+				new_org.description = request.POST.get("n_org_desc","")
+				new_org.contact_first_name = request.POST.get("n_org_poc_fn","")
+				new_org.contact_last_name = request.POST.get("n_org_poc_ln","")
+				new_org.contact_email = request.POST.get("n_org_poc_email","")
+				new_org.contact_number = request.POST.get("n_org_poc_phone","")
+				new_org.org_image = request.FILES['n_org_img']
+				new_org.address = (request.POST.get("n_org_addr","")+'\n' +
+					request.POST.get("n_org_city","") + '\n' +
+					request.POST.get("n_org_state","") + '\n' +
+					request.POST.get("n_org_zip",""))
+				new_org.save()
+				return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('New Organization Registration Successful, Please Login','success')})
+			except IntegrityError as e:
+				if(str(e)=="UNIQUE constraint failed: auth_user.username"):
+					return render(request, 'hub/signup.html', {'div_elem1':Utils.get_alert_html('Username '+user_name+' already registered. Please register with a new username','fail')})
+				else:
+					return render(request, 'hub/signup.html', {'div_elem1':Utils.get_alert_html(str(e),'fail')})
 	else:
 		return render(request, 'hub/signup.html', {})
 
@@ -437,7 +450,7 @@ class Myevents():
 	def __init__(self, request):
 		self.request = request
 		self.user_attendee = is_user_attendee(request.user)
-		if not self.user_attendee:
+		if request.user.is_authenticated and not self.user_attendee:
 			self.org_id = get_organization_id(request.user.username)
 		else:
 			self.org_id=None
