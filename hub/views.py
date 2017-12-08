@@ -70,9 +70,13 @@ class Homepage():
 		self.request = request
 		user = request.user
 		self.user_attendee = is_user_attendee(user)
+		if not self.user_attendee:
+			self.org_id = get_organization_id(user.username)
+		else:
+			self.org_id=None
 
 	def _render_me(self):
-		return render(self.request, Homepage.template, {'events':self.events, 'is_user_attendee': self.user_attendee})
+		return render(self.request, Homepage.template, {'events':self.events, 'is_user_attendee': self.user_attendee, 'org_id': self.org_id})
 
 	def event_list(self):
 		user = self.request.user
@@ -104,10 +108,14 @@ class EventDetails():
 	def __init__(self, request):
 		self.request = request
 		self.user_attendee = is_user_attendee(request.user)
+		if not self.user_attendee:
+			self.org_id = get_organization_id(request.user.username)
+		else:
+			self.org_id=None
 
 	def _render_me(self):
 		return render(
-			self.request, EventDetails.template, {'event':self.event, 'is_user_attendee': self.user_attendee})
+			self.request, EventDetails.template, {'event':self.event, 'is_user_attendee': self.user_attendee, 'org_id': self.org_id})
 
 	def _get_event_details(self,eventId):
 		evntId = int(eventId)
@@ -163,6 +171,10 @@ class EventUpload():
 		self.request = request
 		self.user_attendee = is_user_attendee(request.user)
 		self.categories = Category.objects.all()
+		if not self.user_attendee:
+			self.org_id = get_organization_id(request.user.username)
+		else:
+			self.org_id=None
 
 	# Event Upload related views
 	def _get_alert_html(self,text,alerttype):
@@ -179,7 +191,7 @@ class EventUpload():
 
 	def _render_event_upload(self,request):
 		if request.user.is_authenticated and not self.user_attendee:
-			return render(request, self.template, {'div_elem': " ", 'is_user_attendee': self.user_attendee, 'categories': self.categories})
+			return render(request, self.template, {'div_elem': " ", 'is_user_attendee': self.user_attendee, 'categories': self.categories, 'org_id': self.org_id})
 		else:
 			return render(request, 'hub/permission_denied.html')
 
@@ -235,6 +247,10 @@ class SearchListing():
 		self.response = SearchListing.Response()
 		self.request = request
 		self.user_attendee = is_user_attendee(request.user)
+		if not self.user_attendee:
+			self.org_id = get_organization_id(request.user.username)
+		else:
+			self.org_id=None
 
 	def _get_keywords(self):
 		return self.request.GET.get("q")
@@ -266,8 +282,7 @@ class SearchListing():
 	def _render_me(self):
 		return render(self.request, SearchListing.template,
 								{"events":self.response.events,
-								"empty_search":self.response.empty_search, 'is_user_attendee': self.user_attendee}
-								)
+								"empty_search":self.response.empty_search, 'is_user_attendee': self.user_attendee, 'org_id': self.org_id})
 
 
 	def render(self):
@@ -307,6 +322,11 @@ class OrganizationPage():
 		self.org_details = None
 		self.events = []
 		self.invalid = False
+		if not self.user_attendee:
+			self.org_id = get_organization_id(request.user.username)
+		else:
+			self.org_id=None
+
 	def _get_id(self):
 		return self.request.GET.get("id")
 
@@ -322,7 +342,7 @@ class OrganizationPage():
 		return render(self.request, OrganizationPage.template,
 								{"organizer": self.org_details,
 								"events":self.events, 'is_user_attendee': self.user_attendee,
-								"invalid":self.invalid})
+								"invalid":self.invalid, 'org_id': self.org_id})
 
 	def render(self):
 		id = self._get_id()
@@ -417,9 +437,13 @@ class Myevents():
 	def __init__(self, request):
 		self.request = request
 		self.user_attendee = is_user_attendee(request.user)
+		if not self.user_attendee:
+			self.org_id = get_organization_id(request.user.username)
+		else:
+			self.org_id=None
 
 	def _render_me(self):
-		return render(self.request, Myevents.template, {'events':self.events, 'is_user_attendee': self.user_attendee})
+		return render(self.request, Myevents.template, {'events':self.events, 'is_user_attendee': self.user_attendee, 'org_id': self.org_id})
 
 	def event_list(self):
 		events=get_rsvp_events(self.request.user.id)
