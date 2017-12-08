@@ -19,8 +19,7 @@
     {% endblock %}
     {% block content %}
     <div class="row">
-		<div class ="col"></div>
-		<div class = "col-md-10">
+		<div class="event_details_wrapper">
 			<div class="event_tile_wrapper no-padding">
 				<div class="poster">
 					<img src="{{event.image_url}}" class="poster_image img-responsive"/>
@@ -57,40 +56,31 @@
 						</p>
 					</div>
 
-					<div>
-						<a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{event.title}}&dates={{event.googleDate}}&details={{event.description}}&location={{event.location}}&trp=false&sprop=&sprop=name" target="_blank" class="btn btn-default">
-							<p class="p_calendar">
-							Add to calendar
-							</p>
-						</a>
+						
+					<!--div>
+						<p class="hashtagContent">
+							{{  event.hashtags }}
 
-						<div>
-							<p class="hashtagContent">
-								{{  event.hashtags }}
-
-							</p>
-						</div>
-					</div>
-
+						</p>
+					</div-->
+				
 
 				</div>
-			<br style="clear: both;">
+				<br style="clear: both;">
 			</div>
-		</div>
-		<div class ="col"></div>
-
-	</div>
-	<div class="row" style="margin-top:10px">
-		<div class ="col"></div>
-		<div class = "col-md-10">
-
 			<div id="wrapper">
 				<div class ="description">
-					<h3 class ="heading">Description</h3>
-					<div style="padding-bottom:20px">
+					<div class="event_details_headings">
+						<p class ="p_event_details_headings">Description</p>
+					</div>
+					<div style="min-height:150px">
 						<p class="p_description">{{event.description}}</p>
 					</div>
-					<h3 class="heading">Categories</h3>
+					<div class="event_details_headings">
+						<p class ="p_event_details_headings">Categories</p>
+					</div>
+					<div style="min-height:20px">
+					
 						<ul>
 						{% for c in event.categories %}
 							<li>
@@ -98,18 +88,22 @@
 							</li>
 							{% endfor %}
 						</ul>
-					<p></p>
-					<div  class="text">
-						<div>
-							<p><h3 class ="heading">Tags</h3></p>
-							<p class="p_hashtag">
-								{{  event.hashtags }}
-							</p>
-						</div>
+					</div>
+					<div class="event_details_headings">
+						<p class ="p_event_details_headings">Tags</p>
+					</div>
+					<div style="min-height:20px">
+						<p class="p_hashtag">
+							{{  event.hashtags }}
+						</p>
+					</div>
+					<div style="min-height:20px">
+						<!-- spacing -->
 					</div>
 				</div>
-				<div class ="sidecolumn" id = "rsvpCol">
-					
+				<div class ="sidecolumn">
+					<div id="rsvpCol" style="width:100%;text-align:center">
+						<div style="display:inline">
 						{% if event.rsvpd %}
 							<input type="button" id = "removeRSVP" onclick="remove_rsvp()" value="Remove RSVP">
 						{% else %}
@@ -118,11 +112,25 @@
 							<input type="button" id="saveRSVP" onclick="save_rsvp({{ event.user.is_authenticated|yesno:'true,false' }})" value="RSVP">
 							{% endif %}
 						{% endif %}
-
+						</div>
+					</div>
+					<div style="height:20px">
+						<!-- spacing -->
+					</div>
+					<div  style="width:100%;text-align:center">
+						<div style="display:inline">
+						<a href="http://www.google.com/calendar/event?action=TEMPLATE&text={{event.title}}&dates={{event.googleDate}}&details={{event.description}}&location={{event.location}}&trp=false&sprop=&sprop=name" target="_blank" class="btn calendar_box">
+							<p class="p_calendar">
+							Add to calendar
+							</p>
+						</a>
+						</div>
+					</div>
 				</div>
+				
 			</div>
 		</div>
-		<div class ="col"></div>
+		
 	</div>
 	<script type="text/javascript">
 		function makeAJAXCall(url,flag){
