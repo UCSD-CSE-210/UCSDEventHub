@@ -93,14 +93,12 @@
 					<h3 class="heading">Categories</h3>
 						<ul>
 						{% for c in event.categories %}
-							<li class="p_description">
-								{{ c.categories__category }}
+							<li>
+								<h4 style="color:#5a5a5a">{{ c.categories__category }}</h4>
 							</li>
 							{% endfor %}
 						</ul>
 					<p></p>
-						<br/>
-					
 					<div  class="text">
 						<div>
 							<p><h3 class ="heading">Tags</h3></p>

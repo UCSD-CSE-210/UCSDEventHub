@@ -24,6 +24,9 @@
 <div class="tab-content" id="nav-tabContent">
   <div class="tab-pane fade in active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
     <div class="container">
+      <div class="col-md-6 col-centered">
+        {{ div_elem|safe }}
+      </div>
       <form id="user-signup-form" enctype="multipart/form-data" method="post" action="{% url 'signup' %}" class="form-horizontal" role="form" novalidate>
         {% csrf_token %}
         <h2>New User Registration</h2>
@@ -120,6 +123,9 @@
 
 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
   <div class="container">
+    <div class="col-md-6 col-centered">
+      {{ div_elem1|safe }}
+    </div>
     <form id="org-signup-form" enctype="multipart/form-data" method="post" action="{% url 'signup' %}" class="form-horizontal" role="form" novalidate>
       {% csrf_token %}
       <h2>New Organization Registration</h2>
