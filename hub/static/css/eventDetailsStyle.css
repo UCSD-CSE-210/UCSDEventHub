@@ -56,6 +56,9 @@
 	border-bottom-color: lightgrey;
 	border-bottom-width: 1px;
 	padding-left: 10px;
+	overflow: scroll;
+	text-overflow: clip;
+	white-space: nowrap;
 }
 .p_title{
 	font-weight: bold;

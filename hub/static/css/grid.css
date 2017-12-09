@@ -39,7 +39,7 @@ body {
   font-size: 85%;
   background: rgba(211, 211, 211, 0.16);
   height:100px;
-  
+  text-align:left;
 }
 
 footer {
@@ -69,6 +69,9 @@ footer p {
 	border-bottom-color: lightgray;
 	border-bottom-width: 1px;
 	padding-left: 10px;
+	overflow: hidden;
+	text-overflow: clip;
+	white-space: nowrap;
 }
 .homepage_p_title{
 	font-weight: bold;
@@ -100,7 +103,9 @@ footer p {
 	padding-left: 10px;
 	padding-top:1px;
 	padding-bottom:1px;
-	
+	overflow: hidden;
+	text-overflow: clip;
+	white-space: nowrap;
 }
 .homepage_p_location{
 	margin-bottom: 0px;
@@ -115,7 +120,9 @@ footer p {
 	padding-left: 10px;
 	padding-top:1px;
 	padding-bottom:1px;
-	
+	overflow: hidden;
+	text-overflow: clip;
+	white-space: nowrap;
 }
 .homepage_p_hashtag{
 	margin-bottom: 0px;
@@ -124,20 +131,20 @@ footer p {
 	color: gray;
 }
 
-#wrapper {
+#upevents_wrapper {
     margin: 0 auto; /* to make the div center align to the browser */
     text-align: center;
 }
-#wrapper ul {
+#upevents_wrapper ul {
     padding: 10px;
     display: inline-block;
 }
-#wrapper ul li {
+#upevents_wrapper ul li {
     color: #fff;
     display: inline-block;
     margin: 0 20px 0 0;
 }
-#wrapper ul li:last-child {
+#upevents_wrapper ul li:last-child {
     color: #fff;
     display: inline-block;
     margin: 0;
