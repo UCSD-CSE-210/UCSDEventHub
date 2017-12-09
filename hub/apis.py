@@ -91,7 +91,10 @@ def get_rsvp_count(event_id):
         'rsvp_event_id').count()
 
 def get_organization_id(org_name):
-    return OrganizationDetails.objects.get(user_name=org_name).organization_id
+    if OrganizationDetails.objects.filter(user_name=org_name).exists():
+        return OrganizationDetails.objects.get(user_name=org_name).organization_id
+    else:
+        return None
 
 def get_organization_name(org_id):
     return OrganizationDetails.objects.get(organization_id=org_id).org_name
