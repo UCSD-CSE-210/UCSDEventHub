@@ -11,10 +11,8 @@
 	display: flex !important;
 	border-color:lightgrey;
 	width: 100%;
-	height: 265px;
+	height: 365px;
 	border-radius: 5px;
-	margin-top:7px;
-	margin-bottom:7px;
 	background: unset;
 	padding-left: 0px;
 	padding-right: 0px;
@@ -27,7 +25,7 @@
 	padding: 2px;
 	background:lightgrey;
 	border-radius: 4px;
-	width:45%;
+	width:50%;
 			
 }
 
@@ -41,7 +39,7 @@
 .org_details{
 	display: inline-block;
 	padding:1px;
-	width:55%;
+	width:50%;
 }
 .org_text{
 	padding-left: 10px;
