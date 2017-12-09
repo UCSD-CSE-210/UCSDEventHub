@@ -350,8 +350,10 @@ class OrganizationPage():
 		if not id:
 			self.invalid = True
 		self.org_details = get_org_details(id)
-		self.events = upcoming_events_by_org(id)
-
+		if self.org_details:
+			self.events = upcoming_events_by_org(id)
+		else:
+			self.invalid = True
 		return self._render_me()
 
 	@staticmethod
