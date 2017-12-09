@@ -17,7 +17,7 @@ body {
   float: left;
   width: 330px;
   /*height: 300px;*/
-  padding: 2px;
+  padding: 5px;
   margin-bottom: 1rem;
   border: 0;
       
@@ -142,7 +142,7 @@ footer p {
 #upevents_wrapper ul li {
     color: #fff;
     display: inline-block;
-    margin: 0 20px 0 0;
+    margin: 0 0 0 0;
 }
 #upevents_wrapper ul li:last-child {
     color: #fff;
