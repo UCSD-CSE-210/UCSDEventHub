@@ -17,8 +17,8 @@ body {
   float: left;
   width: 330px;
   /*height: 300px;*/
-  padding: 2px;
-  margin-bottom: 2rem;
+  padding: 5px;
+  margin-bottom: 1rem;
   border: 0;
       
 }
@@ -39,7 +39,7 @@ body {
   font-size: 85%;
   background: rgba(211, 211, 211, 0.16);
   height:100px;
-  
+  text-align:left;
 }
 
 footer {
@@ -69,6 +69,9 @@ footer p {
 	border-bottom-color: lightgray;
 	border-bottom-width: 1px;
 	padding-left: 10px;
+	overflow: hidden;
+	text-overflow: clip;
+	white-space: nowrap;
 }
 .homepage_p_title{
 	font-weight: bold;
@@ -100,7 +103,9 @@ footer p {
 	padding-left: 10px;
 	padding-top:1px;
 	padding-bottom:1px;
-	
+	overflow: hidden;
+	text-overflow: clip;
+	white-space: nowrap;
 }
 .homepage_p_location{
 	margin-bottom: 0px;
@@ -115,11 +120,32 @@ footer p {
 	padding-left: 10px;
 	padding-top:1px;
 	padding-bottom:1px;
-	
+	overflow: hidden;
+	text-overflow: clip;
+	white-space: nowrap;
 }
 .homepage_p_hashtag{
 	margin-bottom: 0px;
 	font-family: sans-serif;
 	font-size: 13px;
 	color: gray;
+}
+
+#upevents_wrapper {
+    margin: 0 auto; /* to make the div center align to the browser */
+    text-align: center;
+}
+#upevents_wrapper ul {
+    padding: 10px;
+    display: inline-block;
+}
+#upevents_wrapper ul li {
+    color: #fff;
+    display: inline-block;
+    margin: 0 0 0 0;
+}
+#upevents_wrapper ul li:last-child {
+    color: #fff;
+    display: inline-block;
+    margin: 0;
 }

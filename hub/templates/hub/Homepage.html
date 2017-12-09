@@ -23,59 +23,51 @@
 			<p></p>
 			{% endblock %}
 			{% block content %}
-			<div class="row">
-				<div class="col">
-				</div>
-				<div class="col-md-12" style="padding: 0px">
-					<div class="album text-muted" style="background:transparent">
-						<div>
-							<div class="row">
-								{% for event in events %}
-								<div class="card">
-									<!-- <div class="card_i"> -->
-									<div class="homepage_poster">
-										<a href="{{ event.event_url }}">
-										<img src= "{{ event.image_url }}" class="homepage_poster_image">
-										</a>
+			<div id="upevents_wrapper">
+					<ul>
+						{% for event in events %}
+						<li>
+						<div class="card">
+							<!-- <div class="card_i"> -->
+							<div class="homepage_poster">
+								<a href="{{ event.event_url }}">
+								<img src= "{{ event.image_url }}" class="homepage_poster_image">
+								</a>
+							</div>
+							<!-- </div> -->
+							<div class="card-text">
+								<a href="{{ event.event_url }}">
+									<div class="homepage_title">
+										<p class="homepage_p_title">
+											{{ event.title }}
+										</p>
 									</div>
-									<!-- </div> -->
-									<div class="card-text">
-										<a href="{{ event.event_url }}">
-											<div class="homepage_title">
-												<p class="homepage_p_title">
-													{{ event.title }}
-												</p>
-											</div>
-										</a>
-										<div class="homepage_datetime">
-											<p class="homepage_p_datetime">
-												{{ event.start_date }}
-											</p>
-										</div>
-										<div class="homepage_location">
-											<p class="homepage_p_location">
-												{{ event.location }}
-											</p>
-										</div>
-										<div class="homepage_hashtag">
-											<p class="homepage_p_hashtag" style="
-												margin-top: 0px;
-												">
-												{{ event.hashtags }}
-											</p>
-										</div>
-									</div>
+								</a>
+								<div class="homepage_datetime">
+									<p class="homepage_p_datetime">
+										{{ event.start_date }}
+									</p>
 								</div>
-								{% endfor %}
-
+								<div class="homepage_location">
+									<p class="homepage_p_location">
+										{{ event.location }}
+									</p>
+								</div>
+								<div class="homepage_hashtag">
+									<p class="homepage_p_hashtag" style="
+										margin-top: 0px;
+										">
+										{{ event.hashtags }}
+									</p>
+								</div>
 							</div>
 						</div>
-					</div>
-
-				</div>
-				<div class="col">
-				</div>
+						</li>
+						{% endfor %}
+						
+					</ul>
 			</div>
+
 			{% endblock %}
 		</div>
 	</body>
