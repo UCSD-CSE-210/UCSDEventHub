@@ -62,23 +62,23 @@
 
           <div class="form-inline mt-2 mt-md-0" id="navBarSearchForm">
             <input class="form-control mr-sm-4 span10" id="search" method="put" type="text" placeholder="Search" onkeypress= "searchKeyPressListener(event)">
-            <button class="btn btn-outline-success my-2 my-sm-0" onclick="SubmitSearchQuery()" id="searchButton">Search</button>
+            <button class="btn btn-outline-success my-2 my-sm-0" onclick="SubmitSearchQuery()" id="searchButton" style="color: #fff;">Search</button>
           </div>
             {% if request.user.is_authenticated and not is_user_attendee %}
               <li class="nav-item">
-                <a class="nav-link" href="/event_upload">Create Event</a>
+                <a class="nav-link" href="/event_upload" style="color: #fff;">Create Event</a>
               </li>
             {% endif %}
             <li class="nav-item">
                 {% if not request.user.is_authenticated %}
-                    <a class="nav-link" href="/signup/"><span class="glyphicon glyphicon-user"></span> Register</a>
+                    <a class="nav-link" href="/signup/" style="color: #fff;"><span class="glyphicon glyphicon-user"></span> Register</a>
                 {% endif %}
             </li>
             <li class="nav-item">
                 {% if not request.user.is_authenticated %}
-                    <a class="nav-link" href="/login/"><span class="glyphicon glyphicon-log-in"></span> Sign In</a>
+                    <a class="nav-link" href="/login/" style="color: #fff;"><span class="glyphicon glyphicon-log-in"></span> Sign In</a>
                 {% else %}
-                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"><strong>{{ request.user.username }}</strong></a>
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" style="color: #fff;"><strong>{{ request.user.username }}</strong></a>
                     <ul class="dropdown-menu" role="menu"  style="padding: 10px; padding-bottom: 0px;">
                       <li>
                         <div class="navbar-login">
