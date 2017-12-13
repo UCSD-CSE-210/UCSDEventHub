@@ -50,7 +50,7 @@
 					</div>
 					<div class="organizer">
 						<p class="p_organizer">
-							By: <a href="{{ event.organizer_url }}">
+							By: <a href="{{ event.organizer_url }}"  style="color:unset">
 								{{event.org_name}}
 								</a>
 						</p>
@@ -79,15 +79,13 @@
 					<div class="event_details_headings">
 						<p class ="p_event_details_headings">Categories</p>
 					</div>
-					<div style="min-height:20px">
+					<div style="min-height:20px;padding-bottom:20px">
 					
-						<ul>
 						{% for c in event.categories %}
-							<li>
-								<h4 style="color:#5a5a5a">{{ c.categories__category }}</h4>
-							</li>
+							<h4 style="color:#5a5a5a">{{ c.categories__category }}</h4>
+							
 							{% endfor %}
-						</ul>
+						
 					</div>
 					<div class="event_details_headings">
 						<p class ="p_event_details_headings">Tags</p>

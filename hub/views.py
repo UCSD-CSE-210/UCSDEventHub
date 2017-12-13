@@ -243,6 +243,7 @@ class SearchListing():
 		def __init__(self):
 			self.events = []
 			self.empty_search = True
+			self.prefill = ""
 
 	def __init__(self, request):
 		self.response = SearchListing.Response()
@@ -283,12 +284,12 @@ class SearchListing():
 	def _render_me(self):
 		return render(self.request, SearchListing.template,
 								{"events":self.response.events,
-								"empty_search":self.response.empty_search, 'is_user_attendee': self.user_attendee, 'org_id': self.org_id})
+								"empty_search":self.response.empty_search, 'is_user_attendee': self.user_attendee, 'org_id': self.org_id, "search_box_prefill":self.response.prefill})
 
 
 	def render(self):
 		search_keywords = self._get_keywords()
-
+		self.response.prefill=search_keywords
 		if not search_keywords:
 			return self._render_me()
 

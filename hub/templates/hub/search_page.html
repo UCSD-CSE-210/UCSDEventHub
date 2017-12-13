@@ -18,7 +18,7 @@
 		<div class="col-md-10">
 			<div id="custom-search-input">
 				<div class="input-group col-md-12"  style="padding:0px">
-					<input id="search2" type="text" class="form-control input-lg" onkeypress= "searchKeyPressListener2(event)" placeholder="Search" style="height:36px" method="put" value="">
+					<input id="search2" type="text" class="form-control input-lg" onkeypress= "searchKeyPressListener2(event)" placeholder="Search" style="height:36px" method="put" value="{{ search_box_prefill }}">
 					<span class="input-group-btn">
 						<button class="btn btn-info btn-lg" id="searchButton2" type="button"  onclick="SubmitSearchQuery2()">
 							<img src="/static/images/search_q.PNG" style="width:40px">
@@ -89,7 +89,7 @@
 						</div>
 						<div class="search_organizer">
 							<p class="search_p_organizer">
-								By: <a href="{{ event.organizer_url }}">
+								By: <a href="{{ event.organizer_url }}" style="color:unset">
 									{{  event.org_name }}
 									</a>
 							</p>
