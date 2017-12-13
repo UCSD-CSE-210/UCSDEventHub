@@ -77,7 +77,7 @@ class Homepage():
 			self.org_id=None
 
 	def _render_me(self):
-		return render(self.request, Homepage.template, {'events':self.events, 'is_user_attendee': self.user_attendee, 'org_id': self.org_id})
+		return render(self.request, Homepage.template, {'events':self.events, 'is_user_attendee': self.user_attendee, 'org_id': self.org_id, "categories":Category.objects.all()} )
 
 	def event_list(self):
 		user = self.request.user
@@ -116,7 +116,7 @@ class EventDetails():
 
 	def _render_me(self):
 		return render(
-			self.request, EventDetails.template, {'event':self.event, 'is_user_attendee': self.user_attendee, 'org_id': self.org_id})
+			self.request, EventDetails.template, {'event':self.event, 'is_user_attendee': self.user_attendee, 'org_id': self.org_id,"categories":Category.objects.all()})
 
 	def _get_event_details(self,eventId):
 		evntId = int(eventId)
@@ -192,9 +192,9 @@ class EventUpload():
 
 	def _render_event_upload(self,request):
 		if request.user.is_authenticated and not self.user_attendee:
-			return render(request, self.template, {'div_elem': " ", 'is_user_attendee': self.user_attendee, 'categories': self.categories, 'org_id': self.org_id})
+			return render(request, self.template, {'div_elem': " ", 'is_user_attendee': self.user_attendee, 'categories': self.categories, 'org_id': self.org_id, "categories":Category.objects.all()})
 		else:
-			return render(request, 'hub/permission_denied.html')
+			return render(request, 'hub/permission_denied.html', {"categories":Category.objects.all()})
 
 	def _submit_event(self,request):
 		data = request.POST.items()
@@ -211,7 +211,7 @@ class EventUpload():
 		startdate_object = datetime.strptime(request.POST.get('n_startdate'),'%m/%d/%Y %I:%M %p')
 		enddate_object = datetime.strptime(request.POST.get('n_enddate'),'%m/%d/%Y %I:%M %p')
 		if enddate_object < startdate_object:
-			return render(request, 'hub/event_upload.html', {'div_elem':self._get_alert_html('End date must be after the Start date!','fail')})
+			return render(request, 'hub/event_upload.html', {'div_elem':self._get_alert_html('End date must be after the Start date!','fail'), "categories":Category.objects.all()})
 		new_event.start_date = startdate_object
 		new_event.end_date = enddate_object
 		uploaded_poster = request.FILES['n_uploadedposter']
@@ -221,7 +221,7 @@ class EventUpload():
 		add_event_to_db(new_event)
 		new_event.categories = get_categories(request.POST.getlist('n_category'))
 		new_event.save()
-		return render(request, 'hub/event_upload.html', {'div_elem':self._get_alert_html('Event Upload is Successful','sucess')})
+		return render(request, 'hub/event_upload.html', {'div_elem':self._get_alert_html('Event Upload is Successful','sucess'), "categories":Category.objects.all()})
 
 	@staticmethod
 	def render_page(request):
@@ -284,7 +284,7 @@ class SearchListing():
 	def _render_me(self):
 		return render(self.request, SearchListing.template,
 								{"events":self.response.events,
-								"empty_search":self.response.empty_search, 'is_user_attendee': self.user_attendee, 'org_id': self.org_id, "search_box_prefill":self.response.prefill})
+								"empty_search":self.response.empty_search, 'is_user_attendee': self.user_attendee, 'org_id': self.org_id, "search_box_prefill":self.response.prefill,"categories":Category.objects.all()})
 
 
 	def render(self):
@@ -344,7 +344,7 @@ class OrganizationPage():
 		return render(self.request, OrganizationPage.template,
 								{"organizer": self.org_details,
 								"events":self.events, 'is_user_attendee': self.user_attendee,
-								"invalid":self.invalid, 'org_id': self.org_id})
+								"invalid":self.invalid, 'org_id': self.org_id,"categories":Category.objects.all()})
 
 	def render(self):
 		id = self._get_id()
@@ -372,7 +372,7 @@ def login(request):
 		user_name = request.POST['n_username']
 		password = request.POST['n_password']
 		if not check_user_name(user_name, is_org=True) and not check_user_name(user_name, is_org=False):
-			return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('User is not registered. Please Signup','fail')})
+			return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('User is not registered. Please Signup','fail'), "categories":Category.objects.all()})
 		# is_org = request.POST.get('n_is_org',False)
 		# if not check_user_name(user_name,is_org):
 		# 	return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('User is not registered. Please Signup','fail')})
@@ -382,9 +382,9 @@ def login(request):
 			auth.login(request,user)
 			return redirect(Homepage.render_page)
 		else:
-			return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('Wrong Username, Password combination','fail')})
+			return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('Wrong Username, Password combination','fail'), "categories":Category.objects.all()})
 	else:
-		return render(request, 'hub/login.html', {})
+		return render(request, 'hub/login.html', {"categories":Category.objects.all()})
 
 def logout(request):
 	auth.logout(request)
@@ -408,12 +408,12 @@ def signup(request):
 				new_custom_user.user_last_name = request.POST.get('n_user_ln',"")
 				new_custom_user.user_email = request.POST.get('n_user_email',"")
 				new_custom_user.save()
-				return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('New User Registration Successful, Please Login','success')})
+				return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('New User Registration Successful, Please Login','success'), "categories":Category.objects.all()})
 			except IntegrityError as e:
 				if(str(e)=="UNIQUE constraint failed: auth_user.username"):
-					return render(request, 'hub/signup.html', {'div_elem':Utils.get_alert_html('Username '+user_name+' already registered. Please register with a new username','fail')})
+					return render(request, 'hub/signup.html', {'div_elem':Utils.get_alert_html('Username '+user_name+' already registered. Please register with a new username','fail'), "categories":Category.objects.all()})
 				else:
-					return render(request, 'hub/signup.html', {'div_elem':Utils.get_alert_html(str(e),'fail')})
+					return render(request, 'hub/signup.html', {'div_elem':Utils.get_alert_html(str(e),'fail'), "categories":Category.objects.all()})
 		else:
 			#This request is for new org
 			try:
@@ -436,14 +436,14 @@ def signup(request):
 					request.POST.get("n_org_state","") + '\n' +
 					request.POST.get("n_org_zip",""))
 				new_org.save()
-				return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('New Organization Registration Successful, Please Login','success')})
+				return render(request, 'hub/login.html', {'div_elem':Utils.get_alert_html('New Organization Registration Successful, Please Login','success'), "categories":Category.objects.all()})
 			except IntegrityError as e:
 				if(str(e)=="UNIQUE constraint failed: auth_user.username"):
-					return render(request, 'hub/signup.html', {'div_elem1':Utils.get_alert_html('Username '+user_name+' already registered. Please register with a new username','fail')})
+					return render(request, 'hub/signup.html', {'div_elem1':Utils.get_alert_html('Username '+user_name+' already registered. Please register with a new username','fail'), "categories":Category.objects.all()})
 				else:
-					return render(request, 'hub/signup.html', {'div_elem1':Utils.get_alert_html(str(e),'fail')})
+					return render(request, 'hub/signup.html', {'div_elem1':Utils.get_alert_html(str(e),'fail'), "categories":Category.objects.all()})
 	else:
-		return render(request, 'hub/signup.html', {})
+		return render(request, 'hub/signup.html', {"categories":Category.objects.all()})
 
 class Myevents():
 	base_url = "myevents/"
@@ -459,7 +459,7 @@ class Myevents():
 			self.org_id=None
 
 	def _render_me(self):
-		return render(self.request, Myevents.template, {'events':self.events, 'is_user_attendee': self.user_attendee, 'org_id': self.org_id})
+		return render(self.request, Myevents.template, {'events':self.events, 'is_user_attendee': self.user_attendee, 'org_id': self.org_id, "categories":Category.objects.all()})
 
 	def event_list(self):
 		events=get_rsvp_events(self.request.user.id)
